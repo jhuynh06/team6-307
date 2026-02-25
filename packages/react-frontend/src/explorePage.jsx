@@ -10,14 +10,14 @@ const CarouselSection = ({ title, centerLabel }) => {
         {/* Left Arrow */}
         <div className="carousel-arrow">◀</div>
         
-        {/* Grid for the 3 items */}
+        {/* Grid for 3 items*/}
         <div className="carousel-grid">
           {/* Item 1 */}
           <div className="carousel-item">
             <div className="gray-box"></div>
           </div>
 
-          {/* Item 2 (Center with text) */}
+          {/* Item 2  */}
           <div className="carousel-item">
             <div className="gray-box center-content">
               <span>Photo of Food</span>

@@ -44,7 +44,6 @@ body,
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2vw;
-    /* Use viewport-based gap */
     width: 100%;
 }
 
@@ -110,7 +109,6 @@ body,
     font-size: 1.1rem;
 }
 
-/* Sub-nav */
 .sub-nav {
     background-color: #666;
     color: white;
@@ -234,8 +232,7 @@ body,
     aspect-ratio: 4/3;
 }
 
-/* --- Explore Page Specific Styles --- */
-
+/*EXPLORE PAGE */
 .explore-section {
     margin-bottom: 50px;
 }
@@ -243,7 +240,7 @@ body,
 .carousel-wrapper {
     display: flex;
     align-items: center;
-    gap: 2vw; /* Matches the gap used in your nearby-grid */
+    gap: 2vw;
     width: 100%;
 }
 
@@ -252,7 +249,7 @@ body,
     color: #D9D9D9; 
     cursor: pointer;
     user-select: none;
-    flex-shrink: 0; /* Prevents arrows from being squeezed by the grid */
+    flex-shrink: 0;
 }
 
 .carousel-grid {
@@ -268,7 +265,6 @@ body,
     gap: 10px;
 }
 
-/* Centers the text inside the middle gray box */
 .center-content {
     display: flex;
     align-items: center;

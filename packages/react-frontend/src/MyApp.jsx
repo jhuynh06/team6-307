@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Homepage from "./homepage"; 
-import Explore from "./explorePage"; // FIXED: Changed 'Explorepage' to 'Explore'
+import Explore from "./explorePage"; 
 
 export default function MyApp() {
   return (
