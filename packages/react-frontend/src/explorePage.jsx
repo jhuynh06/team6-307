@@ -52,7 +52,7 @@ const Explore = () => {
         </div>
         
         <nav className="nav-links">
-            <Link to="/">Home</Link>
+            <Link to="/home">Home</Link>
             <Link to="/explore" style={{ fontWeight: "bold" }}>Explore</Link>
             <Link to="/stores">Stores</Link>
         </nav>

@@ -16,7 +16,7 @@ const Homepage = () => {
         </div>
         
         <nav className="nav-links">
-          <a href="/">Home</a>
+          <a href="/home">Home</a>
           <a href="/explore">Explore</a>
           <a href="/">Stores</a>
         </nav>
