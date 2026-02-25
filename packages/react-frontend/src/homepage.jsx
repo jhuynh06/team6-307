@@ -1,5 +1,6 @@
 import React from "react";
 import "./page.css";
+import { Link } from "react-router-dom";
 
 const Homepage = () => {
   return (
@@ -15,9 +16,9 @@ const Homepage = () => {
         </div>
         
         <nav className="nav-links">
-          <a href="#">Home</a>
-          <a href="#">Explore</a>
-          <a href="#">Stores</a>
+          <a href="/">Home</a>
+          <a href="/explore">Explore</a>
+          <a href="/">Stores</a>
         </nav>
 
         <div className="profile-section">
