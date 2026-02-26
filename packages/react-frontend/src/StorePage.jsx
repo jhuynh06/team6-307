@@ -62,8 +62,6 @@ function FilterSidebar({ filters, onChange }) {
                   label={type}
                   checked={filters.foodTypes.includes(type)}
                   onChange={() => toggleFoodType(type)}
-                  size="md"
-                  color="green"
                 />
               ))}
             </Stack>
@@ -80,8 +78,6 @@ function FilterSidebar({ filters, onChange }) {
                 onChange={(e) =>
                   onChange({ ...filters, inStock: e.currentTarget.checked })
                 }
-                size="md"
-                color="green"
               />
               <Checkbox
                 label="Out of Stock"
@@ -89,8 +85,6 @@ function FilterSidebar({ filters, onChange }) {
                 onChange={(e) =>
                   onChange({ ...filters, outOfStock: e.currentTarget.checked })
                 }
-                size="md"
-                color="green"
               />
             </Stack>
           </Accordion.Panel>
@@ -171,9 +165,9 @@ function StorePage() {
             <Group gap={10} mt={4}>
               <Box
                 style={{
-                  backgroundColor: "#8BC34A",
+                  backgroundColor: "var(--mantine-color-green-5)",
                   padding: "2px 8px",
-                  borderRadius: 4
+                  borderRadius: "var(--mantine-radius-sm)"
                 }}
               >
                 <Text size="xs" fw={700} c="white" tt="uppercase">

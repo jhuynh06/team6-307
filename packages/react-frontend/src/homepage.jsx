@@ -1,39 +1,9 @@
 import React from "react";
 import "./page.css";
-import { Link } from "react-router-dom";
 
 const Homepage = () => {
   return (
     <div className="container">
-      {/* Header Section */}
-      <header className="main-header">
-        <div className="logo-section">
-          <div className="circle-placeholder"></div>
-          <div className="logo-text">
-            <h1>POLY RATE</h1>
-            <h2>MY FOOD</h2>
-          </div>
-        </div>
-        
-        <nav className="nav-links">
-          <a href="/">Home</a>
-          <a href="/explore">Explore</a>
-          <a href="/stores">Stores</a>
-        </nav>
-
-        <div className="profile-section">
-          <div className="circle-placeholder"></div>
-          <span>Profile</span>
-        </div>
-      </header>
-
-      {/* Sub-navigation bar */}
-      <div className="sub-nav">
-        <span>&lt;</span>
-        <span className="photos-label">Photos</span>
-        <span>&gt;</span>
-      </div>
-
       <main className="content">
         {/* What's Nearby */}
         <section className="section">

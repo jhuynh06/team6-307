@@ -1,6 +1,5 @@
 import React from "react";
 import "./page.css";
-import { Link } from "react-router-dom";
 
 const CarouselSection = ({ title, centerLabel }) => {
   return (
@@ -41,36 +40,6 @@ const CarouselSection = ({ title, centerLabel }) => {
 const Explore = () => {
   return (
     <div className="container">
-      {/* Header Section */}
-      <header className="main-header">
-        <div className="logo-section">
-          <div className="circle-placeholder"></div>
-          <div className="logo-text">
-            <h1>POLY RATE</h1>
-            <h2>MY FOOD</h2>
-          </div>
-        </div>
-        
-        <nav className="nav-links">
-            <Link to="/">Home</Link>
-            <Link to="/explore" style={{ fontWeight: "bold" }}>Explore</Link>
-            <Link to="/stores">Stores</Link>
-        </nav>
-
-        <div className="profile-section">
-          <div className="circle-placeholder"></div>
-          <span>Profile</span>
-        </div>
-      </header>
-
-      {/* Sub-navigation bar */}
-      <div className="sub-nav">
-        <span>&lt;</span>
-        <span className="photos-label">On-Campus Dining</span>
-        <span>&gt;</span>
-      </div>
-
-      {/* Main Content Area */}
       <main className="content">
         <CarouselSection title="Most Popular" centerLabel="Food Name 1" />
         <CarouselSection title="Highly Rated" centerLabel="Food Name 2" />

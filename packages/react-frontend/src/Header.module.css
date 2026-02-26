@@ -1,0 +1,41 @@
+.header {
+  height: 60px;
+  background-color: var(--mantine-color-body);
+  border-bottom: 1px solid light-dark(
+    var(--mantine-color-gray-3),
+    var(--mantine-color-dark-4)
+  );
+}
+
+.inner {
+  height: 60px;
+  width: 100%;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.link {
+  display: block;
+  line-height: 1;
+  padding: 8px 12px;
+  border-radius: var(--mantine-radius-default);
+  text-decoration: none;
+  color: light-dark(
+    var(--mantine-color-gray-7),
+    var(--mantine-color-dark-0)
+  );
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 500;
+
+  @mixin hover {
+    background-color: light-dark(
+      var(--mantine-color-green-0),
+      var(--mantine-color-dark-6)
+    );
+  }
+
+  &[data-active] {
+    background-color: var(--mantine-primary-color-filled);
+    color: var(--mantine-color-white);
+  }
+}
