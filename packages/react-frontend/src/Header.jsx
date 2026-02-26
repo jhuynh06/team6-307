@@ -35,7 +35,7 @@ export default function Header() {
             style={{ borderRadius: "50%", flexShrink: 0 }}
           />
           <Text fw={700} fz="lg" style={{ letterSpacing: 1 }}>
-            POLY RATE
+            POLY RATE MY FOOD
           </Text>
         </Group>
 
