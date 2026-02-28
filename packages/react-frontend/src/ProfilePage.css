@@ -1,0 +1,45 @@
+/* Page wrapper */
+.profile-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 60px;
+}
+
+/* Card styling override */
+.profile-card {
+  width: 100%;
+  max-width: 600px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Header section */
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Section spacing */
+.profile-section {
+  margin-top: 20px;
+}
+
+/* Save button spacing */
+.profile-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* Optional: slightly soften inputs */
+.profile-card input,
+.profile-card textarea {
+  border-radius: 8px;
+}

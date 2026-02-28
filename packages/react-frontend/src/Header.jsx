@@ -6,7 +6,8 @@ import classes from "./Header.module.css";
 const links = [
   { link: "/", label: "Home" },
   { link: "/explore", label: "Explore" },
-  { link: "/stores", label: "Stores" }
+  { link: "/stores", label: "Stores" },
+  { link: "/profile", label: "Profile"}
 ];
 
 export default function Header() {

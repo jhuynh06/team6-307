@@ -1,25 +1,22 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import '@mantine/core/styles.css';
-import { MantineProvider } from '@mantine/core';
+import { Routes, Route } from "react-router-dom";
 
-import theme from "./theme";
 import Homepage from "./homepage";
 import Explore from "./explorePage";
 import StorePage from "./StorePage";
 import Header from "./Header";
+import ProfilePage from "./ProfilePage";
 
 export default function MyApp() {
   return (
-    <MantineProvider theme={theme}>
-      <BrowserRouter>
-        <Header />
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/explore" element={<Explore />} />
-          <Route path="/stores" element={<StorePage />} />
-        </Routes>
-      </BrowserRouter>
-    </MantineProvider>
+    <>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/explore" element={<Explore />} />
+        <Route path="/stores" element={<StorePage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+      </Routes>
+    </>
   );
 }
