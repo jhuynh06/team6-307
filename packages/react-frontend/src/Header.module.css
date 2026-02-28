@@ -14,28 +14,56 @@
   flex-wrap: nowrap;
 }
 
-.link {
-  display: block;
-  line-height: 1;
-  padding: 8px 12px;
-  border-radius: var(--mantine-radius-default);
-  text-decoration: none;
-  color: light-dark(
-    var(--mantine-color-gray-7),
-    var(--mantine-color-dark-0)
-  );
-  font-size: var(--mantine-font-size-sm);
+/* Tabs styling */
+.tabs {
+  align-self: stretch;
+}
+
+.tabList {
+  height: 100%;
+  border-bottom: none;
+  gap: 4px;
+}
+
+.tab {
+  font-size: var(--mantine-font-size-md);
   font-weight: 500;
+  padding: 0 20px;
+  height: 100%;
+  border-bottom: 3px solid transparent;
+  color: light-dark(
+    var(--mantine-color-gray-6),
+    var(--mantine-color-dark-1)
+  );
 
   @mixin hover {
-    background-color: light-dark(
-      var(--mantine-color-green-0),
-      var(--mantine-color-dark-6)
+    background-color: transparent;
+    color: light-dark(
+      var(--mantine-color-dark-9),
+      var(--mantine-color-dark-0)
     );
+    border-bottom-color: var(--mantine-color-gray-4);
   }
 
   &[data-active] {
-    background-color: var(--mantine-primary-color-filled);
-    color: var(--mantine-color-white);
+    color: var(--mantine-color-green-8);
+    border-bottom-color: var(--mantine-color-green-6);
+    background-color: transparent;
   }
+}
+
+/* Avatar */
+.avatar {
+  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  border: 2px solid transparent;
+
+  @mixin hover {
+    box-shadow: 0 0 0 3px var(--mantine-color-green-1);
+    transform: scale(1.05);
+  }
+}
+
+.avatarActive {
+  border-color: var(--mantine-color-green-5);
+  box-shadow: 0 0 0 3px var(--mantine-color-green-1);
 }

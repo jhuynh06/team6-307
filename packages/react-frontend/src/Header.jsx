@@ -1,29 +1,20 @@
-import { Burger, Group, Text, Box } from "@mantine/core";
+import { Burger, Group, Text, Box, Button, Avatar, Tabs } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import classes from "./Header.module.css";
 
 const links = [
   { link: "/", label: "Home" },
   { link: "/explore", label: "Explore" },
-  { link: "/stores", label: "Stores" },
-  { link: "/profile", label: "Profile"}
+  { link: "/stores", label: "Stores" }
 ];
 
-export default function Header() {
+export default function Header({ isLoggedIn, onLogout }) {
   const [opened, { toggle }] = useDisclosure(false);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
-  const items = links.map((item) => (
-    <Link
-      key={item.label}
-      to={item.link}
-      className={classes.link}
-      data-active={pathname === item.link || undefined}
-    >
-      {item.label}
-    </Link>
-  ));
+  const activeTab = links.find((l) => l.link === pathname)?.link || null;
 
   return (
     <header className={classes.header}>
@@ -40,8 +31,57 @@ export default function Header() {
           </Text>
         </Group>
 
-        <Group gap={5} visibleFrom="xs">
-          {items}
+        <Tabs
+          value={activeTab}
+          onChange={(value) => navigate(value)}
+          variant="default"
+          visibleFrom="xs"
+          classNames={{ root: classes.tabs, list: classes.tabList, tab: classes.tab }}
+        >
+          <Tabs.List>
+            {links.map((item) => (
+              <Tabs.Tab key={item.link} value={item.link}>
+                {item.label}
+              </Tabs.Tab>
+            ))}
+          </Tabs.List>
+        </Tabs>
+
+        <Group gap="sm" visibleFrom="xs">
+          {isLoggedIn ? (
+            <>
+              <Avatar
+                radius="xl"
+                size="md"
+                color="green"
+                className={`${classes.avatar} ${pathname === "/profile" ? classes.avatarActive : ""}`}
+                onClick={() => navigate("/profile")}
+                style={{ cursor: "pointer" }}
+              >
+                U
+              </Avatar>
+              <Button variant="subtle" size="compact-md" onClick={onLogout}>
+                Logout
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                variant="filled"
+                size="compact-md"
+                onClick={() => navigate("/login")}
+              >
+                Log in
+              </Button>
+              <Button
+                variant="outline"
+                size="compact-md"
+                onClick={() => navigate("/signup")}
+              >
+                Sign up
+              </Button>
+            </>
+          )}
         </Group>
 
         <Burger
