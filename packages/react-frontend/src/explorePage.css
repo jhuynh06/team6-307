@@ -1,0 +1,57 @@
+/* Container helps pin the arrows relative to the image row */
+.carousel-container {
+  position: relative;
+  width: 100%;
+  padding: 0 40px; /* Space for arrows */
+  box-sizing: border-box;
+}
+
+/* The window that hides what is outside */
+.carousel-viewport {
+  overflow: hidden;
+  width: 100%;
+}
+
+/* The long train of items */
+.carousel-track {
+  display: flex;
+  /* Reverted to a standard ease-in-out for that natural smooth feeling */
+  transition: transform 0.5s ease-in-out; 
+  width: 100%;
+}
+
+.carousel-card-wrapper {
+  flex: 0 0 33.3333%; /* 3 items per row */
+  max-width: 33.3333%;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* --- Arrows --- */
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%); /* Keeps them vertically centered */
+  z-index: 10;
+  
+  /* Visual adjustments to match original look */
+  color: #333; 
+  font-size: 24px;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+}
+
+.carousel-arrow:hover {
+  background: transparent; /* No gray box on hover */
+  transform: translateY(-50%) scale(1.2); /* Slight zoom effect */
+}
+
+/* Pin to sides */
+.arrow-left {
+  left: -10px; /* Pull it slightly outside the content area */
+}
+
+.arrow-right {
+  right: -10px;
+}
