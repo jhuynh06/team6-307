@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import userModel from "../models/user.js";
+import { User as userModel } from "../auth.js";
 
 mongoose.set("debug", true);
 
