@@ -9,7 +9,8 @@ import Header from "./Header";
 import ProfilePage from "./ProfilePage";
 import Login from "./Login";
 
-const API_PREFIX = "polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net";
+const API_PREFIX =
+  "polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net";
 const INVALID_TOKEN = "INVALID_TOKEN";
 
 export default function MyApp() {

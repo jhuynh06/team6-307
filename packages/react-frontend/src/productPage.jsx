@@ -27,7 +27,9 @@ function ProductPage() {
 
   // 1. Fetch from Database
   useEffect(() => {
-    fetch(`polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/products/${id}`)
+    fetch(
+      `polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/products/${id}`
+    )
       .then((res) => {
         if (!res.ok) throw new Error("Product not found");
         return res.json();
