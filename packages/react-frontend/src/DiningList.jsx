@@ -1,5 +1,12 @@
 import { Link } from "react-router-dom";
-import { Box, Group, Paper, Stack, Text, Title } from "@mantine/core";
+import {
+  Box,
+  Group,
+  Paper,
+  Stack,
+  Text,
+  Title
+} from "@mantine/core";
 
 const restaurants = [
   { name: "Campus Market", hours: "10:00 AM - 11:00 PM" },
@@ -26,8 +33,10 @@ function DiningList() {
             shadow="sm"
             radius="md"
             withBorder
-            style={{ textDecoration: "none", color: "inherit" }}
-          >
+            style={{
+              textDecoration: "none",
+              color: "inherit"
+            }}>
             <Group wrap="nowrap" gap={0}>
               <Box
                 w={140}

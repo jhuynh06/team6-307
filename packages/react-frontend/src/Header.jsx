@@ -1,4 +1,12 @@
-import { Burger, Group, Text, Box, Button, Avatar, Tabs } from "@mantine/core";
+import {
+  Burger,
+  Group,
+  Text,
+  Box,
+  Button,
+  Avatar,
+  Tabs
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useLocation, useNavigate } from "react-router-dom";
 import classes from "./Header.module.css";
@@ -14,7 +22,8 @@ export default function Header({ isLoggedIn, onLogout }) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const activeTab = links.find((l) => l.link === pathname)?.link || null;
+  const activeTab =
+    links.find((l) => l.link === pathname)?.link || null;
 
   return (
     <header className={classes.header}>
@@ -36,8 +45,11 @@ export default function Header({ isLoggedIn, onLogout }) {
           onChange={(value) => navigate(value)}
           variant="default"
           visibleFrom="xs"
-          classNames={{ root: classes.tabs, list: classes.tabList, tab: classes.tab }}
-        >
+          classNames={{
+            root: classes.tabs,
+            list: classes.tabList,
+            tab: classes.tab
+          }}>
           <Tabs.List>
             {links.map((item) => (
               <Tabs.Tab key={item.link} value={item.link}>
@@ -56,11 +68,13 @@ export default function Header({ isLoggedIn, onLogout }) {
                 color="green"
                 className={`${classes.avatar} ${pathname === "/profile" ? classes.avatarActive : ""}`}
                 onClick={() => navigate("/profile")}
-                style={{ cursor: "pointer" }}
-              >
+                style={{ cursor: "pointer" }}>
                 U
               </Avatar>
-              <Button variant="subtle" size="compact-md" onClick={onLogout}>
+              <Button
+                variant="subtle"
+                size="compact-md"
+                onClick={onLogout}>
                 Logout
               </Button>
             </>
@@ -69,15 +83,13 @@ export default function Header({ isLoggedIn, onLogout }) {
               <Button
                 variant="filled"
                 size="compact-md"
-                onClick={() => navigate("/login")}
-              >
+                onClick={() => navigate("/login")}>
                 Log in
               </Button>
               <Button
                 variant="outline"
                 size="compact-md"
-                onClick={() => navigate("/signup")}
-              >
+                onClick={() => navigate("/signup")}>
                 Sign up
               </Button>
             </>

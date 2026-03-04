@@ -19,16 +19,6 @@ export default function MyApp() {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  function addAuthHeader(otherHeaders = {}) {
-    if (token === INVALID_TOKEN) {
-      return otherHeaders;
-    }
-    return {
-      ...otherHeaders,
-      Authorization: `Bearer ${token}`
-    };
-  }
-
   function loginUser(creds) {
     return fetch(`${API_PREFIX}/login`, {
       method: "POST",
@@ -45,7 +35,9 @@ export default function MyApp() {
           });
         } else {
           return res.text().then((text) => {
-            setMessage(text || "Login failed: Invalid credentials.");
+            setMessage(
+              text || "Login failed: Invalid credentials."
+            );
           });
         }
       })
@@ -98,14 +90,29 @@ export default function MyApp() {
         <Route path="/explore" element={<Explore />} />
         <Route path="/stores" element={<DiningList />} />
         <Route path="/stores/view" element={<StorePage />} />
-        <Route path="/profile" element={<ProfilePage token={token} />} />
+        <Route
+          path="/profile"
+          element={<ProfilePage token={token} />}
+        />
         <Route
           path="/login"
-          element={<Login handleSubmit={loginUser} buttonLabel="Log In" message={message} />}
+          element={
+            <Login
+              handleSubmit={loginUser}
+              buttonLabel="Log In"
+              message={message}
+            />
+          }
         />
         <Route
           path="/signup"
-          element={<Login handleSubmit={signupUser} buttonLabel="Sign Up" message={message} />}
+          element={
+            <Login
+              handleSubmit={signupUser}
+              buttonLabel="Sign Up"
+              message={message}
+            />
+          }
         />
       </Routes>
     </>
