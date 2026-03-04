@@ -3,7 +3,12 @@ import cors from "cors";
 import userServices from "./services/user-service.js";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import { registerUser, loginUser, authenticateUser, User } from "./auth.js";
+import {
+  registerUser,
+  loginUser,
+  authenticateUser,
+  User
+} from "./auth.js";
 
 dotenv.config();
 
@@ -42,7 +47,8 @@ app.get("/profile", authenticateUser, (req, res) => {
       if (!user) {
         return res.status(404).send("User not found.");
       }
-      const { fullName, pronouns, schoolYear, major, bio } = user;
+      const { fullName, pronouns, schoolYear, major, bio } =
+        user;
       res.send({ fullName, pronouns, schoolYear, major, bio });
     })
     .catch((error) => {
@@ -52,7 +58,8 @@ app.get("/profile", authenticateUser, (req, res) => {
 });
 
 app.put("/profile", authenticateUser, (req, res) => {
-  const { fullName, pronouns, schoolYear, major, bio } = req.body;
+  const { fullName, pronouns, schoolYear, major, bio } =
+    req.body;
   User.findOneAndUpdate(
     { username: req.username },
     { fullName, pronouns, schoolYear, major, bio },

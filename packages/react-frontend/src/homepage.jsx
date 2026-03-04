@@ -49,10 +49,13 @@ const Homepage = () => {
                   <span className="username">You</span>
                   <span className="timestamp">date/time</span>
                 </div>
-                <p className="comment">This place was okay. Food was okay.</p>
+                <p className="comment">
+                  This place was okay. Food was okay.
+                </p>
               </div>
               <div className="stars">
-                ★★★★★ <span className="action-icons">📝 🗑️</span>
+                ★★★★★{" "}
+                <span className="action-icons">📝 🗑️</span>
               </div>
             </div>
             <div className="post-images">

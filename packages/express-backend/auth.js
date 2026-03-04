@@ -69,7 +69,9 @@ export function registerUser(req, res) {
   const { username, pwd } = req.body;
 
   if (!username || !pwd) {
-    return res.status(400).send("Bad request: Invalid input data.");
+    return res
+      .status(400)
+      .send("Bad request: Invalid input data.");
   }
 
   User.findOne({ username: username })
@@ -99,19 +101,25 @@ export function loginUser(req, res) {
   const { username, pwd } = req.body;
 
   if (!username || !pwd) {
-    return res.status(400).send("Bad request: Invalid input data.");
+    return res
+      .status(400)
+      .send("Bad request: Invalid input data.");
   }
 
   User.findOne({ username: username })
     .then((retrievedUser) => {
       if (!retrievedUser) {
-        return res.status(401).send("Unauthorized: No such user.");
+        return res
+          .status(401)
+          .send("Unauthorized: No such user.");
       }
       return bcrypt
         .compare(pwd, retrievedUser.hashedPassword)
         .then((matched) => {
           if (!matched) {
-            return res.status(401).send("Unauthorized: Wrong password.");
+            return res
+              .status(401)
+              .send("Unauthorized: Wrong password.");
           }
           return generateAccessToken(username).then((token) => {
             res.status(200).send({ token: token });
@@ -132,13 +140,17 @@ export function authenticateUser(req, res, next) {
     return res.status(401).send("No token provided.");
   }
 
-  jwt.verify(token, process.env.TOKEN_SECRET, (error, decoded) => {
-    if (error) {
-      return res.status(401).send("Invalid token.");
+  jwt.verify(
+    token,
+    process.env.TOKEN_SECRET,
+    (error, decoded) => {
+      if (error) {
+        return res.status(401).send("Invalid token.");
+      }
+      req.username = decoded.username;
+      next();
     }
-    req.username = decoded.username;
-    next();
-  });
+  );
 }
 
 export { User };
