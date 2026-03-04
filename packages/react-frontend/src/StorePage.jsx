@@ -15,12 +15,13 @@ import {
 } from "@mantine/core";
 import ProductCard from "./ProductCard";
 import "./StorePage.css";
+import { Link } from "react-router-dom";
 
 const BANNER =
   "https://ssgse.com/ssg/wp-content/uploads/SSG-CalPoly-CampusMktUU-2-1024x563.jpg";
 
 const mockProducts = [
-  { _id: "1", name: "Food Name 1", category: "Snacks", inStock: true },
+  { _id: "69a7bd8c89048771ad1a93e0", name: "Bishop Burger", category: "Snacks", inStock: true },
   { _id: "2", name: "Food Name 2", category: "Drinks", inStock: true },
   { _id: "3", name: "Food Name 3", category: "Meals", inStock: false },
   { _id: "4", name: "Food Name 4", category: "Snacks", inStock: true },
@@ -187,6 +188,7 @@ function StorePage() {
           <FilterSidebar filters={filters} onChange={setFilters} />
           <Box style={{ flex: 1 }}>
             {loading ? (
+              // 1. Loading State (Show Skeletons)
               <SimpleGrid cols={3} spacing="lg">
                 {Array(6)
                   .fill(0)
@@ -195,15 +197,23 @@ function StorePage() {
                   ))}
               </SimpleGrid>
             ) : filtered.length === 0 ? (
+              // 2. Empty State
               <Paper p="xl" withBorder style={{ textAlign: "center" }}>
                 <Text size="lg" c="dimmed">
                   No products match your filters.
                 </Text>
               </Paper>
             ) : (
+              // 3. Success State (Show Clickable Products)
               <SimpleGrid cols={3} spacing="lg">
                 {filtered.map((product) => (
-                  <ProductCard key={product._id} product={product} />
+                  <Link
+                    key={product._id}
+                    to={`/product/${product._id}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <ProductCard product={product} />
+                  </Link>
                 ))}
               </SimpleGrid>
             )}

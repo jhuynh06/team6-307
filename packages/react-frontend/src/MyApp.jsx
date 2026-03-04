@@ -8,6 +8,7 @@ import DiningList from "./DiningList";
 import Header from "./Header";
 import ProfilePage from "./ProfilePage";
 import Login from "./Login";
+import ProductPage from "./productPage";
 
 const API_PREFIX = "http://localhost:8000";
 const INVALID_TOKEN = "INVALID_TOKEN";
@@ -107,6 +108,8 @@ export default function MyApp() {
           path="/signup"
           element={<Login handleSubmit={signupUser} buttonLabel="Sign Up" message={message} />}
         />
+        <Route path="/stores" element={<StorePage />} />
+        <Route path="/product/:id" element={<ProductPage />} />
       </Routes>
     </>
   );
