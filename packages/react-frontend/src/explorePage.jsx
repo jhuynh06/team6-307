@@ -7,7 +7,7 @@ import {
   ActionIcon
 } from "@mantine/core";
 import ProductCard from "./ProductCard";
-import "./explorepage.css";
+import "./explorePage.css";
 
 const mockProducts = [
   {
