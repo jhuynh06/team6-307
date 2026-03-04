@@ -157,7 +157,7 @@ function StorePage() {
   });
 
   useEffect(() => {
-    fetch("http://localhost:8000/products")
+    fetch("https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/products")
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);
