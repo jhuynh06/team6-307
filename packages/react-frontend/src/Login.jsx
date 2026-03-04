@@ -1,7 +1,19 @@
 import React, { useState } from "react";
-import { TextInput, PasswordInput, Button, Stack, Title, Paper, Alert } from "@mantine/core";
+import {
+  TextInput,
+  PasswordInput,
+  Button,
+  Stack,
+  Title,
+  Paper,
+  Alert
+} from "@mantine/core";
 
-export default function Login({ handleSubmit, buttonLabel = "Log In", message = "" }) {
+export default function Login({
+  handleSubmit,
+  buttonLabel = "Log In",
+  message = ""
+}) {
   const [creds, setCreds] = useState({ username: "", pwd: "" });
 
   function handleChange(event) {
@@ -22,9 +34,13 @@ export default function Login({ handleSubmit, buttonLabel = "Log In", message = 
           <Title order={3}>{buttonLabel}</Title>
           {message && (
             <Alert
-              color={message.toLowerCase().includes("fail") || message.toLowerCase().includes("taken") ? "red" : "green"}
-              variant="light"
-            >
+              color={
+                message.toLowerCase().includes("fail") ||
+                message.toLowerCase().includes("taken")
+                  ? "red"
+                  : "green"
+              }
+              variant="light">
               {message}
             </Alert>
           )}

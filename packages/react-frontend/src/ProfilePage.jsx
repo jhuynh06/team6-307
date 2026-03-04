@@ -53,7 +53,7 @@ export default function ProfilePage({ token }) {
     const value =
       typeof valueOrEvent === "string"
         ? valueOrEvent
-        : valueOrEvent?.currentTarget?.value ?? "";
+        : (valueOrEvent?.currentTarget?.value ?? "");
     setDraft((d) => ({ ...d, [key]: value }));
   };
 
@@ -101,8 +101,7 @@ export default function ProfilePage({ token }) {
             size={110}
             radius={110}
             color="green"
-            className="profile-avatar"
-          >
+            className="profile-avatar">
             {initials}
           </Avatar>
 
@@ -135,8 +134,7 @@ export default function ProfilePage({ token }) {
             variant="light"
             size="compact-sm"
             className="profile-edit-btn"
-            onClick={onOpen}
-          >
+            onClick={onOpen}>
             Edit Profile
           </Button>
         </Container>
@@ -146,35 +144,81 @@ export default function ProfilePage({ token }) {
       <Container size="sm" py="xl">
         <Stack gap="lg">
           {/* Bio card */}
-          <Paper withBorder p="lg" radius="md" className="profile-card">
-            <Text fw={600} mb="xs">About</Text>
-            <Text c={profile.bio ? undefined : "dimmed"} fs={profile.bio ? undefined : "italic"}>
+          <Paper
+            withBorder
+            p="lg"
+            radius="md"
+            className="profile-card">
+            <Text fw={600} mb="xs">
+              About
+            </Text>
+            <Text
+              c={profile.bio ? undefined : "dimmed"}
+              fs={profile.bio ? undefined : "italic"}>
               {profile.bio || "No bio yet."}
             </Text>
           </Paper>
 
           {/* Details card */}
-          <Paper withBorder p="lg" radius="md" className="profile-card">
-            <Text fw={600} mb="md">Details</Text>
+          <Paper
+            withBorder
+            p="lg"
+            radius="md"
+            className="profile-card">
+            <Text fw={600} mb="md">
+              Details
+            </Text>
             <Stack gap="sm">
               <Group>
-                <Text size="sm" c="dimmed" w={120}>Name</Text>
-                <Text size="sm">{profile.fullName || <Text span c="dimmed" fs="italic">Not set</Text>}</Text>
+                <Text size="sm" c="dimmed" w={120}>
+                  Name
+                </Text>
+                <Text size="sm">
+                  {profile.fullName || (
+                    <Text span c="dimmed" fs="italic">
+                      Not set
+                    </Text>
+                  )}
+                </Text>
               </Group>
               <Divider />
               <Group>
-                <Text size="sm" c="dimmed" w={120}>Pronouns</Text>
-                <Text size="sm">{profile.pronouns || <Text span c="dimmed" fs="italic">Not set</Text>}</Text>
+                <Text size="sm" c="dimmed" w={120}>
+                  Pronouns
+                </Text>
+                <Text size="sm">
+                  {profile.pronouns || (
+                    <Text span c="dimmed" fs="italic">
+                      Not set
+                    </Text>
+                  )}
+                </Text>
               </Group>
               <Divider />
               <Group>
-                <Text size="sm" c="dimmed" w={120}>School Year</Text>
-                <Text size="sm">{profile.schoolYear || <Text span c="dimmed" fs="italic">Not set</Text>}</Text>
+                <Text size="sm" c="dimmed" w={120}>
+                  School Year
+                </Text>
+                <Text size="sm">
+                  {profile.schoolYear || (
+                    <Text span c="dimmed" fs="italic">
+                      Not set
+                    </Text>
+                  )}
+                </Text>
               </Group>
               <Divider />
               <Group>
-                <Text size="sm" c="dimmed" w={120}>Major</Text>
-                <Text size="sm">{profile.major || <Text span c="dimmed" fs="italic">Not set</Text>}</Text>
+                <Text size="sm" c="dimmed" w={120}>
+                  Major
+                </Text>
+                <Text size="sm">
+                  {profile.major || (
+                    <Text span c="dimmed" fs="italic">
+                      Not set
+                    </Text>
+                  )}
+                </Text>
               </Group>
             </Stack>
           </Paper>
@@ -187,8 +231,7 @@ export default function ProfilePage({ token }) {
         onClose={close}
         title="Edit Profile"
         size="md"
-        centered
-      >
+        centered>
         <Stack gap="md">
           <Group>
             <Avatar radius="xl" size="lg" color="green">
@@ -264,8 +307,7 @@ export default function ProfilePage({ token }) {
                   major: "",
                   bio: ""
                 })
-              }
-            >
+              }>
               Reset
             </Button>
             <Button onClick={onSave}>Save</Button>

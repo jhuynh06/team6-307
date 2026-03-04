@@ -1,10 +1,11 @@
 .header {
   height: 60px;
   background-color: var(--mantine-color-body);
-  border-bottom: 1px solid light-dark(
-    var(--mantine-color-gray-3),
-    var(--mantine-color-dark-4)
-  );
+  border-bottom: 1px solid
+    light-dark(
+      var(--mantine-color-gray-3),
+      var(--mantine-color-dark-4)
+    );
 }
 
 .inner {
@@ -54,7 +55,9 @@
 
 /* Avatar */
 .avatar {
-  transition: box-shadow 0.15s ease, transform 0.15s ease;
+  transition:
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
   border: 2px solid transparent;
 
   @mixin hover {

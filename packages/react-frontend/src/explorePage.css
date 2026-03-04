@@ -16,7 +16,7 @@
 .carousel-track {
   display: flex;
   /* Reverted to a standard ease-in-out for that natural smooth feeling */
-  transition: transform 0.5s ease-in-out; 
+  transition: transform 0.5s ease-in-out;
   width: 100%;
 }
 
@@ -31,11 +31,13 @@
 .carousel-arrow {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%); /* Keeps them vertically centered */
+  transform: translateY(
+    -50%
+  ); /* Keeps them vertically centered */
   z-index: 10;
-  
+
   /* Visual adjustments to match original look */
-  color: #333; 
+  color: #333;
   font-size: 24px;
   cursor: pointer;
   background: transparent;

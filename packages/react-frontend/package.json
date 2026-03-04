@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npx vite",
     "build": "npx vite build",
-    "lint": "npx eslint .",
+    "lint": "npx eslint . && npx prettier --check .",
     "preview": "npx vite preview"
   },
   "dependencies": {

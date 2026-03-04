@@ -20,12 +20,42 @@ const BANNER =
   "https://ssgse.com/ssg/wp-content/uploads/SSG-CalPoly-CampusMktUU-2-1024x563.jpg";
 
 const mockProducts = [
-  { _id: "1", name: "Food Name 1", category: "Snacks", inStock: true },
-  { _id: "2", name: "Food Name 2", category: "Drinks", inStock: true },
-  { _id: "3", name: "Food Name 3", category: "Meals", inStock: false },
-  { _id: "4", name: "Food Name 4", category: "Snacks", inStock: true },
-  { _id: "5", name: "Food Name 5", category: "Drinks", inStock: false },
-  { _id: "6", name: "Food Name 6", category: "Meals", inStock: true }
+  {
+    _id: "1",
+    name: "Food Name 1",
+    category: "Snacks",
+    inStock: true
+  },
+  {
+    _id: "2",
+    name: "Food Name 2",
+    category: "Drinks",
+    inStock: true
+  },
+  {
+    _id: "3",
+    name: "Food Name 3",
+    category: "Meals",
+    inStock: false
+  },
+  {
+    _id: "4",
+    name: "Food Name 4",
+    category: "Snacks",
+    inStock: true
+  },
+  {
+    _id: "5",
+    name: "Food Name 5",
+    category: "Drinks",
+    inStock: false
+  },
+  {
+    _id: "6",
+    name: "Food Name 6",
+    category: "Meals",
+    inStock: true
+  }
 ];
 
 const FOOD_TYPES = ["Snacks", "Drinks", "Meals"];
@@ -50,8 +80,7 @@ function FilterSidebar({ filters, onChange }) {
         multiple
         defaultValue={["category", "availability"]}
         chevronPosition="left"
-        className="filter-accordion"
-      >
+        className="filter-accordion">
         <Accordion.Item value="category">
           <Accordion.Control>Category</Accordion.Control>
           <Accordion.Panel>
@@ -76,14 +105,20 @@ function FilterSidebar({ filters, onChange }) {
                 label="In Stock"
                 checked={filters.inStock}
                 onChange={(e) =>
-                  onChange({ ...filters, inStock: e.currentTarget.checked })
+                  onChange({
+                    ...filters,
+                    inStock: e.currentTarget.checked
+                  })
                 }
               />
               <Checkbox
                 label="Out of Stock"
                 checked={filters.outOfStock}
                 onChange={(e) =>
-                  onChange({ ...filters, outOfStock: e.currentTarget.checked })
+                  onChange({
+                    ...filters,
+                    outOfStock: e.currentTarget.checked
+                  })
                 }
               />
             </Stack>
@@ -148,10 +183,16 @@ function StorePage() {
 
   return (
     <Box className="store-page-container">
-      <Box className="hero-banner" style={{ backgroundImage: `url(${BANNER})` }}>
+      <Box
+        className="hero-banner"
+        style={{ backgroundImage: `url(${BANNER})` }}>
         <Box className="hero-overlay" />
         <Group align="center" gap="md" className="hero-content">
-          <Avatar size={80} radius="xl" className="store-avatar" />
+          <Avatar
+            size={80}
+            radius="xl"
+            className="store-avatar"
+          />
           <Stack gap={4}>
             <Title order={1} c="white" style={{ fontSize: 32 }}>
               Campus Market
@@ -165,12 +206,16 @@ function StorePage() {
             <Group gap={10} mt={4}>
               <Box
                 style={{
-                  backgroundColor: "var(--mantine-color-green-5)",
+                  backgroundColor:
+                    "var(--mantine-color-green-5)",
                   padding: "2px 8px",
                   borderRadius: "var(--mantine-radius-sm)"
-                }}
-              >
-                <Text size="xs" fw={700} c="white" tt="uppercase">
+                }}>
+                <Text
+                  size="xs"
+                  fw={700}
+                  c="white"
+                  tt="uppercase">
                   Open
                 </Text>
               </Box>
@@ -184,18 +229,28 @@ function StorePage() {
 
       <Box className="main-content">
         <Group align="flex-start" gap={32}>
-          <FilterSidebar filters={filters} onChange={setFilters} />
+          <FilterSidebar
+            filters={filters}
+            onChange={setFilters}
+          />
           <Box style={{ flex: 1 }}>
             {loading ? (
               <SimpleGrid cols={3} spacing="lg">
                 {Array(6)
                   .fill(0)
                   .map((_, i) => (
-                    <Skeleton key={i} height={260} radius="md" />
+                    <Skeleton
+                      key={i}
+                      height={260}
+                      radius="md"
+                    />
                   ))}
               </SimpleGrid>
             ) : filtered.length === 0 ? (
-              <Paper p="xl" withBorder style={{ textAlign: "center" }}>
+              <Paper
+                p="xl"
+                withBorder
+                style={{ textAlign: "center" }}>
                 <Text size="lg" c="dimmed">
                   No products match your filters.
                 </Text>
@@ -203,7 +258,10 @@ function StorePage() {
             ) : (
               <SimpleGrid cols={3} spacing="lg">
                 {filtered.map((product) => (
-                  <ProductCard key={product._id} product={product} />
+                  <ProductCard
+                    key={product._id}
+                    product={product}
+                  />
                 ))}
               </SimpleGrid>
             )}
