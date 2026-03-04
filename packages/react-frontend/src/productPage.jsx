@@ -1,6 +1,18 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Container, Title, Text, Button, Paper, Group, Rating, Textarea, Stack, Divider, Loader } from "@mantine/core";
+import {
+  Container,
+  Title,
+  Text,
+  Button,
+  Paper,
+  Group,
+  Rating,
+  Textarea,
+  Stack,
+  Divider,
+  Loader
+} from "@mantine/core";
 
 function ProductPage() {
   const { id } = useParams();
@@ -52,20 +64,25 @@ function ProductPage() {
 
     // Send to backend
     try {
-      await fetch(`http://localhost:8000/products/${id}/reviews`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newReview),
-      });
+      await fetch(
+        `http://localhost:8000/products/${id}/reviews`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newReview)
+        }
+      );
     } catch (error) {
-      console.error("Failed to save review");
+      console.error(error);
     }
   };
 
   // 3. Loading State
   if (isLoading) {
     return (
-      <Container size="sm" style={{ marginTop: 60, textAlign: "center" }}>
+      <Container
+        size="sm"
+        style={{ marginTop: 60, textAlign: "center" }}>
         <Loader size="xl" />
       </Container>
     );
@@ -74,11 +91,16 @@ function ProductPage() {
   // 4. "Product Does Not Exist" State
   if (!productData) {
     return (
-      <Container size="sm" style={{ marginTop: 60, textAlign: 'center' }}>
+      <Container
+        size="sm"
+        style={{ marginTop: 60, textAlign: "center" }}>
         <Paper p="xl" withBorder shadow="sm">
-          <Title order={2} mb="md">No details available</Title>
+          <Title order={2} mb="md">
+            No details available
+          </Title>
           <Text c="dimmed" mb="xl">
-            This dish has no reviews or detailed information yet.
+            This dish has no reviews or detailed information
+            yet.
           </Text>
           <Button onClick={() => navigate(-1)}>Go Back</Button>
         </Paper>
@@ -88,38 +110,61 @@ function ProductPage() {
 
   // 5. Success State
   return (
-    <Container size="md" style={{ marginTop: 40, paddingBottom: 60 }}>
-      <Button variant="subtle" onClick={() => navigate(-1)} mb="md">
+    <Container
+      size="md"
+      style={{ marginTop: 40, paddingBottom: 60 }}>
+      <Button
+        variant="subtle"
+        onClick={() => navigate(-1)}
+        mb="md">
         &larr; Back to Store
       </Button>
-      
+
       <Title>{productData.name}</Title>
-      <Text size="lg" c="dimmed" mb="xl">{productData.description}</Text>
+      <Text size="lg" c="dimmed" mb="xl">
+        {productData.description}
+      </Text>
 
       <Divider my="xl" />
 
       {/* RATING FORM */}
-      <Paper withBorder p="md" mb="xl" bg="var(--mantine-color-gray-0)">
-        <Title order={4} mb="sm">Leave a Review</Title>
+      <Paper
+        withBorder
+        p="md"
+        mb="xl"
+        bg="var(--mantine-color-gray-0)">
+        <Title order={4} mb="sm">
+          Leave a Review
+        </Title>
         <Stack gap="sm">
           <Group>
             <Text fw={500}>Your Rating:</Text>
-            <Rating value={newRating} onChange={setNewRating} size="lg" />
+            <Rating
+              value={newRating}
+              onChange={setNewRating}
+              size="lg"
+            />
           </Group>
           <Textarea
             placeholder="What did you think of this dish?"
             value={newReviewText}
-            onChange={(e) => setNewReviewText(e.currentTarget.value)}
+            onChange={(e) =>
+              setNewReviewText(e.currentTarget.value)
+            }
             minRows={3}
           />
-          <Button onClick={handleSubmitReview} style={{ alignSelf: 'flex-start' }}>
+          <Button
+            onClick={handleSubmitReview}
+            style={{ alignSelf: "flex-start" }}>
             Submit Review
           </Button>
         </Stack>
       </Paper>
 
       {/* REVIEWS LIST */}
-      <Title order={3} mb="md">Reviews ({reviews.length})</Title>
+      <Title order={3} mb="md">
+        Reviews ({reviews.length})
+      </Title>
       {reviews.length === 0 ? (
         <Text c="dimmed">No reviews yet. Be the first!</Text>
       ) : (
@@ -127,7 +172,11 @@ function ProductPage() {
           <Paper key={index} withBorder p="md" mb="sm">
             <Group justify="space-between" mb="xs">
               <Text fw={700}>{review.user}</Text>
-              <Rating value={review.rating} readOnly size="sm" />
+              <Rating
+                value={review.rating}
+                readOnly
+                size="sm"
+              />
             </Group>
             <Text size="sm">{review.text}</Text>
           </Paper>

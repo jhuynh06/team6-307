@@ -21,12 +21,42 @@ const BANNER =
   "https://ssgse.com/ssg/wp-content/uploads/SSG-CalPoly-CampusMktUU-2-1024x563.jpg";
 
 const mockProducts = [
-  { _id: "69a7bd8c89048771ad1a93e0", name: "Bishop Burger", category: "Snacks", inStock: true },
-  { _id: "2", name: "Food Name 2", category: "Drinks", inStock: true },
-  { _id: "3", name: "Food Name 3", category: "Meals", inStock: false },
-  { _id: "4", name: "Food Name 4", category: "Snacks", inStock: true },
-  { _id: "5", name: "Food Name 5", category: "Drinks", inStock: false },
-  { _id: "6", name: "Food Name 6", category: "Meals", inStock: true }
+  {
+    _id: "69a7bd8c89048771ad1a93e0",
+    name: "Bishop Burger",
+    category: "Snacks",
+    inStock: true
+  },
+  {
+    _id: "2",
+    name: "Food Name 2",
+    category: "Drinks",
+    inStock: true
+  },
+  {
+    _id: "3",
+    name: "Food Name 3",
+    category: "Meals",
+    inStock: false
+  },
+  {
+    _id: "4",
+    name: "Food Name 4",
+    category: "Snacks",
+    inStock: true
+  },
+  {
+    _id: "5",
+    name: "Food Name 5",
+    category: "Drinks",
+    inStock: false
+  },
+  {
+    _id: "6",
+    name: "Food Name 6",
+    category: "Meals",
+    inStock: true
+  },
   {
     _id: "1",
     name: "Food Name 1",
@@ -256,7 +286,6 @@ function StorePage() {
               </SimpleGrid>
             ) : filtered.length === 0 ? (
               // 2. Empty State
-              <Paper p="xl" withBorder style={{ textAlign: "center" }}>
               <Paper
                 p="xl"
                 withBorder
@@ -272,14 +301,9 @@ function StorePage() {
                   <Link
                     key={product._id}
                     to={`/product/${product._id}`}
-                    style={{ textDecoration: "none" }}
-                  >
+                    style={{ textDecoration: "none" }}>
                     <ProductCard product={product} />
                   </Link>
-                  <ProductCard
-                    key={product._id}
-                    product={product}
-                  />
                 ))}
               </SimpleGrid>
             )}
