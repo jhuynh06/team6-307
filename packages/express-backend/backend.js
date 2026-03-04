@@ -16,8 +16,7 @@ const { MONGO_CONNECTION_STRING } = process.env;
 
 mongoose.set("debug", true);
 
-
-  mongoose
+mongoose
   .connect(process.env.MONGO_CONNECTION_STRING)
   .then(() => console.log("Successfully connected to MongoDB!"))
   .catch((error) => console.log(error));
@@ -130,17 +129,19 @@ const productSchema = new mongoose.Schema({
   category: String,
   inStock: Boolean,
   description: String,
-  reviews: [reviewSchema] 
+  reviews: [reviewSchema]
 });
 
-const Product = mongoose.model('Product', productSchema);
+const Product = mongoose.model("Product", productSchema);
 
 // GET a specific product and its reviews
-app.get('/products/:id', async (req, res) => {
+app.get("/products/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) {
-      return res.status(404).json({ message: "Product not found" });
+      return res
+        .status(404)
+        .json({ message: "Product not found" });
     }
     res.json(product);
   } catch (error) {
@@ -149,7 +150,7 @@ app.get('/products/:id', async (req, res) => {
 });
 
 // POST a new review to a product
-app.post('/products/:id/reviews', async (req, res) => {
+app.post("/products/:id/reviews", async (req, res) => {
   try {
     const { user, text, rating } = req.body;
     const productId = req.params.id;
@@ -173,16 +174,17 @@ app.post('/products/:id/reviews', async (req, res) => {
 //End of review section
 
 // TEMPORARY ROUTE to create our first product
-app.get('/seed', async (req, res) => {
+app.get("/seed", async (req, res) => {
   try {
     const newProduct = new Product({
       name: "Bishop Burger",
       category: "Meals",
       inStock: true,
-      description: "The classic campus burger with double cheese and secret sauce.",
+      description:
+        "The classic campus burger with double cheese and secret sauce.",
       reviews: [] // Starts with empty reviews
     });
-    
+
     const savedProduct = await newProduct.save();
     res.json(savedProduct);
   } catch (error) {
