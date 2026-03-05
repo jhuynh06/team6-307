@@ -15,7 +15,8 @@ import {
 } from "@mantine/core";
 
 // Switch to azure when pr merges
-const API_URL = "https://polyratemyfood-ezfxgaf9dcgf9dcgpdkga.eastus-01.azurewebsites.net";
+const API_URL =
+  "https://polyratemyfood-ezfxgaf9dcgf9dcgpdkga.eastus-01.azurewebsites.net";
 
 function ProductPage() {
   const { id } = useParams();
