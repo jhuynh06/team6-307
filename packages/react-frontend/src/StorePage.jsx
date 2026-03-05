@@ -17,6 +17,12 @@ import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import "./StorePage.css";
 
+//Switch to azure when live
+const API_URL =
+  window.location.hostname === "localhost"
+    ? "http://localhost:8000"
+    : "https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net";
+
 const BANNER =
   "https://ssgse.com/ssg/wp-content/uploads/SSG-CalPoly-CampusMktUU-2-1024x563.jpg";
 
@@ -120,7 +126,7 @@ function StorePage() {
   });
 
   useEffect(() => {
-    fetch("http://localhost:8000/products")
+    fetch(`${API_URL}/products`)
       .then((res) => {
         if (!res.ok)
           throw new Error("Failed to fetch products");
