@@ -27,7 +27,9 @@ function ProductPage() {
 
   // 1. Fetch from Database
   useEffect(() => {
-    fetch(`http://localhost:8000/products/${id}`)
+    fetch(
+      `polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/products/${id}`
+    )
       .then((res) => {
         if (!res.ok) throw new Error("Product not found");
         return res.json();
@@ -65,7 +67,7 @@ function ProductPage() {
     // Send to backend
     try {
       await fetch(
-        `http://localhost:8000/products/${id}/reviews`,
+        `polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/products/${id}/reviews`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

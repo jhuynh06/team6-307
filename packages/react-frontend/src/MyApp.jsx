@@ -10,7 +10,8 @@ import ProfilePage from "./ProfilePage";
 import Login from "./Login";
 import ProductPage from "./productPage";
 
-const API_PREFIX = "http://localhost:8000";
+const API_PREFIX =
+  "https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net";
 const INVALID_TOKEN = "INVALID_TOKEN";
 
 export default function MyApp() {
