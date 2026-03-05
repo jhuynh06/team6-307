@@ -18,10 +18,7 @@ import ProductCard from "./ProductCard";
 import "./StorePage.css";
 
 //Switch to azure when live
-const API_URL =
-  window.location.hostname === "localhost"
-    ? "http://localhost:8000"
-    : "https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net";
+const API_URL = "https://polyratemyfood-ezfxgaf9dcgf9dcgpdkga.eastus-01.azurewebsites.net";
 
 const BANNER =
   "https://ssgse.com/ssg/wp-content/uploads/SSG-CalPoly-CampusMktUU-2-1024x563.jpg";
