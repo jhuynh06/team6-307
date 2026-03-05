@@ -116,7 +116,6 @@ export default function MyApp() {
             />
           }
         />
-        <Route path="/stores" element={<StorePage />} />
         <Route path="/product/:id" element={<ProductPage />} />
       </Routes>
     </>

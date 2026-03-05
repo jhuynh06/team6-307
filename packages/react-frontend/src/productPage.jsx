@@ -25,11 +25,9 @@ function ProductPage() {
   const [newRating, setNewRating] = useState(0);
   const [newReviewText, setNewReviewText] = useState("");
 
-  // 1. Fetch from Database
+// 1. Fetch from Database
   useEffect(() => {
-    fetch(
-      `polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/products/${id}`
-    )
+    fetch(`http://localhost:8000/products/${id}`)
       .then((res) => {
         if (!res.ok) throw new Error("Product not found");
         return res.json();
@@ -41,7 +39,7 @@ function ProductPage() {
       })
       .catch((error) => {
         console.error("Fetch error:", error);
-        setProductData(null); // Forces the "No details" screen
+        setProductData(null);
         setIsLoading(false);
       });
   }, [id]);
@@ -66,8 +64,7 @@ function ProductPage() {
 
     // Send to backend
     try {
-      await fetch(
-        `polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/products/${id}/reviews`,
+        await fetch(`http://localhost:8000/products/${id}/reviews`, 
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
