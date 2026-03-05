@@ -157,7 +157,9 @@ function StorePage() {
   });
 
   useEffect(() => {
-    fetch("https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/products")
+    fetch(
+      "https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/products"
+    )
       .then((res) => res.json())
       .then((data) => {
         setProducts(data);

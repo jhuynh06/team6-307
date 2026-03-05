@@ -20,7 +20,7 @@ import { useDisclosure } from "@mantine/hooks";
 import "./ProfilePage.css";
 
 const API_PREFIX =
-  "polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/";
+  "https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net";
 
 export default function ProfilePage({ token }) {
   const [profile, setProfile] = useState({
