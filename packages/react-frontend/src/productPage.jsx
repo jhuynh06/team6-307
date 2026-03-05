@@ -14,6 +14,10 @@ import {
   Loader
 } from "@mantine/core";
 
+// Switch to azure when pr merges
+const API_URL =
+  "https://polyratemyfood-ezfxgaf9dcgf9dcgpdkga.eastus-01.azurewebsites.net";
+
 function ProductPage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -25,11 +29,9 @@ function ProductPage() {
   const [newRating, setNewRating] = useState(0);
   const [newReviewText, setNewReviewText] = useState("");
 
-  // 1. Fetch from Database
+  // 1. Fetch from Database using dynamic API_URL
   useEffect(() => {
-    fetch(
-      `polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/products/${id}`
-    )
+    fetch(`${API_URL}/products/${id}`)
       .then((res) => {
         if (!res.ok) throw new Error("Product not found");
         return res.json();
@@ -41,12 +43,12 @@ function ProductPage() {
       })
       .catch((error) => {
         console.error("Fetch error:", error);
-        setProductData(null); // Forces the "No details" screen
+        setProductData(null);
         setIsLoading(false);
       });
   }, [id]);
 
-  // 2. Submit to Database
+  // 2. Submit Review using dynamic API_URL
   const handleSubmitReview = async () => {
     if (newRating === 0) {
       alert("Please select a star rating first!");
@@ -59,50 +61,38 @@ function ProductPage() {
       rating: newRating
     };
 
-    // Optimistic UI update
     setReviews([newReview, ...reviews]);
     setNewRating(0);
     setNewReviewText("");
 
-    // Send to backend
     try {
-      await fetch(
-        `polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/products/${id}/reviews`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(newReview)
-        }
-      );
+      await fetch(`${API_URL}/products/${id}/reviews`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newReview)
+      });
     } catch (error) {
       console.error(error);
     }
   };
 
-  // 3. Loading State
-  if (isLoading) {
+  // ... (Rest of your component remains the same)
+  if (isLoading)
     return (
-      <Container
-        size="sm"
-        style={{ marginTop: 60, textAlign: "center" }}>
+      <Container size="sm" mt={60} ta="center">
         <Loader size="xl" />
       </Container>
     );
-  }
 
-  // 4. "Product Does Not Exist" State
   if (!productData) {
     return (
-      <Container
-        size="sm"
-        style={{ marginTop: 60, textAlign: "center" }}>
+      <Container size="sm" mt={60} ta="center">
         <Paper p="xl" withBorder shadow="sm">
           <Title order={2} mb="md">
             No details available
           </Title>
           <Text c="dimmed" mb="xl">
-            This dish has no reviews or detailed information
-            yet.
+            This dish has no reviews yet.
           </Text>
           <Button onClick={() => navigate(-1)}>Go Back</Button>
         </Paper>
@@ -110,26 +100,19 @@ function ProductPage() {
     );
   }
 
-  // 5. Success State
   return (
-    <Container
-      size="md"
-      style={{ marginTop: 40, paddingBottom: 60 }}>
+    <Container size="md" mt={40} pb={60}>
       <Button
         variant="subtle"
         onClick={() => navigate(-1)}
         mb="md">
         &larr; Back to Store
       </Button>
-
       <Title>{productData.name}</Title>
       <Text size="lg" c="dimmed" mb="xl">
         {productData.description}
       </Text>
-
       <Divider my="xl" />
-
-      {/* RATING FORM */}
       <Paper
         withBorder
         p="md"
@@ -148,7 +131,7 @@ function ProductPage() {
             />
           </Group>
           <Textarea
-            placeholder="What did you think of this dish?"
+            placeholder="What did you think?"
             value={newReviewText}
             onChange={(e) =>
               setNewReviewText(e.currentTarget.value)
@@ -162,25 +145,19 @@ function ProductPage() {
           </Button>
         </Stack>
       </Paper>
-
-      {/* REVIEWS LIST */}
       <Title order={3} mb="md">
         Reviews ({reviews.length})
       </Title>
       {reviews.length === 0 ? (
-        <Text c="dimmed">No reviews yet. Be the first!</Text>
+        <Text c="dimmed">No reviews yet.</Text>
       ) : (
-        reviews.map((review, index) => (
-          <Paper key={index} withBorder p="md" mb="sm">
+        reviews.map((r, i) => (
+          <Paper key={i} withBorder p="md" mb="sm">
             <Group justify="space-between" mb="xs">
-              <Text fw={700}>{review.user}</Text>
-              <Rating
-                value={review.rating}
-                readOnly
-                size="sm"
-              />
+              <Text fw={700}>{r.user}</Text>
+              <Rating value={r.rating} readOnly size="sm" />
             </Group>
-            <Text size="sm">{review.text}</Text>
+            <Text size="sm">{r.text}</Text>
           </Paper>
         ))
       )}

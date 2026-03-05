@@ -8,6 +8,7 @@ import DiningList from "./DiningList";
 import Header from "./Header";
 import ProfilePage from "./ProfilePage";
 import Login from "./Login";
+import ProductPage from "./productPage";
 
 const API_PREFIX =
   "https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net";
@@ -115,6 +116,7 @@ export default function MyApp() {
             />
           }
         />
+        <Route path="/product/:id" element={<ProductPage />} />
       </Routes>
     </>
   );

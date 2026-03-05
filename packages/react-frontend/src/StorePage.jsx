@@ -13,50 +13,16 @@ import {
   Checkbox,
   Accordion
 } from "@mantine/core";
+import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import "./StorePage.css";
 
+//Switch to azure when live
+const API_URL =
+  "https://polyratemyfood-ezfxgaf9dcgf9dcgpdkga.eastus-01.azurewebsites.net";
+
 const BANNER =
   "https://ssgse.com/ssg/wp-content/uploads/SSG-CalPoly-CampusMktUU-2-1024x563.jpg";
-
-const mockProducts = [
-  {
-    _id: "1",
-    name: "Food Name 1",
-    category: "Snacks",
-    inStock: true
-  },
-  {
-    _id: "2",
-    name: "Food Name 2",
-    category: "Drinks",
-    inStock: true
-  },
-  {
-    _id: "3",
-    name: "Food Name 3",
-    category: "Meals",
-    inStock: false
-  },
-  {
-    _id: "4",
-    name: "Food Name 4",
-    category: "Snacks",
-    inStock: true
-  },
-  {
-    _id: "5",
-    name: "Food Name 5",
-    category: "Drinks",
-    inStock: false
-  },
-  {
-    _id: "6",
-    name: "Food Name 6",
-    category: "Meals",
-    inStock: true
-  }
-];
 
 const FOOD_TYPES = ["Snacks", "Drinks", "Meals"];
 
@@ -150,6 +116,7 @@ function FilterSidebar({ filters, onChange }) {
 function StorePage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [filters, setFilters] = useState({
     foodTypes: [],
     inStock: false,
@@ -157,16 +124,21 @@ function StorePage() {
   });
 
   useEffect(() => {
-    fetch(
-      "https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/products"
-    )
-      .then((res) => res.json())
+    fetch(`${API_URL}/products`)
+      .then((res) => {
+        if (!res.ok)
+          throw new Error("Failed to fetch products");
+        return res.json();
+      })
       .then((data) => {
         setProducts(data);
         setLoading(false);
       })
-      .catch(() => {
-        setProducts(mockProducts);
+      .catch((err) => {
+        console.error("Fetch error:", err);
+        setError(
+          "Could not load products. Please try again later."
+        ); // Sets the error
         setLoading(false);
       });
   }, []);
@@ -248,6 +220,16 @@ function StorePage() {
                     />
                   ))}
               </SimpleGrid>
+            ) : error ? (
+              // NEW: Display the error message if the database connection fails
+              <Paper
+                p="xl"
+                withBorder
+                style={{ textAlign: "center" }}>
+                <Text size="lg" c="red">
+                  {error}
+                </Text>
+              </Paper>
             ) : filtered.length === 0 ? (
               <Paper
                 p="xl"
@@ -260,10 +242,13 @@ function StorePage() {
             ) : (
               <SimpleGrid cols={3} spacing="lg">
                 {filtered.map((product) => (
-                  <ProductCard
+                  // RESTORED: Clickable Links routing to the product page
+                  <Link
                     key={product._id}
-                    product={product}
-                  />
+                    to={`/product/${product._id}`}
+                    style={{ textDecoration: "none" }}>
+                    <ProductCard product={product} />
+                  </Link>
                 ))}
               </SimpleGrid>
             )}
