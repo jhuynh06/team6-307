@@ -1,6 +1,3 @@
-
-
-
 ## Signup Sequence Diagram
 
 ![](security-diagram/user-signup-flow.png)

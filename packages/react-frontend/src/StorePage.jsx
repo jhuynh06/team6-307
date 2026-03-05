@@ -17,7 +17,6 @@ import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import "./StorePage.css";
 
-
 const BANNER =
   "https://ssgse.com/ssg/wp-content/uploads/SSG-CalPoly-CampusMktUU-2-1024x563.jpg";
 
@@ -113,17 +112,18 @@ function FilterSidebar({ filters, onChange }) {
 function StorePage() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null); 
+  const [error, setError] = useState(null);
   const [filters, setFilters] = useState({
     foodTypes: [],
     inStock: false,
     outOfStock: false
   });
 
-useEffect(() => {
+  useEffect(() => {
     fetch("http://localhost:8000/products")
       .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch products");
+        if (!res.ok)
+          throw new Error("Failed to fetch products");
         return res.json();
       })
       .then((data) => {
@@ -132,7 +132,9 @@ useEffect(() => {
       })
       .catch((err) => {
         console.error("Fetch error:", err);
-        setError("Could not load products. Please try again later."); // Sets the error
+        setError(
+          "Could not load products. Please try again later."
+        ); // Sets the error
         setLoading(false);
       });
   }, []);
@@ -207,18 +209,28 @@ useEffect(() => {
                 {Array(6)
                   .fill(0)
                   .map((_, i) => (
-                    <Skeleton key={i} height={260} radius="md" />
+                    <Skeleton
+                      key={i}
+                      height={260}
+                      radius="md"
+                    />
                   ))}
               </SimpleGrid>
             ) : error ? (
               // NEW: Display the error message if the database connection fails
-              <Paper p="xl" withBorder style={{ textAlign: "center" }}>
+              <Paper
+                p="xl"
+                withBorder
+                style={{ textAlign: "center" }}>
                 <Text size="lg" c="red">
                   {error}
                 </Text>
               </Paper>
             ) : filtered.length === 0 ? (
-              <Paper p="xl" withBorder style={{ textAlign: "center" }}>
+              <Paper
+                p="xl"
+                withBorder
+                style={{ textAlign: "center" }}>
                 <Text size="lg" c="dimmed">
                   No products match your filters.
                 </Text>
@@ -227,11 +239,10 @@ useEffect(() => {
               <SimpleGrid cols={3} spacing="lg">
                 {filtered.map((product) => (
                   // RESTORED: Clickable Links routing to the product page
-                  <Link 
-                    key={product._id} 
-                    to={`/product/${product._id}`} 
-                    style={{ textDecoration: 'none' }}
-                  >
+                  <Link
+                    key={product._id}
+                    to={`/product/${product._id}`}
+                    style={{ textDecoration: "none" }}>
                     <ProductCard product={product} />
                   </Link>
                 ))}

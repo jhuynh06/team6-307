@@ -25,7 +25,7 @@ function ProductPage() {
   const [newRating, setNewRating] = useState(0);
   const [newReviewText, setNewReviewText] = useState("");
 
-// 1. Fetch from Database
+  // 1. Fetch from Database
   useEffect(() => {
     fetch(`http://localhost:8000/products/${id}`)
       .then((res) => {
@@ -64,7 +64,8 @@ function ProductPage() {
 
     // Send to backend
     try {
-        await fetch(`http://localhost:8000/products/${id}/reviews`, 
+      await fetch(
+        `http://localhost:8000/products/${id}/reviews`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

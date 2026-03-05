@@ -134,7 +134,7 @@ const Product = mongoose.model("Product", productSchema);
 
 // GET a specific product and its reviews
 // GET all products (Needed for the Store Page grid)
-app.get('/products', async (req, res) => {
+app.get("/products", async (req, res) => {
   try {
     const products = await Product.find(); // This tells MongoDB to grab everything
     res.json(products);
@@ -166,11 +166,13 @@ app.post("/products/:id/reviews", async (req, res) => {
 });
 
 // GET a specific product by its ID
-app.get('/products/:id', async (req, res) => {
+app.get("/products/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) {
-      return res.status(404).json({ message: "Product not found" });
+      return res
+        .status(404)
+        .json({ message: "Product not found" });
     }
     res.json(product);
   } catch (error) {
