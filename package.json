@@ -7,7 +7,7 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "start": "npm run dev --workspace=react-frontend",
+    "start": "npm start --workspace=express-backend",
     "test": "echo \"Error: no test specified\"",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
   },
