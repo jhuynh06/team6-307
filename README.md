@@ -109,6 +109,8 @@ This separation ensures:
 
 ## Development Environment Setup
 
+Please read our contributing doc below!
+
 [Contributing Doc](CONTRIBUTING.md)
 
 ---
