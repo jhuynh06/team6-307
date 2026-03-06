@@ -1,3 +1,21 @@
+# Poly Rate My Food
+## Rubber Duck - team 6 - CSC 307 team project
+
+🌐 **Live Website:** https://zealous-grass-0d5be150f.4.azurestaticapps.net/
+
+## Table of Contents
+
+- [Product Vision](#product-vision)
+- [UI Prototype](#ui-prototype)
+- [Architecture Docs](#architecture-docs)
+  - [Our Stack](#our-stack)
+- [Development Environment Setup](#development-environment-setup)
+- [Class (Data Model) Diagrams](#class-data-model-diagrams)
+- [Signup Sequence Diagram](#signup-sequence-diagram)
+- [Signin Sequence Diagram](#signin-sequence-diagram)
+- [Endpoint Sequence Diagram](#endpoint-sequence-diagram)
+
+
 ## Product Vision
 For Cal Poly students who utilize on-campus dining, Poly Rate My Food is a specialized rating platform that elevates the student dining experience and identifies the best campus dishes.
 
@@ -17,16 +35,12 @@ For Cal Poly students who utilize on-campus dining, Poly Rate My Food is a speci
 
 - **Community Recommendation:** Reducing the "overwhelming" feeling for students and the "lack of options" feeling for seniors by highlighting the best dishes across all spread-out dining halls.
 
-## Features
-
-- User authentication (signup/login)
-- Dish rating (1–5 stars)
-- Written reviews
-- Trending dishes dashboard
-- Search/filter food options
 
 ## UI Prototype
-![](images_for_README/UMLDiagram.png)
+
+We decided to use figma to create an interactive UI prototype. You can find our project through the link below!
+
+[https://www.figma.com/proto/OISdAr94PWu1oY6zqT3CjO/PRMF-wireframe?node-id=11-232&t=zIU9eh66fzXnfrG5-1&starting-point-node-id=11%3A232](URL)
 
 ## Architecture Docs
 
@@ -42,8 +56,9 @@ For Cal Poly students who utilize on-campus dining, Poly Rate My Food is a speci
 
 We adopted Prettier and ESLint in order to have a cohesive coding style and linting rules. This helped us save time and limit merge conflicts.
 
-## Class (Data Model) Diagrams ???
+## Class (Data Model) Diagrams 
 
+![](images_for_README/UMLDiagram.png)
 
 ## Signup Sequence Diagram
 
