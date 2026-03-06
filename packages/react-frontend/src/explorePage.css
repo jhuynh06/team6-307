@@ -1,7 +1,7 @@
 .carousel-container {
   position: relative;
   width: 100%;
-  padding: 0 40px; 
+  padding: 0 40px;
   box-sizing: border-box;
 }
 
@@ -17,7 +17,7 @@
 }
 
 .carousel-card-wrapper {
-  flex: 0 0 33.3333%; 
+  flex: 0 0 33.3333%;
   max-width: 33.3333%;
   padding: 10px;
   box-sizing: border-box;
@@ -27,9 +27,7 @@
 .carousel-arrow {
   position: absolute;
   top: 50%;
-  transform: translateY(
-    -50%
-  ); 
+  transform: translateY(-50%);
   z-index: 10;
 
   color: #333;
@@ -40,12 +38,12 @@
 }
 
 .carousel-arrow:hover {
-  background: transparent; 
+  background: transparent;
   transform: translateY(-50%) scale(1.2);
 }
 
 .arrow-left {
-  left: -10px; 
+  left: -10px;
 }
 
 .arrow-right {
@@ -53,4 +51,3 @@
 }
 
 /*---------------------------------------*/
-

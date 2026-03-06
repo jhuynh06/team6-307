@@ -5,9 +5,24 @@ import "./page.css";
 
 // temp datga for nearby
 const mockNearbyData = [
-  { _id: "n1", name: "Campus Market", category: "Stores", inStock: true },
-  { _id: "n2", name: "Subway", category: "Meals", inStock: true },
-  { _id: "n3", name: "Starbucks", category: "Drinks", inStock: true },
+  {
+    _id: "n1",
+    name: "Campus Market",
+    category: "Stores",
+    inStock: true
+  },
+  {
+    _id: "n2",
+    name: "Subway",
+    category: "Meals",
+    inStock: true
+  },
+  {
+    _id: "n3",
+    name: "Starbucks",
+    category: "Drinks",
+    inStock: true
+  }
 ];
 
 //temporary data
@@ -17,29 +32,29 @@ const mockData = [
     restaurantName: "Restaurant name",
     time: "date/time",
     message: "message",
-    hasImages: true,
+    hasImages: true
   },
   {
     id: 2,
     restaurantName: "Restaurant name",
     time: "date/time",
     message: "message",
-    hasImages: true,
+    hasImages: true
   },
   {
     id: 3,
     restaurantName: "Restaurant name",
     time: "date/time",
     message: "message",
-    hasImages: false,
+    hasImages: false
   },
   {
     id: 4,
     restaurantName: "Restaurant name",
     time: "date/time",
     message: "message",
-    hasImages: true,
-  },
+    hasImages: true
+  }
 ];
 
 const Homepage = () => {
@@ -48,7 +63,9 @@ const Homepage = () => {
   return (
     <Container size="xl" py="xl">
       <section className="section">
-        <Title order={2} mb="md">What's Nearby</Title>
+        <Title order={2} mb="md">
+          What's Nearby
+        </Title>
         <div className="nearby-grid">
           {mockNearbyData.map((place) => (
             <ProductCard key={place._id} product={place} />
@@ -56,35 +73,39 @@ const Homepage = () => {
         </div>
       </section>
 
-      <section className="section" style={{ marginTop: '60px' }}>
-        <Title order={2} mb="md">Recent Activity</Title>
-        
-        
+      <section
+        className="section"
+        style={{ marginTop: "60px" }}>
+        <Title order={2} mb="md">
+          Recent Activity
+        </Title>
+
         {/*tabs*/}
-        <div className="tabs" > 
-          <span 
-            className={activeTab === "You" ? "active-tab" : ""} 
+        <div className="tabs">
+          <span
+            className={activeTab === "You" ? "active-tab" : ""}
             onClick={() => setActiveTab("You")}
-            style={{ cursor: "pointer" }}
-          >
+            style={{ cursor: "pointer" }}>
             You
           </span>
-          <span 
-            className={activeTab === "Friends" ? "active-tab" : ""} 
+          <span
+            className={
+              activeTab === "Friends" ? "active-tab" : ""
+            }
             onClick={() => setActiveTab("Friends")}
-            style={{ cursor: "pointer" }} 
-          >
+            style={{ cursor: "pointer" }}>
             Friends
           </span>
-          <span 
-            className={activeTab === "Following" ? "active-tab" : ""} 
+          <span
+            className={
+              activeTab === "Following" ? "active-tab" : ""
+            }
             onClick={() => setActiveTab("Following")}
-            style={{ cursor: "pointer" }}
-          >
+            style={{ cursor: "pointer" }}>
             Following
           </span>
         </div>
-        
+
         {/*PLACEHOLDER DATA*/}
         {activeTab === "You" && (
           <div>
@@ -138,10 +159,16 @@ const Homepage = () => {
                   <div className="pic-placeholder">pic</div>
                   <div className="post-meta">
                     <div className="meta-top following-header">
-                      <span className="following-name">{post.restaurantName}</span>
-                      <span className="following-time">{post.time}</span>
+                      <span className="following-name">
+                        {post.restaurantName}
+                      </span>
+                      <span className="following-time">
+                        {post.time}
+                      </span>
                     </div>
-                    <p className="comment following-comment">{post.message}</p>
+                    <p className="comment following-comment">
+                      {post.message}
+                    </p>
                   </div>
                 </div>
                 {post.hasImages && (
@@ -149,10 +176,10 @@ const Homepage = () => {
                     <div className="gray-box following-box"></div>
                     <div className="gray-box following-box"></div>
                   </div>
-                )}  
+                )}
               </div>
             ))}
-            
+
             <div className="end-of-feed-banner">
               (no new posts)
             </div>
@@ -165,7 +192,6 @@ const Homepage = () => {
             Friends activity will appear here.
           </div>
         )}
-
       </section>
     </Container>
   );

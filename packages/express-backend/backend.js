@@ -89,7 +89,7 @@ app.get("/users", authenticateUser, (req, res) => {
 });
 
 app.get("/users/:id", authenticateUser, (req, res) => {
-  const id = req.params["id"]; 
+  const id = req.params["id"];
   userServices
     .findUserById(id)
     .then((result) => res.send(result))
@@ -137,7 +137,7 @@ const Product = mongoose.model("Product", productSchema);
 
 app.get("/products", async (req, res) => {
   try {
-    const products = await Product.find(); 
+    const products = await Product.find();
     res.json(products);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch products" });
@@ -154,7 +154,7 @@ app.post("/products/:id/reviews", async (req, res) => {
     const updatedProduct = await Product.findByIdAndUpdate(
       productId,
       { $push: { reviews: newReview } },
-      { new: true } 
+      { new: true }
     );
 
     res.status(200).json(updatedProduct);
@@ -179,7 +179,6 @@ app.get("/products/:id", async (req, res) => {
 
 /*---------------------------------------*/
 
-
 app.get("/seed", async (req, res) => {
   try {
     const newProduct = new Product({
@@ -188,7 +187,7 @@ app.get("/seed", async (req, res) => {
       inStock: true,
       description:
         "The classic campus burger with double cheese and secret sauce.",
-      reviews: [] 
+      reviews: []
     });
 
     const savedProduct = await newProduct.save();

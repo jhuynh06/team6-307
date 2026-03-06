@@ -137,7 +137,7 @@ function StorePage() {
         console.error("Fetch error:", err);
         setError(
           "Could not load products. Please try again later."
-        ); 
+        );
         setLoading(false);
       });
   }, []);
