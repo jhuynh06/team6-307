@@ -89,7 +89,7 @@ app.get("/users", authenticateUser, (req, res) => {
 });
 
 app.get("/users/:id", authenticateUser, (req, res) => {
-  const id = req.params["id"]; //or req.params.id
+  const id = req.params["id"]; 
   userServices
     .findUserById(id)
     .then((result) => res.send(result))
@@ -114,13 +114,16 @@ app.delete("/users/:id", authenticateUser, (req, res) => {
       res.status(404).send("Resource not found.")
     );
 });
-//Review Section
+
+/*---------------Review section--------------------*/
 const reviewSchema = new mongoose.Schema({
   user: String,
   text: String,
   rating: Number,
   date: { type: Date, default: Date.now }
 });
+
+//Product subsection//
 
 const productSchema = new mongoose.Schema({
   name: String,
@@ -132,31 +135,26 @@ const productSchema = new mongoose.Schema({
 
 const Product = mongoose.model("Product", productSchema);
 
-// GET a specific product and its reviews
-// GET all products (Needed for the Store Page grid)
 app.get("/products", async (req, res) => {
   try {
-    const products = await Product.find(); // This tells MongoDB to grab everything
+    const products = await Product.find(); 
     res.json(products);
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch products" });
   }
 });
 
-// POST a new review to a product
 app.post("/products/:id/reviews", async (req, res) => {
   try {
     const { user, text, rating } = req.body;
     const productId = req.params.id;
 
-    // Create the new review object
     const newReview = { user, text, rating };
 
-    // Find the product and push the new review into its array
     const updatedProduct = await Product.findByIdAndUpdate(
       productId,
       { $push: { reviews: newReview } },
-      { new: true } // Returns the updated document
+      { new: true } 
     );
 
     res.status(200).json(updatedProduct);
@@ -165,7 +163,6 @@ app.post("/products/:id/reviews", async (req, res) => {
   }
 });
 
-// GET a specific product by its ID
 app.get("/products/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
@@ -180,9 +177,9 @@ app.get("/products/:id", async (req, res) => {
   }
 });
 
-//End of review section
+/*---------------------------------------*/
 
-// TEMPORARY ROUTE to create our first product
+
 app.get("/seed", async (req, res) => {
   try {
     const newProduct = new Product({
@@ -191,7 +188,7 @@ app.get("/seed", async (req, res) => {
       inStock: true,
       description:
         "The classic campus burger with double cheese and secret sauce.",
-      reviews: [] // Starts with empty reviews
+      reviews: [] 
     });
 
     const savedProduct = await newProduct.save();

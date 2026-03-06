@@ -17,7 +17,6 @@ import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import "./StorePage.css";
 
-//Switch to azure when live
 const API_URL =
   "https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net";
 
@@ -138,7 +137,7 @@ function StorePage() {
         console.error("Fetch error:", err);
         setError(
           "Could not load products. Please try again later."
-        ); // Sets the error
+        ); 
         setLoading(false);
       });
   }, []);
@@ -221,7 +220,6 @@ function StorePage() {
                   ))}
               </SimpleGrid>
             ) : error ? (
-              // NEW: Display the error message if the database connection fails
               <Paper
                 p="xl"
                 withBorder
@@ -242,7 +240,6 @@ function StorePage() {
             ) : (
               <SimpleGrid cols={3} spacing="lg">
                 {filtered.map((product) => (
-                  // RESTORED: Clickable Links routing to the product page
                   <Link
                     key={product._id}
                     to={`/product/${product._id}`}

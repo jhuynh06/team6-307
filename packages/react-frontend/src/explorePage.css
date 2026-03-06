@@ -23,7 +23,7 @@
   box-sizing: border-box;
 }
 
-/* --- Arrows --- */
+/*----------------Arrow section------------------*/
 .carousel-arrow {
   position: absolute;
   top: 50%;
@@ -51,3 +51,6 @@
 .arrow-right {
   right: -10px;
 }
+
+/*---------------------------------------*/
+
