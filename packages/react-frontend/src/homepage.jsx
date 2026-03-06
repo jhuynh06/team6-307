@@ -149,7 +149,7 @@ const Homepage = () => {
                     <div className="gray-box following-box"></div>
                     <div className="gray-box following-box"></div>
                   </div>
-                )}
+                )}  
               </div>
             ))}
             
