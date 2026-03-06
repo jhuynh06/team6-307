@@ -1,5 +1,5 @@
-# Poly Rate My Food
-## Rubber Duck - team 6 - CSC 307 team project
+## Rubber Duck — Team 6  
+### CSC 307 Team Project
 
 🌐 **Live Website:** https://zealous-grass-0d5be150f.4.azurestaticapps.net/
 
@@ -27,18 +27,11 @@ For Cal Poly students who utilize on-campus dining, Poly Rate My Food is a speci
 
 - **Bridging the Gap:** Creating a feedback loop where student discontent is transformed into actionable data for faculty to better allocate resources and improve options.
 
-**Core Values:**
-
-- **Transparency:** Providing a clear "Quality vs. Cost" metric so students know exactly what they are getting for their dining dollars.
-
-- **Efficiency for Faculty:** Offering a "free data collection" method that replaces manual surveys with real-time student sentiment.
-
-- **Community Recommendation:** Reducing the "overwhelming" feeling for students and the "lack of options" feeling for seniors by highlighting the best dishes across all spread-out dining halls.
 
 
 ## UI Prototype
 
-We decided to use figma to create an interactive UI prototype. You can find our project through the link below!
+We decided to use Figma to create an interactive UI prototype. You can find our project through the link below!
 
 [View Our Figma Prototype](https://www.figma.com/proto/OISdAr94PWu1oY6zqT3CjO/PRMF-wireframe?node-id=11-232&t=zIU9eh66fzXnfrG5-1&starting-point-node-id=11%3A232)
 
@@ -46,15 +39,13 @@ We decided to use figma to create an interactive UI prototype. You can find our 
 
 **Our Stack**
 
-**Frontend** : React, Mantine
-
-**Backend** : Express, Mongoose 
-
-**Database** : MongoDB
+**Frontend:** React, Mantine
+**Backend:** Express, Mongoose
+**Database:** MongoDB
 
 ## Development Environment Setup
 
-We adopted Prettier and ESLint in order to have a cohesive coding style and linting rules. This helped us save time and limit merge conflicts.
+[Contributing Doc](CONTRIBUTING.md)
 
 ## Class (Data Model) Diagrams 
 
