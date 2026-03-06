@@ -40,7 +40,7 @@ For Cal Poly students who utilize on-campus dining, Poly Rate My Food is a speci
 
 We decided to use figma to create an interactive UI prototype. You can find our project through the link below!
 
-[https://www.figma.com/proto/OISdAr94PWu1oY6zqT3CjO/PRMF-wireframe?node-id=11-232&t=zIU9eh66fzXnfrG5-1&starting-point-node-id=11%3A232](URL)
+[View Our Figma Prototype](https://www.figma.com/proto/OISdAr94PWu1oY6zqT3CjO/PRMF-wireframe?node-id=11-232&t=zIU9eh66fzXnfrG5-1&starting-point-node-id=11%3A232)
 
 ## Architecture Docs
 
