@@ -9,6 +9,13 @@ For Cal Poly students who utilize on-campus dining, Poly Rate My Food is a speci
 
 - **Bridging the Gap:** Creating a feedback loop where student discontent is transformed into actionable data for faculty to better allocate resources and improve options.
 
+## Features
+
+- User authentication (signup/login)
+- Dish rating (1–5 stars)
+- Written reviews
+- Trending dishes dashboard
+- Search/filter food options
 
 **Core Values:**
 
@@ -32,6 +39,8 @@ For Cal Poly students who utilize on-campus dining, Poly Rate My Food is a speci
 **Database** : MongoDB
 
 ## Development Environment Setup
+
+We adopted Prettier and ESLint in order to have a cohesive coding style and linting rules. This helped us save time and limit merge conflicts.
 
 ## Class (Data Model) Diagrams
 
