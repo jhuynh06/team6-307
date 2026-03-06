@@ -73,7 +73,6 @@ const CarouselSection = ({ title, products, loading }) => {
   const totalItems = safeProducts.length;
 
   const handleNext = () => {
-    // If scrolling past the end, loop to 0
     if (currentIndex + itemsToShow >= totalItems) {
       setCurrentIndex(0);
     } else {
@@ -82,9 +81,7 @@ const CarouselSection = ({ title, products, loading }) => {
   };
 
   const handlePrev = () => {
-    // If at the start, loop to the end
     if (currentIndex === 0) {
-      // Find the start index of the last full "page"
       const remainder = totalItems % itemsToShow;
       const lastPageStart =
         remainder === 0
@@ -103,7 +100,6 @@ const CarouselSection = ({ title, products, loading }) => {
       </Title>
 
       <div className="carousel-container">
-        {/* Left Arrow: Transparent variant to look like original */}
         <ActionIcon
           className="carousel-arrow arrow-left"
           variant="transparent"
@@ -142,7 +138,6 @@ const CarouselSection = ({ title, products, loading }) => {
           )}
         </div>
 
-        {/* Right Arrow */}
         <ActionIcon
           className="carousel-arrow arrow-right"
           variant="transparent"

@@ -14,7 +14,6 @@ import {
   Loader
 } from "@mantine/core";
 
-// Switch to azure when pr merges
 const API_URL =
   "https://polyratemyfood-ezfxgaf9dcgf9dcgpdkga.eastus-01.azurewebsites.net";
 
@@ -29,7 +28,6 @@ function ProductPage() {
   const [newRating, setNewRating] = useState(0);
   const [newReviewText, setNewReviewText] = useState("");
 
-  // 1. Fetch from Database using dynamic API_URL
   useEffect(() => {
     fetch(`${API_URL}/products/${id}`)
       .then((res) => {
@@ -48,7 +46,6 @@ function ProductPage() {
       });
   }, [id]);
 
-  // 2. Submit Review using dynamic API_URL
   const handleSubmitReview = async () => {
     if (newRating === 0) {
       alert("Please select a star rating first!");
@@ -76,7 +73,6 @@ function ProductPage() {
     }
   };
 
-  // ... (Rest of your component remains the same)
   if (isLoading)
     return (
       <Container size="sm" mt={60} ta="center">

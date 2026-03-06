@@ -15,7 +15,7 @@
   flex-wrap: nowrap;
 }
 
-/* Tabs styling */
+/*--------------Tabs section------------------*/
 .tabs {
   align-self: stretch;
 }
@@ -53,7 +53,9 @@
   }
 }
 
-/* Avatar */
+/*---------------------------------------*/
+
+/*--------------Avatar section-------------*/
 .avatar {
   transition:
     box-shadow 0.15s ease,
@@ -70,3 +72,4 @@
   border-color: var(--mantine-color-green-5);
   box-shadow: 0 0 0 3px var(--mantine-color-green-1);
 }
+/*---------------------------------------*/
