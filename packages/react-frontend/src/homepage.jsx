@@ -57,7 +57,7 @@ const Homepage = () => {
     posts: []
   });
 
-  // subsectionL: friend tab
+  // subsection: friend tab
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -114,7 +114,7 @@ const Homepage = () => {
         </div>
       </section>
 
-      {/*Recent activity*/}
+      {/* Recent activity */}
       <section
         className="section"
         style={{ marginTop: "60px" }}>
@@ -137,7 +137,7 @@ const Homepage = () => {
         {/* You tab */}
         {activeTab === "You" && (
           <div>
-            {/* subsection: stats bar*/}
+            {/* subsection: stats bar */}
             <Paper
               shadow="sm"
               radius="md"
@@ -174,7 +174,7 @@ const Homepage = () => {
               </Group>
             </Paper>
 
-            {/*User feed*/}
+            {/* User feed */}
             <div className="scrollable-feed">
               {userData.posts.map((post) => (
                 <Paper
@@ -191,6 +191,9 @@ const Homepage = () => {
                       </Avatar>
                       <div>
                         <Text weight={500}>
+                          {post.username}
+                        </Text>
+                        <Text size="sm">
                           {post.restaurantName}
                         </Text>
                         <Text size="xs" color="dimmed">
@@ -219,7 +222,7 @@ const Homepage = () => {
           </div>
         )}
 
-        {/*Following Tab*/}
+        {/* Following Tab */}
         {activeTab === "Following" && (
           <div className="scrollable-feed">
             {feedData.map((post) => (
@@ -247,7 +250,7 @@ const Homepage = () => {
           </div>
         )}
 
-        {/*Friend tab*/}
+        {/* Friends tab */}
         {activeTab === "Friends" && (
           <Stack spacing="md" mt="md">
             {/* Search input */}
@@ -308,7 +311,7 @@ const Homepage = () => {
               </Paper>
             )}
 
-            {/* Friend list*/}
+            {/* Friend list */}
             <Title order={4} mt="lg">
               Your Friends
             </Title>

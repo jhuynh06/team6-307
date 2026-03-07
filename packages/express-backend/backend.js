@@ -207,14 +207,17 @@ const activitySchema = new mongoose.Schema({
   time: String,
   message: String,
   hasImages: Boolean,
-  rating: Number
+  rating: Number,
+  type: String
 });
 
 const Activity = mongoose.model("Activity", activitySchema);
 
 app.get("/activity", async (req, res) => {
   try {
-    const activities = await Activity.find();
+    const activities = await Activity.find({
+      type: "announcement"
+    });
     res.json(activities);
   } catch (error) {
     res
@@ -249,26 +252,36 @@ app.get("/seed-activity", async (req, res) => {
     const testPosts = [
       {
         username: "linan",
-        restaurantName: "Campus Dining",
+        restaurantName: "VG",
         time: "10 mins ago",
-        message: "This place was okay. Food was okay.",
+        message: "Good pasta!!!",
         hasImages: false,
-        rating: 4
+        rating: 4,
+        type: "review"
       },
       {
-        username: "testuser2",
-        restaurantName: "Coffee Shop",
-        time: "2 days ago",
-        message: "We are closing early today for maintenance.",
+        username: "campusdining",
+        restaurantName: "Campus Dining",
+        time: "1 hour ago",
+        message: "Come try da goods!",
         hasImages: false,
-        rating: 5
+        rating: null,
+        type: "announcement"
+      },
+      {
+        username: "subwayslo",
+        restaurantName: "Subway",
+        time: "3 hours ago",
+        message: "Closing early today.",
+        hasImages: false,
+        rating: null,
+        type: "announcement"
       }
     ];
 
     await Activity.insertMany(testPosts);
     res.json({
-      message:
-        "Activity feed seeded successfully with user data",
+      message: "Activity feed seeded successfully",
       testPosts
     });
   } catch (error) {
@@ -292,4 +305,18 @@ app.get("/users/search", authenticateUser, async (req, res) => {
     res.status(500).json({ error: "Search failed" });
   }
 });
-/*------------------------------------------------*/
+
+app.get("/users/search", authenticateUser, async (req, res) => {
+  const query = req.query.q;
+  try {
+    const users = await User.find({
+      $or: [
+        { username: { $regex: query, $options: "i" } },
+        { fullName: { $regex: query, $options: "i" } }
+      ]
+    }).select("username fullName major");
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: "Search failed" });
+  }
+});
