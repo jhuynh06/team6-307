@@ -177,8 +177,6 @@ app.get("/products/:id", async (req, res) => {
   }
 });
 
-/*---------------------------------------*/
-
 app.get("/seed", async (req, res) => {
   try {
     const newProduct = new Product({
@@ -198,3 +196,100 @@ app.get("/seed", async (req, res) => {
 });
 
 //lol
+
+/*---------------HOMEPAGE--------------------*/
+
+/*///////////////Recent Activity/////////////*/
+
+const activitySchema = new mongoose.Schema({
+  username: String,
+  restaurantName: String,
+  time: String,
+  message: String,
+  hasImages: Boolean,
+  rating: Number
+});
+
+const Activity = mongoose.model("Activity", activitySchema);
+
+app.get("/activity", async (req, res) => {
+  try {
+    const activities = await Activity.find();
+    res.json(activities);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Failed to fetch activity feed" });
+  }
+});
+
+app.get("/activity/user/:username", async (req, res) => {
+  try {
+    const targetUser = req.params.username;
+    const userPosts = await Activity.find({
+      username: targetUser
+    });
+
+    //MOCK DATA!!!!
+    const userStats = { rated: 1, saved: 3, tried: 5 };
+
+    res.json({ stats: userStats, posts: userPosts });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Failed to fetch user profile data" });
+  }
+});
+
+app.get("/seed-activity", async (req, res) => {
+  try {
+    await Activity.deleteMany({});
+
+    //MOCK POSTS!!!
+    const testPosts = [
+      {
+        username: "linan",
+        restaurantName: "Campus Dining",
+        time: "10 mins ago",
+        message: "This place was okay. Food was okay.",
+        hasImages: false,
+        rating: 4
+      },
+      {
+        username: "testuser2",
+        restaurantName: "Coffee Shop",
+        time: "2 days ago",
+        message: "We are closing early today for maintenance.",
+        hasImages: false,
+        rating: 5
+      }
+    ];
+
+    await Activity.insertMany(testPosts);
+    res.json({
+      message:
+        "Activity feed seeded successfully with user data",
+      testPosts
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Failed to seed activities" });
+  }
+});
+
+app.get("/users/search", authenticateUser, async (req, res) => {
+  const query = req.query.q;
+  try {
+    const users = await User.find({
+      $or: [
+        { username: { $regex: query, $options: "i" } },
+        { fullName: { $regex: query, $options: "i" } }
+      ]
+    }).select("username fullName major");
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: "Search failed" });
+  }
+});
+/*------------------------------------------------*/
