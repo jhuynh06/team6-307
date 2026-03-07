@@ -63,7 +63,6 @@ const Homepage = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [myFriends] = useState([]);
 
-  
   // ---- 4. DATA ------------------------------------
   useEffect(() => {
     //global feed
