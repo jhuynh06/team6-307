@@ -61,7 +61,10 @@ const Homepage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
-  const [myFriends, setMyFriends] = useState([]);
+
+  //FUTURE IMPLEMENTATION//
+  
+  //const [myFriends, setMyFriends] = useState([]);//
 
   // ---- 4. DATA ------------------------------------
   useEffect(() => {
