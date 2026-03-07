@@ -1,9 +1,31 @@
-import React, { useState } from "react";
-import { Container, Title } from "@mantine/core";
+// HOMEPAGE CONTENTS
+// Sections:
+//   1. Imports
+//   2. Mock Data
+//   3. Components
+//   4. Data Fetching (useEffect)
+//   5. Handlers
+//   6. Render
+
+// -------1. IMPORTS -------------------------------------
+import React, { useState, useEffect } from "react";
+import {
+  Container,
+  Title,
+  Paper,
+  Group,
+  Text,
+  Divider,
+  Avatar,
+  Stack
+} from "@mantine/core";
 import ProductCard from "./ProductCard";
 import "./page.css";
+import { IconSearch, IconUserPlus } from "@tabler/icons-react";
+import { TextInput, ActionIcon, Loader } from "@mantine/core";
 
-// temp datga for nearby
+// ---- 2. MOCK DATA ------------------------------------------
+
 const mockNearbyData = [
   {
     _id: "n1",
@@ -25,43 +47,62 @@ const mockNearbyData = [
   }
 ];
 
-//temporary data
-const mockData = [
-  {
-    id: 1,
-    restaurantName: "Restaurant name",
-    time: "date/time",
-    message: "message",
-    hasImages: true
-  },
-  {
-    id: 2,
-    restaurantName: "Restaurant name",
-    time: "date/time",
-    message: "message",
-    hasImages: true
-  },
-  {
-    id: 3,
-    restaurantName: "Restaurant name",
-    time: "date/time",
-    message: "message",
-    hasImages: false
-  },
-  {
-    id: 4,
-    restaurantName: "Restaurant name",
-    time: "date/time",
-    message: "message",
-    hasImages: true
-  }
-];
-
 const Homepage = () => {
-  const [activeTab, setActiveTab] = useState("Following");
+  // ---- 3. COMPONENTS ----------------------------------
+  const [activeTab, setActiveTab] = useState("You"); //Current tab
+  const [feedData, setFeedData] = useState([]); //Following
+  const [userData, setUserData] = useState({
+    //You tab stats
+    stats: { rated: 0, saved: 0, tried: 0 },
+    posts: []
+  });
 
+  // subsection: friend tab
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [myFriends] = useState([]);
+
+  // ---- 4. DATA ------------------------------------
+  useEffect(() => {
+    //global feed
+    fetch("http://localhost:8000/activity")
+      .then((res) => res.json())
+      .then((data) => setFeedData(data))
+      .catch((error) =>
+        console.log("Error fetching activity:", error)
+      );
+
+    // user data
+    fetch("http://localhost:8000/activity/user/linan")
+      .then((res) => res.json())
+      .then((data) => setUserData(data))
+      .catch((error) =>
+        console.log("Error fetching user data:", error)
+      );
+  }, []);
+
+  // ---- 5. HANDLERS -----------------------------------------
+  //search function friends tab
+  const handleSearch = () => {
+    if (!searchQuery) return;
+    setIsSearching(true);
+    fetch(`http://localhost:8000/users/search?q=${searchQuery}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setSearchResults(data);
+        setIsSearching(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setIsSearching(false);
+      });
+  };
+
+  // ---- 6. Visual render -------------------------------------------
   return (
     <Container size="xl" py="xl">
+      {/* Nearby stuff */}
       <section className="section">
         <Title order={2} mb="md">
           What's Nearby
@@ -73,6 +114,7 @@ const Homepage = () => {
         </div>
       </section>
 
+      {/* Recent activity */}
       <section
         className="section"
         style={{ marginTop: "60px" }}>
@@ -80,117 +122,209 @@ const Homepage = () => {
           Recent Activity
         </Title>
 
-        {/*tabs*/}
         <div className="tabs">
-          <span
-            className={activeTab === "You" ? "active-tab" : ""}
-            onClick={() => setActiveTab("You")}
-            style={{ cursor: "pointer" }}>
-            You
-          </span>
-          <span
-            className={
-              activeTab === "Friends" ? "active-tab" : ""
-            }
-            onClick={() => setActiveTab("Friends")}
-            style={{ cursor: "pointer" }}>
-            Friends
-          </span>
-          <span
-            className={
-              activeTab === "Following" ? "active-tab" : ""
-            }
-            onClick={() => setActiveTab("Following")}
-            style={{ cursor: "pointer" }}>
-            Following
-          </span>
+          {["You", "Friends", "Following"].map((tab) => (
+            <span
+              key={tab}
+              className={activeTab === tab ? "active-tab" : ""}
+              onClick={() => setActiveTab(tab)}
+              style={{ cursor: "pointer" }}>
+              {tab}
+            </span>
+          ))}
         </div>
 
-        {/*PLACEHOLDER DATA*/}
+        {/* You tab */}
         {activeTab === "You" && (
           <div>
-            <div className="stats-bar">
-              <div className="stat-item">
-                <span className="stat-number">3</span>
-                <span className="stat-label">Places rated</span>
-              </div>
-              <div className="stat-item border-sides">
-                <span className="stat-number">2</span>
-                <span className="stat-label">Places saved</span>
-              </div>
-              <div className="stat-item">
-                <span className="stat-number">5</span>
-                <span className="stat-label">Places tried</span>
-              </div>
-            </div>
+            {/* subsection: stats bar */}
+            <Paper
+              shadow="sm"
+              radius="md"
+              p="md"
+              mb="xl"
+              withBorder>
+              <Group position="center" spacing="xl" grow>
+                <div style={{ textAlign: "center" }}>
+                  <Text size="xl" weight={700}>
+                    {userData.stats.rated}
+                  </Text>
+                  <Text size="sm" color="dimmed">
+                    Places rated
+                  </Text>
+                </div>
+                <Divider orientation="vertical" />
+                <div style={{ textAlign: "center" }}>
+                  <Text size="xl" weight={700}>
+                    {userData.stats.saved}
+                  </Text>
+                  <Text size="sm" color="dimmed">
+                    Places saved
+                  </Text>
+                </div>
+                <Divider orientation="vertical" />
+                <div style={{ textAlign: "center" }}>
+                  <Text size="xl" weight={700}>
+                    {userData.stats.tried}
+                  </Text>
+                  <Text size="sm" color="dimmed">
+                    Places tried
+                  </Text>
+                </div>
+              </Group>
+            </Paper>
 
-            <div className="activity-item">
-              <div className="user-info">
-                <div className="pic-placeholder">pic</div>
-                <div className="post-meta">
-                  <div className="meta-top">
-                    <span className="username">You</span>
-                    <span className="timestamp">date/time</span>
-                  </div>
-                  <p className="comment">
-                    This place was okay. Food was okay.
-                  </p>
-                </div>
-                <div className="stars">
-                  ★★★★★{" "}
-                  <span className="action-icons">📝 🗑️</span>
-                </div>
-              </div>
-              <div className="post-images">
-                <div className="gray-box small-box"></div>
-                <div className="gray-box small-box"></div>
-              </div>
+            {/* User feed */}
+            <div className="scrollable-feed">
+              {userData.posts.map((post) => (
+                <Paper
+                  key={post._id}
+                  shadow="xs"
+                  radius="md"
+                  p="md"
+                  mb="sm"
+                  withBorder>
+                  <Group position="apart" mb="sm">
+                    <Group>
+                      <Avatar color="blue" radius="xl">
+                        Y
+                      </Avatar>
+                      <div>
+                        <Text weight={500}>
+                          {post.username}
+                        </Text>
+                        <Text size="sm">
+                          {post.restaurantName}
+                        </Text>
+                        <Text size="xs" color="dimmed">
+                          {post.time}
+                        </Text>
+                      </div>
+                    </Group>
+                    <Text size="sm">
+                      {Array(post.rating).fill("★").join("")}
+                    </Text>
+                  </Group>
+                  <Text size="sm" mb="md">
+                    {post.message}
+                  </Text>
+                  <Group position="right">
+                    <span style={{ cursor: "pointer" }}>
+                      📝
+                    </span>
+                    <span style={{ cursor: "pointer" }}>
+                      🗑️
+                    </span>
+                  </Group>
+                </Paper>
+              ))}
             </div>
           </div>
         )}
 
-        {/* MOCK DATA PLACEHOLDER*/}
+        {/* Following Tab */}
         {activeTab === "Following" && (
           <div className="scrollable-feed">
-            {/*Speicifcally this map*/}
-            {mockData.map((post) => (
-              <div className="activity-item" key={post.id}>
+            {feedData.map((post) => (
+              <div className="activity-item" key={post._id}>
                 <div className="user-info">
-                  <div className="pic-placeholder">pic</div>
-                  <div className="post-meta">
-                    <div className="meta-top following-header">
-                      <span className="following-name">
-                        {post.restaurantName}
-                      </span>
-                      <span className="following-time">
-                        {post.time}
-                      </span>
+                  <div className="avatar"></div>
+                  <div>
+                    <div className="username">
+                      {post.restaurantName}
                     </div>
-                    <p className="comment following-comment">
-                      {post.message}
-                    </p>
+                    <div className="time">{post.time}</div>
                   </div>
                 </div>
-                {post.hasImages && (
-                  <div className="post-images following-images">
-                    <div className="gray-box following-box"></div>
-                    <div className="gray-box following-box"></div>
-                  </div>
-                )}
+                <div className="post-content">
+                  <p>{post.message}</p>
+                  {post.hasImages && (
+                    <div className="post-image-placeholder"></div>
+                  )}
+                </div>
               </div>
             ))}
-
             <div className="end-of-feed-banner">
               (no new posts)
             </div>
           </div>
         )}
 
-        {/*PLACEHOLDER FOR FRIENDS CONTENT*/}
+        {/* Friends tab */}
         {activeTab === "Friends" && (
-          <div style={{ marginTop: "20px", color: "#666" }}>
-            Friends activity will appear here.
-          </div>
+          <Stack spacing="md" mt="md">
+            {/* Search input */}
+            <TextInput
+              placeholder="Search for friends by name or username..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={(e) =>
+                e.key === "Enter" && handleSearch()
+              }
+              rightSection={
+                isSearching ? (
+                  <Loader size="xs" />
+                ) : (
+                  <ActionIcon
+                    onClick={handleSearch}
+                    variant="filled"
+                    color="blue">
+                    <IconSearch size="1.1rem" />
+                  </ActionIcon>
+                )
+              }
+            />
+
+            {/* Search results */}
+            {searchResults.length > 0 && (
+              <Paper withBorder p="md" radius="md">
+                <Text size="xs" fw={700} c="dimmed" mb="xs">
+                  SEARCH RESULTS
+                </Text>
+                <Stack spacing="xs">
+                  {searchResults.map((user) => (
+                    <Group
+                      justify="space-between"
+                      key={user.username}>
+                      <Group>
+                        <Avatar radius="xl" color="cyan">
+                          {user.username[0].toUpperCase()}
+                        </Avatar>
+                        <div>
+                          <Text size="sm" fw={500}>
+                            {user.fullName}
+                          </Text>
+                          <Text size="xs" c="dimmed">
+                            @{user.username} • {user.major}
+                          </Text>
+                        </div>
+                      </Group>
+                      <ActionIcon
+                        variant="light"
+                        color="blue"
+                        radius="xl">
+                        <IconUserPlus size="1.1rem" />
+                      </ActionIcon>
+                    </Group>
+                  ))}
+                </Stack>
+              </Paper>
+            )}
+
+            {/* Friend list */}
+            <Title order={4} mt="lg">
+              Your Friends
+            </Title>
+            {myFriends.length === 0 ? (
+              <Text c="dimmed" size="sm" italic>
+                You haven't added any friends yet.
+              </Text>
+            ) : (
+              <Stack spacing="sm">
+                {/* Map friend list please*/}
+              </Stack>
+            )}
+          </Stack>
         )}
       </section>
     </Container>
