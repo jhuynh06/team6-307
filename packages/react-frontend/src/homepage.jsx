@@ -67,7 +67,9 @@ const Homepage = () => {
   // ---- 4. DATA ------------------------------------
   useEffect(() => {
     //global feed
-    fetch("https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/")
+    fetch(
+      "https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/"
+    )
       .then((res) => res.json())
       .then((data) => setFeedData(data))
       .catch((error) =>
@@ -75,7 +77,9 @@ const Homepage = () => {
       );
 
     // user data
-    fetch("https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/activity/user")
+    fetch(
+      "https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/activity/user"
+    )
       .then((res) => res.json())
       .then((data) => setUserData(data))
       .catch((error) =>
@@ -88,7 +92,9 @@ const Homepage = () => {
   const handleSearch = () => {
     if (!searchQuery) return;
     setIsSearching(true);
-    fetch(`https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/users/search?q=${searchQuery}`)
+    fetch(
+      `https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/users/search?q=${searchQuery}`
+    )
       .then((res) => res.json())
       .then((data) => {
         setSearchResults(data);
@@ -110,8 +116,11 @@ const Homepage = () => {
         </Title>
         <div className="nearby-grid">
           {mockNearbyData.map((place) => (
-            <Link key={place._id} to={`stores/view`} style={{ textDecoration: "none" }}>
-             <ProductCard key={place._id} product={place} />
+            <Link
+              key={place._id}
+              to={`stores/view`}
+              style={{ textDecoration: "none" }}>
+              <ProductCard key={place._id} product={place} />
             </Link>
           ))}
         </div>
