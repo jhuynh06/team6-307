@@ -63,12 +63,13 @@ const Homepage = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
   const [myFriends] = useState([]);
+  const username = localStorage.getItem("username");
 
   // ---- 4. DATA ------------------------------------
   useEffect(() => {
     //global feed
     fetch(
-      "https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/"
+      "https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/activity"
     )
       .then((res) => res.json())
       .then((data) => setFeedData(data))
@@ -78,7 +79,7 @@ const Homepage = () => {
 
     // user data
     fetch(
-      "https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/activity/user"
+      `https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/activity/user/${username}`
     )
       .then((res) => res.json())
       .then((data) => setUserData(data))
@@ -93,7 +94,12 @@ const Homepage = () => {
     if (!searchQuery) return;
     setIsSearching(true);
     fetch(
-      `https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/users/search?q=${searchQuery}`
+      `https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/users/search?q=${searchQuery}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      }
     )
       .then((res) => res.json())
       .then((data) => {
