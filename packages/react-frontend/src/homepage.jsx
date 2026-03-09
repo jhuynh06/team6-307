@@ -23,6 +23,7 @@ import ProductCard from "./ProductCard";
 import "./page.css";
 import { IconSearch, IconUserPlus } from "@tabler/icons-react";
 import { TextInput, ActionIcon, Loader } from "@mantine/core";
+import { Link } from "react-router-dom";
 
 // ---- 2. MOCK DATA ------------------------------------------
 
@@ -66,7 +67,7 @@ const Homepage = () => {
   // ---- 4. DATA ------------------------------------
   useEffect(() => {
     //global feed
-    fetch("http://localhost:8000/activity")
+    fetch("https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/")
       .then((res) => res.json())
       .then((data) => setFeedData(data))
       .catch((error) =>
@@ -74,7 +75,7 @@ const Homepage = () => {
       );
 
     // user data
-    fetch("http://localhost:8000/activity/user/linan")
+    fetch("https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/activity/user")
       .then((res) => res.json())
       .then((data) => setUserData(data))
       .catch((error) =>
@@ -87,7 +88,7 @@ const Homepage = () => {
   const handleSearch = () => {
     if (!searchQuery) return;
     setIsSearching(true);
-    fetch(`http://localhost:8000/users/search?q=${searchQuery}`)
+    fetch(`https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net/users/search?q=${searchQuery}`)
       .then((res) => res.json())
       .then((data) => {
         setSearchResults(data);
@@ -109,7 +110,9 @@ const Homepage = () => {
         </Title>
         <div className="nearby-grid">
           {mockNearbyData.map((place) => (
-            <ProductCard key={place._id} product={place} />
+            <Link key={place._id} to={`stores/view`} style={{ textDecoration: "none" }}>
+             <ProductCard key={place._id} product={place} />
+            </Link>
           ))}
         </div>
       </section>
