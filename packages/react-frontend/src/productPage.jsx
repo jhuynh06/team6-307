@@ -15,7 +15,7 @@ import {
 } from "@mantine/core";
 
 const API_URL =
-  "https://polyratemyfood-ezfxgaf9dcgf9dcgpdkga.eastus-01.azurewebsites.net";
+  "https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net";
 
 function ProductPage() {
   const { id } = useParams();
