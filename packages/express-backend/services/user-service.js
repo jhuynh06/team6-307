@@ -1,7 +1,4 @@
-import mongoose from "mongoose";
 import { User as userModel } from "../auth.js";
-
-mongoose.set("debug", true);
 
 function getUsers(name, job) {
   let promise;
@@ -28,15 +25,15 @@ function addUser(user) {
 }
 
 function findUserByName(name) {
-  return userModel.find({ name: name });
+  return userModel.find({ fullName: name });
 }
 
 function findUserByJob(job) {
-  return userModel.find({ job: job });
+  return userModel.find({ major: job });
 }
 
 function findUserByNameAndJob(name, job) {
-  return userModel.find({ name: name, job: job });
+  return userModel.find({ fullName: name, major: job });
 }
 
 function removeUser(id) {

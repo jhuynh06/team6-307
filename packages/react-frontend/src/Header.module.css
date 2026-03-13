@@ -2,10 +2,7 @@
   height: 60px;
   background-color: var(--mantine-color-body);
   border-bottom: 1px solid
-    light-dark(
-      var(--mantine-color-gray-3),
-      var(--mantine-color-dark-4)
-    );
+    light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
 }
 
 .inner {
@@ -32,17 +29,11 @@
   padding: 0 20px;
   height: 100%;
   border-bottom: 3px solid transparent;
-  color: light-dark(
-    var(--mantine-color-gray-6),
-    var(--mantine-color-dark-1)
-  );
+  color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-1));
 
-  @mixin hover {
+  &:hover {
     background-color: transparent;
-    color: light-dark(
-      var(--mantine-color-dark-9),
-      var(--mantine-color-dark-0)
-    );
+    color: light-dark(var(--mantine-color-dark-9), var(--mantine-color-dark-0));
     border-bottom-color: var(--mantine-color-gray-4);
   }
 
@@ -62,7 +53,7 @@
     transform 0.15s ease;
   border: 2px solid transparent;
 
-  @mixin hover {
+  &:hover {
     box-shadow: 0 0 0 3px var(--mantine-color-green-1);
     transform: scale(1.05);
   }
