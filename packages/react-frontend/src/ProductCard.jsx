@@ -19,8 +19,7 @@ function ProductCard({ product }) {
       radius="md"
       withBorder
       onClick={handleClick}
-      style={{ cursor: storeId && _id ? "pointer" : "default" }}
-    >
+      style={{ cursor: storeId && _id ? "pointer" : "default" }}>
       <Card.Section>
         {imgSrc ? (
           <Image
