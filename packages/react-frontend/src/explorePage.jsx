@@ -93,9 +93,7 @@ const Explore = () => {
           stores.map((s) =>
             fetch(`${API_PREFIX}/stores/${s._id}/products`)
               .then((res) => res.json())
-              .then((prods) =>
-                prods.map((p) => ({ ...p, storeId: s._id }))
-              )
+              .then((prods) => prods.map((p) => ({ ...p, storeId: s._id })))
           )
         );
       })
