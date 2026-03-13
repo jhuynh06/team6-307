@@ -193,7 +193,12 @@ function StorePage() {
         }}>
         <Box className="hero-overlay" />
         <Group align="center" gap="md" className="hero-content">
-          <Avatar size={80} radius="xl" className="store-avatar" />
+          <Avatar
+            size={80}
+            radius="xl"
+            className="store-avatar"
+            src={store.profileImage || null}
+          />
           <Stack gap={4}>
             <Title order={1} c="white" style={{ fontSize: 32 }}>
               {store.name}
