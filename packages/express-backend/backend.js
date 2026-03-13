@@ -3,23 +3,16 @@ import cors from "cors";
 import userServices from "./services/user-service.js";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import {
-  registerUser,
-  loginUser,
-  authenticateUser,
-  User
-} from "./auth.js";
+import { registerUser, loginUser, authenticateUser, User } from "./auth.js";
 
 dotenv.config();
-
-const { MONGO_CONNECTION_STRING } = process.env;
 
 mongoose.set("debug", true);
 
 mongoose
   .connect(process.env.MONGO_CONNECTION_STRING)
   .then(() => console.log("Successfully connected to MongoDB!"))
-  .catch((error) => console.log(error));
+  .catch((error) => console.error(error));
 
 const app = express();
 const port = 8000;
@@ -31,10 +24,6 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.listen(process.env.PORT || port, () => {
-  console.log("REST API is listening.");
-});
-
 app.post("/signup", registerUser);
 app.post("/login", loginUser);
 
@@ -44,19 +33,17 @@ app.get("/profile", authenticateUser, (req, res) => {
       if (!user) {
         return res.status(404).send("User not found.");
       }
-      const { fullName, pronouns, schoolYear, major, bio } =
-        user;
+      const { fullName, pronouns, schoolYear, major, bio } = user;
       res.send({ fullName, pronouns, schoolYear, major, bio });
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
       res.status(500).send("Internal server error.");
     });
 });
 
 app.put("/profile", authenticateUser, (req, res) => {
-  const { fullName, pronouns, schoolYear, major, bio } =
-    req.body;
+  const { fullName, pronouns, schoolYear, major, bio } = req.body;
   User.findOneAndUpdate(
     { username: req.username },
     { fullName, pronouns, schoolYear, major, bio },
@@ -75,7 +62,7 @@ app.put("/profile", authenticateUser, (req, res) => {
       });
     })
     .catch((error) => {
-      console.log(error);
+      console.error(error);
       res.status(500).send("Internal server error.");
     });
 });
@@ -85,7 +72,11 @@ app.get("/users", authenticateUser, (req, res) => {
   const job = req.query.job;
   userServices
     .getUsers(name, job)
-    .then((result) => res.send(result));
+    .then((result) => res.send(result))
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Internal server error.");
+    });
 });
 
 app.get("/users/:id", authenticateUser, (req, res) => {
@@ -93,16 +84,18 @@ app.get("/users/:id", authenticateUser, (req, res) => {
   userServices
     .findUserById(id)
     .then((result) => res.send(result))
-    .catch((err) =>
-      res.status(404).send("Resource not found.")
-    );
+    .catch((err) => res.status(404).send("Resource not found."));
 });
 
 app.post("/users", authenticateUser, (req, res) => {
   const userToAdd = req.body;
   userServices
     .addUser(userToAdd)
-    .then((newUser) => res.status(201).send({ newUser }));
+    .then((newUser) => res.status(201).send({ newUser }))
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Internal server error.");
+    });
 });
 
 app.delete("/users/:id", authenticateUser, (req, res) => {
@@ -110,9 +103,7 @@ app.delete("/users/:id", authenticateUser, (req, res) => {
   userServices
     .removeUser(id)
     .then((_) => res.status(204).send())
-    .catch((err) =>
-      res.status(404).send("Resource not found.")
-    );
+    .catch((err) => res.status(404).send("Resource not found."));
 });
 
 /*---------------Review section--------------------*/
@@ -135,7 +126,7 @@ const productSchema = new mongoose.Schema({
 
 const Product = mongoose.model("Product", productSchema);
 
-app.get("/products", async (req, res) => {
+app.get("/products", authenticateUser, async (req, res) => {
   try {
     const products = await Product.find();
     res.json(products);
@@ -144,7 +135,7 @@ app.get("/products", async (req, res) => {
   }
 });
 
-app.post("/products/:id/reviews", async (req, res) => {
+app.post("/products/:id/reviews", authenticateUser, async (req, res) => {
   try {
     const { user, text, rating } = req.body;
     const productId = req.params.id;
@@ -163,13 +154,11 @@ app.post("/products/:id/reviews", async (req, res) => {
   }
 });
 
-app.get("/products/:id", async (req, res) => {
+app.get("/products/:id", authenticateUser, async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) {
-      return res
-        .status(404)
-        .json({ message: "Product not found" });
+      return res.status(404).json({ message: "Product not found" });
     }
     res.json(product);
   } catch (error) {
@@ -179,7 +168,7 @@ app.get("/products/:id", async (req, res) => {
 
 /*---------------------------------------*/
 
-app.get("/seed", async (req, res) => {
+app.get("/seed", authenticateUser, async (req, res) => {
   try {
     const newProduct = new Product({
       name: "Bishop Burger",
@@ -196,8 +185,6 @@ app.get("/seed", async (req, res) => {
     res.status(500).json({ error: "Failed to create product" });
   }
 });
-
-//lol
 
 /*---------------HOMEPAGE--------------------*/
 
@@ -306,4 +293,8 @@ app.get("/users/search", authenticateUser, async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Search failed" });
   }
+});
+
+app.listen(process.env.PORT || port, () => {
+  console.log("REST API is listening.");
 });

@@ -140,17 +140,13 @@ const Homepage = ({ token }) => {
             You
           </span>
           <span
-            className={
-              activeTab === "Friends" ? "active-tab" : ""
-            }
+            className={activeTab === "Friends" ? "active-tab" : ""}
             onClick={() => setActiveTab("Friends")}
             style={{ cursor: "pointer" }}>
             Friends
           </span>
           <span
-            className={
-              activeTab === "Following" ? "active-tab" : ""
-            }
+            className={activeTab === "Following" ? "active-tab" : ""}
             onClick={() => setActiveTab("Following")}
             style={{ cursor: "pointer" }}>
             Following
@@ -224,13 +220,9 @@ const Homepage = ({ token }) => {
                       <span className="following-name">
                         {post.restaurantName}
                       </span>
-                      <span className="following-time">
-                        {post.time}
-                      </span>
+                      <span className="following-time">{post.time}</span>
                     </div>
-                    <p className="comment following-comment">
-                      {post.message}
-                    </p>
+                    <p className="comment following-comment">{post.message}</p>
                   </div>
                 </div>
                 {post.hasImages && (

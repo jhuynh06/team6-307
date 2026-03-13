@@ -16,9 +16,7 @@ import {
 import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import "./StorePage.css";
-
-const API_URL =
-  "https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net";
+import { API_PREFIX } from "./config";
 
 const BANNER =
   "https://ssgse.com/ssg/wp-content/uploads/SSG-CalPoly-CampusMktUU-2-1024x563.jpg";
@@ -123,10 +121,12 @@ function StorePage() {
   });
 
   useEffect(() => {
-    fetch(`${API_URL}/products`)
+    const token = localStorage.getItem("token") || "";
+    fetch(`${API_PREFIX}/products`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
       .then((res) => {
-        if (!res.ok)
-          throw new Error("Failed to fetch products");
+        if (!res.ok) throw new Error("Failed to fetch products");
         return res.json();
       })
       .then((data) => {
@@ -135,22 +135,18 @@ function StorePage() {
       })
       .catch((err) => {
         console.error("Fetch error:", err);
-        setError(
-          "Could not load products. Please try again later."
-        );
+        setError("Could not load products. Please try again later.");
         setLoading(false);
       });
   }, []);
 
   const filtered = products.filter((p) => {
     const typeMatch =
-      filters.foodTypes.length === 0 ||
-      filters.foodTypes.includes(p.category);
+      filters.foodTypes.length === 0 || filters.foodTypes.includes(p.category);
     const availMatch =
       !filters.inStock && !filters.outOfStock
         ? true
-        : (filters.inStock && p.inStock) ||
-          (filters.outOfStock && !p.inStock);
+        : (filters.inStock && p.inStock) || (filters.outOfStock && !p.inStock);
     return typeMatch && availMatch;
   });
 
@@ -161,11 +157,7 @@ function StorePage() {
         style={{ backgroundImage: `url(${BANNER})` }}>
         <Box className="hero-overlay" />
         <Group align="center" gap="md" className="hero-content">
-          <Avatar
-            size={80}
-            radius="xl"
-            className="store-avatar"
-          />
+          <Avatar size={80} radius="xl" className="store-avatar" />
           <Stack gap={4}>
             <Title order={1} c="white" style={{ fontSize: 32 }}>
               Campus Market
@@ -179,16 +171,11 @@ function StorePage() {
             <Group gap={10} mt={4}>
               <Box
                 style={{
-                  backgroundColor:
-                    "var(--mantine-color-green-5)",
+                  backgroundColor: "var(--mantine-color-green-5)",
                   padding: "2px 8px",
                   borderRadius: "var(--mantine-radius-sm)"
                 }}>
-                <Text
-                  size="xs"
-                  fw={700}
-                  c="white"
-                  tt="uppercase">
+                <Text size="xs" fw={700} c="white" tt="uppercase">
                   Open
                 </Text>
               </Box>
@@ -202,37 +189,24 @@ function StorePage() {
 
       <Box className="main-content">
         <Group align="flex-start" gap={32}>
-          <FilterSidebar
-            filters={filters}
-            onChange={setFilters}
-          />
+          <FilterSidebar filters={filters} onChange={setFilters} />
           <Box style={{ flex: 1 }}>
             {loading ? (
               <SimpleGrid cols={3} spacing="lg">
                 {Array(6)
                   .fill(0)
                   .map((_, i) => (
-                    <Skeleton
-                      key={i}
-                      height={260}
-                      radius="md"
-                    />
+                    <Skeleton key={i} height={260} radius="md" />
                   ))}
               </SimpleGrid>
             ) : error ? (
-              <Paper
-                p="xl"
-                withBorder
-                style={{ textAlign: "center" }}>
+              <Paper p="xl" withBorder style={{ textAlign: "center" }}>
                 <Text size="lg" c="red">
                   {error}
                 </Text>
               </Paper>
             ) : filtered.length === 0 ? (
-              <Paper
-                p="xl"
-                withBorder
-                style={{ textAlign: "center" }}>
+              <Paper p="xl" withBorder style={{ textAlign: "center" }}>
                 <Text size="lg" c="dimmed">
                   No products match your filters.
                 </Text>
