@@ -168,21 +168,37 @@ app.get("/products/:id", async (req, res) => {
 
 /*---------------------------------------*/
 
-app.get("/seed", authenticateUser, async (req, res) => {
-  try {
-    const newProduct = new Product({
-      name: "Bishop Burger",
-      category: "Meals",
-      inStock: true,
-      description:
-        "The classic campus burger with double cheese and secret sauce.",
-      reviews: []
-    });
+/*---------------STORES--------------------*/
 
-    const savedProduct = await newProduct.save();
-    res.json(savedProduct);
+const storeSchema = new mongoose.Schema({
+  name: String,
+  hours: String,
+  rating: { type: Number, default: 0 },
+  reviewCount: { type: Number, default: 0 },
+  isOpen: { type: Boolean, default: true },
+  bannerImage: { type: String, default: "" }
+});
+
+const Store = mongoose.model("Store", storeSchema);
+
+app.get("/stores", async (req, res) => {
+  try {
+    const stores = await Store.find();
+    res.json(stores);
   } catch (error) {
-    res.status(500).json({ error: "Failed to create product" });
+    res.status(500).json({ error: "Failed to fetch stores" });
+  }
+});
+
+app.get("/stores/:id", async (req, res) => {
+  try {
+    const store = await Store.findById(req.params.id);
+    if (!store) {
+      return res.status(404).json({ message: "Store not found" });
+    }
+    res.json(store);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch store" });
   }
 });
 
@@ -230,53 +246,6 @@ app.get("/activity/user/:username", async (req, res) => {
     res
       .status(500)
       .json({ error: "Failed to fetch user profile data" });
-  }
-});
-
-app.get("/seed-activity", async (req, res) => {
-  try {
-    await Activity.deleteMany({});
-
-    //MOCK POSTS!!!
-    const testPosts = [
-      {
-        username: "linan",
-        restaurantName: "VG",
-        time: "10 mins ago",
-        message: "Good pasta!!!",
-        hasImages: false,
-        rating: 4,
-        type: "review"
-      },
-      {
-        username: "campusdining",
-        restaurantName: "Campus Dining",
-        time: "1 hour ago",
-        message: "Come try da goods!",
-        hasImages: false,
-        rating: null,
-        type: "announcement"
-      },
-      {
-        username: "subwayslo",
-        restaurantName: "Subway",
-        time: "3 hours ago",
-        message: "Closing early today.",
-        hasImages: false,
-        rating: null,
-        type: "announcement"
-      }
-    ];
-
-    await Activity.insertMany(testPosts);
-    res.json({
-      message: "Activity feed seeded successfully",
-      testPosts
-    });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Failed to seed activities" });
   }
 });
 

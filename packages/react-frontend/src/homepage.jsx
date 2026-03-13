@@ -1,8 +1,7 @@
 // HOMEPAGE CONTENTS
 // Sections:
 //   1. Imports
-//   2. Mock Data
-//   3. Components
+//   2. Components
 //   4. Data Fetching (useEffect)
 //   5. Handlers
 //   6. Render
@@ -18,33 +17,11 @@ import {
   Avatar,
   Stack
 } from "@mantine/core";
+import { Link } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import "./page.css";
 import { IconSearch, IconUserPlus } from "@tabler/icons-react";
 import { TextInput, ActionIcon, Loader } from "@mantine/core";
-
-// ---- 2. MOCK DATA ------------------------------------------
-
-const mockNearbyData = [
-  {
-    _id: "n1",
-    name: "Campus Market",
-    category: "Stores",
-    inStock: true
-  },
-  {
-    _id: "n2",
-    name: "Subway",
-    category: "Meals",
-    inStock: true
-  },
-  {
-    _id: "n3",
-    name: "Starbucks",
-    category: "Drinks",
-    inStock: true
-  }
-];
 
 const API =
   "https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net";
@@ -57,6 +34,7 @@ const Homepage = ({ token }) => {
 
   // ---- 3. COMPONENTS ----------------------------------
   const [activeTab, setActiveTab] = useState("You"); //Current tab
+  const [nearbyData, setNearbyData] = useState([]); //What's Nearby
   const [feedData, setFeedData] = useState([]); //Following
   const [userData, setUserData] = useState({
     //You tab stats
@@ -72,6 +50,14 @@ const Homepage = ({ token }) => {
 
   // ---- 4. DATA ------------------------------------
   useEffect(() => {
+    //nearby stores
+    fetch(`${API}/stores`)
+      .then((res) => res.json())
+      .then((data) => setNearbyData(data))
+      .catch((error) =>
+        console.log("Error fetching stores:", error)
+      );
+
     //global feed
     fetch(`${API}/activity`)
       .then((res) => res.json())
@@ -117,8 +103,13 @@ const Homepage = ({ token }) => {
           What's Nearby
         </Title>
         <div className="nearby-grid">
-          {mockNearbyData.map((place) => (
-            <ProductCard key={place._id} product={place} />
+          {nearbyData.map((place) => (
+            <Link
+              key={place._id}
+              to={`/stores/${place._id}`}
+              style={{ textDecoration: "none" }}>
+              <ProductCard product={place} />
+            </Link>
           ))}
         </div>
       </section>

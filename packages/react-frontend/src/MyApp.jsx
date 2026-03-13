@@ -80,7 +80,7 @@ export default function MyApp() {
         <Route path="/" element={<Homepage token={token} />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/stores" element={<DiningList />} />
-        <Route path="/stores/view" element={<StorePage />} />
+        <Route path="/stores/:id" element={<StorePage />} />
         <Route path="/profile" element={<ProfilePage token={token} />} />
         <Route
           path="/login"
