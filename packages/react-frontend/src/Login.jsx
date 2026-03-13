@@ -6,44 +6,35 @@ import {
   Stack,
   Title,
   Paper,
-  Alert
+  LoadingOverlay
 } from "@mantine/core";
 
-export default function Login({
-  handleSubmit,
-  buttonLabel = "Log In",
-  message = ""
-}) {
+export default function Login({ handleSubmit, buttonLabel = "Log In" }) {
   const [creds, setCreds] = useState({ username: "", pwd: "" });
+  const [loading, setLoading] = useState(false);
 
   function handleChange(event) {
     const { name, value } = event.target;
     setCreds((prev) => ({ ...prev, [name]: value }));
   }
 
-  function submitForm(event) {
+  async function submitForm(event) {
     event.preventDefault();
-    handleSubmit(creds);
+    setLoading(true);
+    try {
+      await handleSubmit(creds);
+    } finally {
+      setLoading(false);
+    }
     setCreds({ username: "", pwd: "" });
   }
 
   return (
-    <Paper maw={400} mx="auto" mt="xl" p="xl" withBorder>
+    <Paper maw={400} mx="auto" mt="xl" p="xl" withBorder pos="relative">
+      <LoadingOverlay visible={loading} />
       <form onSubmit={submitForm}>
         <Stack>
           <Title order={3}>{buttonLabel}</Title>
-          {message && (
-            <Alert
-              color={
-                message.toLowerCase().includes("fail") ||
-                message.toLowerCase().includes("taken")
-                  ? "red"
-                  : "green"
-              }
-              variant="light">
-              {message}
-            </Alert>
-          )}
           <TextInput
             label="Username"
             name="username"

@@ -41,6 +41,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       trim: true,
       default: ""
+    },
+    isAdmin: {
+      type: Boolean,
+      default: false
     }
   },
   { collection: "users" }
@@ -48,10 +52,10 @@ const userSchema = new mongoose.Schema(
 
 const User = mongoose.model("User", userSchema);
 
-function generateAccessToken(username) {
+function generateAccessToken(username, isAdmin = false) {
   return new Promise((resolve, reject) => {
     jwt.sign(
-      { username: username },
+      { username: username, isAdmin: isAdmin },
       process.env.TOKEN_SECRET,
       { expiresIn: "1d" },
       (error, token) => {
@@ -113,9 +117,11 @@ export function loginUser(req, res) {
           if (!matched) {
             return res.status(401).send("Unauthorized: Wrong password.");
           }
-          return generateAccessToken(username).then((token) => {
-            res.status(200).send({ token: token });
-          });
+          return generateAccessToken(username, retrievedUser.isAdmin).then(
+            (token) => {
+              res.status(200).send({ token: token });
+            }
+          );
         });
     })
     .catch((error) => {
@@ -137,8 +143,16 @@ export function authenticateUser(req, res, next) {
       return res.status(401).send("Invalid token.");
     }
     req.username = decoded.username;
+    req.isAdmin = decoded.isAdmin || false;
     next();
   });
+}
+
+export function authorizeAdmin(req, res, next) {
+  if (!req.isAdmin) {
+    return res.status(403).send("Forbidden: Admin access required.");
+  }
+  next();
 }
 
 export { User };
