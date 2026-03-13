@@ -63,16 +63,33 @@ router.post("/stores/:storeId/products", async (req, res) => {
   }
 });
 
-// Update a product in a store
+// Update a product in a store (supports moving to a different store via newStoreId)
 router.put("/stores/:storeId/products/:productId", async (req, res) => {
   try {
+    const { newStoreId, ...updates } = req.body;
     const store = await Store.findById(req.params.storeId);
     if (!store) return res.status(404).send("Store not found.");
     const product = store.products.id(req.params.productId);
     if (!product) return res.status(404).send("Product not found.");
-    Object.assign(product, req.body);
-    await store.save();
-    res.json(product);
+
+    if (newStoreId && newStoreId !== req.params.storeId) {
+      const destStore = await Store.findById(newStoreId);
+      if (!destStore)
+        return res.status(404).send("Destination store not found.");
+      const productData = product.toObject();
+      delete productData._id;
+      Object.assign(productData, updates);
+      destStore.products.push(productData);
+      product.deleteOne();
+      await store.save();
+      await destStore.save();
+      const moved = destStore.products[destStore.products.length - 1];
+      res.json(moved);
+    } else {
+      Object.assign(product, updates);
+      await store.save();
+      res.json(product);
+    }
   } catch (error) {
     console.error(error);
     res.status(500).send("Internal server error.");

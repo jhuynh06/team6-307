@@ -14,7 +14,10 @@ import {
   Title,
   Image,
   LoadingOverlay,
-  Container
+  Container,
+  Text,
+  Paper,
+  Box
 } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { API_PREFIX } from "./config";
@@ -169,10 +172,13 @@ function ProductsTab({ token }) {
     };
     try {
       if (editing) {
+        const originalStoreId = editing.storeId;
+        const payload =
+          storeId !== originalStoreId ? { ...body, newStoreId: storeId } : body;
         await apiFetch(
-          `/admin/stores/${storeId}/products/${editing._id}`,
+          `/admin/stores/${originalStoreId}/products/${editing._id}`,
           token,
-          { method: "PUT", body: JSON.stringify(body) }
+          { method: "PUT", body: JSON.stringify(payload) }
         );
         notifications.show({
           title: "Updated",
@@ -276,15 +282,14 @@ function ProductsTab({ token }) {
         onClose={() => setModalOpen(false)}
         title={editing ? "Edit Product" : "Add Product"}>
         <Stack>
-          {!editing && (
-            <Select
-              label="Store"
-              data={stores.map((s) => ({ value: s._id, label: s.name }))}
-              value={storeId}
-              onChange={setStoreId}
-              required
-            />
-          )}
+          <Select
+            label="Store"
+            description={editing ? "Change to move this product" : undefined}
+            data={stores.map((s) => ({ value: s._id, label: s.name }))}
+            value={storeId}
+            onChange={setStoreId}
+            required
+          />
           <TextInput
             label="Name"
             value={form.name}
@@ -320,24 +325,53 @@ function ProductsTab({ token }) {
               setForm((f) => ({ ...f, tags: e.currentTarget.value }))
             }
           />
-          <FileInput
-            label="Image"
-            accept="image/*"
-            value={imageFile}
-            onChange={setImageFile}
-          />
-          {imageFile && (
-            <Button
-              size="xs"
-              variant="light"
-              onClick={handleUploadImage}
-              loading={uploading}>
-              Upload Image
-            </Button>
-          )}
-          {form.image && (
-            <Image src={form.image} w={100} h={100} fit="cover" radius="sm" />
-          )}
+          <Paper withBorder p="sm" radius="md" bg="var(--mantine-color-gray-0)">
+            <Text fw={500} size="sm" mb="xs">
+              Product Image
+            </Text>
+            {form.image ? (
+              <Image
+                src={form.image}
+                w={120}
+                h={120}
+                fit="cover"
+                radius="sm"
+                mb="xs"
+              />
+            ) : (
+              <Box
+                w={120}
+                h={120}
+                mb="xs"
+                style={{
+                  border: "2px dashed var(--mantine-color-gray-4)",
+                  borderRadius: "var(--mantine-radius-sm)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}>
+                <Text size="xs" c="dimmed" ta="center">
+                  No image
+                </Text>
+              </Box>
+            )}
+            <FileInput
+              placeholder="Choose image file..."
+              accept="image/*"
+              value={imageFile}
+              onChange={setImageFile}
+              size="sm"
+            />
+            {imageFile && (
+              <Button
+                size="xs"
+                mt="xs"
+                onClick={handleUploadImage}
+                loading={uploading}>
+                Upload Image
+              </Button>
+            )}
+          </Paper>
           <Button onClick={handleSave}>
             {editing ? "Save Changes" : "Add Product"}
           </Button>
@@ -491,26 +525,53 @@ function StoresTab({ token }) {
 
   function renderImageField(field, label) {
     return (
-      <>
+      <Paper withBorder p="sm" radius="md" bg="var(--mantine-color-gray-0)">
+        <Text fw={500} size="sm" mb="xs">
+          {label}
+        </Text>
+        {form[field] ? (
+          <Image
+            src={form[field]}
+            w={120}
+            h={70}
+            fit="cover"
+            radius="sm"
+            mb="xs"
+          />
+        ) : (
+          <Box
+            w={120}
+            h={70}
+            mb="xs"
+            style={{
+              border: "2px dashed var(--mantine-color-gray-4)",
+              borderRadius: "var(--mantine-radius-sm)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}>
+            <Text size="xs" c="dimmed" ta="center">
+              No image
+            </Text>
+          </Box>
+        )}
         <FileInput
-          label={label}
+          placeholder="Choose image file..."
           accept="image/*"
           value={imageFiles[field]}
           onChange={(file) => setImageFiles((f) => ({ ...f, [field]: file }))}
+          size="sm"
         />
         {imageFiles[field] && (
           <Button
             size="xs"
-            variant="light"
+            mt="xs"
             onClick={() => handleUploadField(field)}
             loading={uploading === field}>
             Upload {label}
           </Button>
         )}
-        {form[field] && (
-          <Image src={form[field]} w={100} h={60} fit="cover" radius="sm" />
-        )}
-      </>
+      </Paper>
     );
   }
 
