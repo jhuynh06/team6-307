@@ -9,7 +9,15 @@
 
 // -------1. IMPORTS -------------------------------------
 import React, { useState, useEffect } from "react";
-import { Container, Title, Paper, Group, Text, Avatar, Stack } from "@mantine/core";
+import {
+  Container,
+  Title,
+  Paper,
+  Group,
+  Text,
+  Avatar,
+  Stack
+} from "@mantine/core";
 import ProductCard from "./ProductCard";
 import "./page.css";
 import { IconSearch, IconUserPlus } from "@tabler/icons-react";
@@ -81,7 +89,7 @@ const Homepage = ({ token }) => {
           console.log("Error fetching user data:", error)
         );
     }
-  }, []);
+  }, [username]);
 
   // ---- 5. HANDLERS -----------------------------------------
   //search function friends tab
@@ -132,13 +140,17 @@ const Homepage = ({ token }) => {
             You
           </span>
           <span
-            className={activeTab === "Friends" ? "active-tab" : ""}
+            className={
+              activeTab === "Friends" ? "active-tab" : ""
+            }
             onClick={() => setActiveTab("Friends")}
             style={{ cursor: "pointer" }}>
             Friends
           </span>
           <span
-            className={activeTab === "Following" ? "active-tab" : ""}
+            className={
+              activeTab === "Following" ? "active-tab" : ""
+            }
             onClick={() => setActiveTab("Following")}
             style={{ cursor: "pointer" }}>
             Following
@@ -151,15 +163,21 @@ const Homepage = ({ token }) => {
             {/* subsection: stats bar */}
             <div className="stats-bar">
               <div className="stat-item">
-                <span className="stat-number">{userData.stats.rated}</span>
+                <span className="stat-number">
+                  {userData.stats.rated}
+                </span>
                 <span className="stat-label">Places rated</span>
               </div>
               <div className="stat-item border-sides">
-                <span className="stat-number">{userData.stats.saved}</span>
+                <span className="stat-number">
+                  {userData.stats.saved}
+                </span>
                 <span className="stat-label">Places saved</span>
               </div>
               <div className="stat-item">
-                <span className="stat-number">{userData.stats.tried}</span>
+                <span className="stat-number">
+                  {userData.stats.tried}
+                </span>
                 <span className="stat-label">Places tried</span>
               </div>
             </div>
@@ -172,14 +190,20 @@ const Homepage = ({ token }) => {
                     <div className="pic-placeholder">pic</div>
                     <div className="post-meta">
                       <div className="meta-top">
-                        <span className="username">{post.username}</span>
-                        <span className="timestamp">{post.time}</span>
+                        <span className="username">
+                          {post.username}
+                        </span>
+                        <span className="timestamp">
+                          {post.time}
+                        </span>
                       </div>
                       <p className="comment">{post.message}</p>
                     </div>
                     <div className="stars">
                       {Array(post.rating).fill("★").join("")}
-                      <span className="action-icons">📝 🗑️</span>
+                      <span className="action-icons">
+                        📝 🗑️
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -200,7 +224,9 @@ const Homepage = ({ token }) => {
                       <span className="following-name">
                         {post.restaurantName}
                       </span>
-                      <span className="following-time">{post.time}</span>
+                      <span className="following-time">
+                        {post.time}
+                      </span>
                     </div>
                     <p className="comment following-comment">
                       {post.message}
