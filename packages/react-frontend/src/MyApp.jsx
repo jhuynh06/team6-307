@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-
 import Homepage from "./homepage";
 import Explore from "./explorePage";
 import StorePage from "./StorePage";
@@ -17,7 +16,6 @@ export default function MyApp() {
   );
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-
   function loginUser(creds) {
     return fetch(`${API_PREFIX}/login`, {
       method: "POST",
@@ -43,7 +41,6 @@ export default function MyApp() {
         console.error(error);
       });
   }
-
   function signupUser(creds) {
     return fetch(`${API_PREFIX}/signup`, {
       method: "POST",
@@ -69,24 +66,21 @@ export default function MyApp() {
         console.error(error);
       });
   }
-
   function logout() {
     localStorage.removeItem("token");
     setToken(INVALID_TOKEN);
     setMessage("Logged out.");
     navigate("/");
   }
-
   const isLoggedIn = token !== INVALID_TOKEN;
-
   return (
     <>
       <Header isLoggedIn={isLoggedIn} onLogout={logout} />
       <Routes>
-        <Route path="/" element={<Homepage />} />
+        <Route path="/" element={<Homepage token={token} />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/stores" element={<DiningList />} />
-        <Route path="/stores/view" element={<StorePage />} />
+        <Route path="/stores/:id" element={<StorePage />} />
         <Route path="/profile" element={<ProfilePage token={token} />} />
         <Route
           path="/login"

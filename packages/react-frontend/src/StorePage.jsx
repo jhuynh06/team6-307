@@ -11,15 +11,13 @@ import {
   Skeleton,
   Paper,
   Checkbox,
-  Accordion
+  Accordion,
+  Loader
 } from "@mantine/core";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import "./StorePage.css";
 import { API_PREFIX } from "./config";
-
-const BANNER =
-  "https://ssgse.com/ssg/wp-content/uploads/SSG-CalPoly-CampusMktUU-2-1024x563.jpg";
 
 const FOOD_TYPES = ["Snacks", "Drinks", "Meals"];
 
@@ -111,6 +109,9 @@ function FilterSidebar({ filters, onChange }) {
 }
 
 function StorePage() {
+  const { id } = useParams();
+  const [store, setStore] = useState(null);
+  const [storeLoading, setStoreLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -121,6 +122,20 @@ function StorePage() {
   });
 
   useEffect(() => {
+    fetch(`${API_PREFIX}/stores/${id}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Store not found");
+        return res.json();
+      })
+      .then((data) => {
+        setStore(data);
+        setStoreLoading(false);
+      })
+      .catch((err) => {
+        console.error("Store fetch error:", err);
+        setStoreLoading(false);
+      });
+
     const token = localStorage.getItem("token") || "";
     fetch(`${API_PREFIX}/products`, {
       headers: { Authorization: `Bearer ${token}` }
@@ -138,7 +153,7 @@ function StorePage() {
         setError("Could not load products. Please try again later.");
         setLoading(false);
       });
-  }, []);
+  }, [id]);
 
   const filtered = products.filter((p) => {
     const typeMatch =
@@ -150,37 +165,60 @@ function StorePage() {
     return typeMatch && availMatch;
   });
 
+  if (storeLoading) {
+    return (
+      <Box ta="center" mt={60}>
+        <Loader size="xl" />
+      </Box>
+    );
+  }
+
+  if (!store) {
+    return (
+      <Box ta="center" mt={60}>
+        <Title order={2}>Store not found</Title>
+      </Box>
+    );
+  }
+
   return (
     <Box className="store-page-container">
       <Box
         className="hero-banner"
-        style={{ backgroundImage: `url(${BANNER})` }}>
+        style={{
+          backgroundImage: store.bannerImage
+            ? `url(${store.bannerImage})`
+            : undefined,
+          backgroundColor: store.bannerImage ? undefined : "#4caf50"
+        }}>
         <Box className="hero-overlay" />
         <Group align="center" gap="md" className="hero-content">
           <Avatar size={80} radius="xl" className="store-avatar" />
           <Stack gap={4}>
             <Title order={1} c="white" style={{ fontSize: 32 }}>
-              Campus Market
+              {store.name}
             </Title>
             <Group gap={8}>
-              <Rating value={4} readOnly size="sm" />
+              <Rating value={store.rating} readOnly size="sm" />
               <Text size="sm" c="rgba(255,255,255,0.8)">
-                (128 reviews)
+                ({store.reviewCount} reviews)
               </Text>
             </Group>
             <Group gap={10} mt={4}>
               <Box
                 style={{
-                  backgroundColor: "var(--mantine-color-green-5)",
+                  backgroundColor: store.isOpen
+                    ? "var(--mantine-color-green-5)"
+                    : "var(--mantine-color-red-5)",
                   padding: "2px 8px",
                   borderRadius: "var(--mantine-radius-sm)"
                 }}>
                 <Text size="xs" fw={700} c="white" tt="uppercase">
-                  Open
+                  {store.isOpen ? "Open" : "Closed"}
                 </Text>
               </Box>
               <Text size="sm" c="white" fw={500}>
-                10:00 AM - 11:00 PM
+                {store.hours}
               </Text>
             </Group>
           </Stack>

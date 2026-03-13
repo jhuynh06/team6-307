@@ -4,63 +4,6 @@ import ProductCard from "./ProductCard";
 import "./explorePage.css";
 import { API_PREFIX } from "./config";
 
-const mockProducts = [
-  {
-    _id: "1",
-    name: "Food Name 1",
-    category: "Snacks",
-    inStock: true
-  },
-  {
-    _id: "2",
-    name: "Food Name 2",
-    category: "Drinks",
-    inStock: true
-  },
-  {
-    _id: "3",
-    name: "Food Name 3",
-    category: "Meals",
-    inStock: false
-  },
-  {
-    _id: "4",
-    name: "Food Name 4",
-    category: "Snacks",
-    inStock: true
-  },
-  {
-    _id: "5",
-    name: "Food Name 5",
-    category: "Drinks",
-    inStock: false
-  },
-  {
-    _id: "6",
-    name: "Food Name 6",
-    category: "Meals",
-    inStock: true
-  },
-  {
-    _id: "7",
-    name: "Food Name 7",
-    category: "Meals",
-    inStock: true
-  },
-  {
-    _id: "8",
-    name: "Food Name 8",
-    category: "Snacks",
-    inStock: true
-  },
-  {
-    _id: "9",
-    name: "Food Name 9",
-    category: "Drinks",
-    inStock: true
-  }
-];
-
 const CarouselSection = ({ title, products, loading }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const itemsToShow = 3;
@@ -148,16 +91,12 @@ const Explore = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data && data.length > 0) {
-          setProducts(data);
-        } else {
-          setProducts(mockProducts);
-        }
+        setProducts(data || []);
         setLoading(false);
       })
       .catch((error) => {
         console.error(error);
-        setProducts(mockProducts);
+        setProducts([]);
         setLoading(false);
       });
   }, []);
