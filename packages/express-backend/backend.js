@@ -7,6 +7,7 @@ import userRoutes from "./routes/user-routes.js";
 import productRoutes from "./routes/product-routes.js";
 import storeRoutes from "./routes/store-routes.js";
 import activityRoutes from "./routes/activity-routes.js";
+import adminRoutes from "./routes/admin-routes.js";
 
 dotenv.config();
 
@@ -36,6 +37,7 @@ app.use("/", userRoutes);
 app.use("/products", productRoutes);
 app.use("/stores", storeRoutes);
 app.use("/activity", activityRoutes);
+app.use("/admin", adminRoutes);
 
 app.listen(process.env.PORT || port, () => {
   console.log("REST API is listening.");

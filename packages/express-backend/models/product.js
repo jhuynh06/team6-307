@@ -13,6 +13,7 @@ const productSchema = new mongoose.Schema({
   inStock: { type: Boolean, default: true },
   description: String,
   tags: [String],
+  image: { type: String, default: "" },
   reviews: [reviewSchema]
 });
 

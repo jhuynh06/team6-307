@@ -11,7 +11,9 @@ import {
   Textarea,
   Stack,
   Divider,
-  Loader
+  Loader,
+  Image,
+  Box
 } from "@mantine/core";
 
 import { API_PREFIX, INVALID_TOKEN } from "./config";
@@ -119,6 +121,26 @@ function ProductPage() {
       <Button variant="subtle" onClick={() => navigate(-1)} mb="md">
         &larr; Back to Store
       </Button>
+      {productData.image ? (
+        <Image
+          src={productData.image}
+          alt={productData.name}
+          radius="md"
+          mah={300}
+          fit="cover"
+          mb="md"
+        />
+      ) : (
+        <Box
+          style={{
+            backgroundColor: "#4caf50",
+            borderRadius: "var(--mantine-radius-md)",
+            height: 200,
+            width: "100%"
+          }}
+          mb="md"
+        />
+      )}
       <Title>{productData.name}</Title>
       <Text size="lg" c="dimmed" mb="xl">
         {productData.description}

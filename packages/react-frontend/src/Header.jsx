@@ -3,16 +3,20 @@ import { useDisclosure } from "@mantine/hooks";
 import { useLocation, useNavigate } from "react-router-dom";
 import classes from "./Header.module.css";
 
-const links = [
-  { link: "/", label: "Home" },
-  { link: "/explore", label: "Explore" },
-  { link: "/stores", label: "Stores" }
-];
-
-export default function Header({ isLoggedIn, onLogout }) {
+export default function Header({ isLoggedIn, onLogout, isAdmin }) {
   const [opened, { toggle }] = useDisclosure(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  const links = [
+    { link: "/", label: "Home" },
+    { link: "/explore", label: "Explore" },
+    { link: "/stores", label: "Stores" }
+  ];
+
+  if (isAdmin) {
+    links.push({ link: "/admin", label: "Manage" });
+  }
 
   const activeTab = links.find((l) => l.link === pathname)?.link || null;
 

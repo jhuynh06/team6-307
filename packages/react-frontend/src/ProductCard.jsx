@@ -1,21 +1,22 @@
 import { Card, Box, Text, Image } from "@mantine/core";
 
 function ProductCard({ product }) {
-  const { name, cardImage } = product;
+  const { name, cardImage, image } = product;
+  const imgSrc = cardImage || image;
 
   return (
     <Card shadow="sm" padding="sm" radius="md" withBorder>
       <Card.Section>
-        {cardImage ? (
+        {imgSrc ? (
           <Image
-            src={cardImage}
+            src={imgSrc}
             alt={name}
             style={{ aspectRatio: "4 / 3", objectFit: "cover" }}
           />
         ) : (
           <Box
             style={{
-              backgroundColor: "#DCE775",
+              backgroundColor: "#4caf50",
               aspectRatio: "4 / 3",
               width: "100%"
             }}
