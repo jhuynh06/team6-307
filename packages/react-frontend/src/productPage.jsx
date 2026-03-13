@@ -14,10 +14,10 @@ import {
   Loader
 } from "@mantine/core";
 
-import { API_PREFIX } from "./config";
+import { API_PREFIX, INVALID_TOKEN } from "./config";
 
 function ProductPage() {
-  const { id } = useParams();
+  const { storeId, id } = useParams();
   const navigate = useNavigate();
 
   const [productData, setProductData] = useState(null);
@@ -28,10 +28,7 @@ function ProductPage() {
   const [newReviewText, setNewReviewText] = useState("");
 
   useEffect(() => {
-    const token = localStorage.getItem("token") || "";
-    fetch(`${API_PREFIX}/products/${id}`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
+    fetch(`${API_PREFIX}/stores/${storeId}/products/${id}`)
       .then((res) => {
         if (!res.ok) throw new Error("Product not found");
         return res.json();
@@ -46,7 +43,7 @@ function ProductPage() {
         setProductData(null);
         setIsLoading(false);
       });
-  }, [id]);
+  }, [storeId, id]);
 
   const handleSubmitReview = async () => {
     if (newRating === 0) {
@@ -54,28 +51,43 @@ function ProductPage() {
       return;
     }
 
+    const token = localStorage.getItem("token") || "";
+    if (!token || token === INVALID_TOKEN) {
+      alert("Please log in to leave a review.");
+      return;
+    }
+
     const newReview = {
-      user: "Guest User",
       text: newReviewText,
       rating: newRating
     };
 
-    setReviews([newReview, ...reviews]);
-    setNewRating(0);
-    setNewReviewText("");
-
     try {
-      const token = localStorage.getItem("token") || "";
-      await fetch(`${API_PREFIX}/products/${id}/reviews`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify(newReview)
-      });
+      const res = await fetch(
+        `${API_PREFIX}/stores/${storeId}/products/${id}/reviews`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify(newReview)
+        }
+      );
+
+      if (!res.ok) {
+        const msg = await res.text();
+        alert(msg || "Failed to submit review.");
+        return;
+      }
+
+      const updatedProduct = await res.json();
+      setReviews(updatedProduct.reviews || []);
+      setNewRating(0);
+      setNewReviewText("");
     } catch (error) {
       console.error(error);
+      alert("Failed to submit review. Please try again.");
     }
   };
 

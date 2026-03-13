@@ -136,10 +136,7 @@ function StorePage() {
         setStoreLoading(false);
       });
 
-    const token = localStorage.getItem("token") || "";
-    fetch(`${API_PREFIX}/products`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
+    fetch(`${API_PREFIX}/stores/${id}/products`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch products");
         return res.json();
@@ -259,7 +256,7 @@ function StorePage() {
                 {filtered.map((product) => (
                   <Link
                     key={product._id}
-                    to={`/product/${product._id}`}
+                    to={`/stores/${id}/product/${product._id}`}
                     style={{ textDecoration: "none" }}>
                     <ProductCard product={product} />
                   </Link>
