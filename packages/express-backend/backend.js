@@ -177,6 +177,8 @@ app.get("/products/:id", async (req, res) => {
   }
 });
 
+/*---------------------------------------*/
+
 app.get("/seed", async (req, res) => {
   try {
     const newProduct = new Product({
