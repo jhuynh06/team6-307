@@ -42,7 +42,7 @@ We decided to use Figma to create an interactive UI prototype. You can find our 
 
 [View Our Figma Prototype](https://www.figma.com/proto/OISdAr94PWu1oY6zqT3CjO/PRMF-wireframe?node-id=11-232&t=zIU9eh66fzXnfrG5-1&starting-point-node-id=11%3A232)
 
-**Last updated:** February 2026
+**Last updated:** February 23, 2026
 
 ---
 
@@ -171,22 +171,9 @@ Please read our contributing doc for workflow and coding style guidelines:
 
 See the full [UML Class Diagrams](docs/uml-diagrams.md) documentation page.
 
-![](images_for_README/UMLDiagram.png)
+## Security Daigrams
+
+See the full [Security Diagrams](docs/security-diagrams.md) documentation page.
 
 ---
 
-## Signup Sequence Diagram
-
-![](security-diagram/user-signup-flow.png)
-
----
-
-## Signin Sequence Diagram
-
-![](security-diagram/user-signin-flow.png)
-
----
-
-## Endpoint Sequence Diagram
-
-![](security-diagram/endpoint-flow.png)
