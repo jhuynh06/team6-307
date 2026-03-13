@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
 
 import Homepage from "./homepage";
@@ -9,10 +9,7 @@ import Header from "./Header";
 import ProfilePage from "./ProfilePage";
 import Login from "./Login";
 import ProductPage from "./productPage";
-
-const API_PREFIX =
-  "https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net";
-const INVALID_TOKEN = "INVALID_TOKEN";
+import { API_PREFIX, INVALID_TOKEN } from "./config";
 
 export default function MyApp() {
   const [token, setToken] = useState(
@@ -37,15 +34,13 @@ export default function MyApp() {
           });
         } else {
           return res.text().then((text) => {
-            setMessage(
-              text || "Login failed: Invalid credentials."
-            );
+            setMessage(text || "Login failed: Invalid credentials.");
           });
         }
       })
       .catch((error) => {
         setMessage("Login failed: Could not reach server.");
-        console.log(error);
+        console.error(error);
       });
   }
 
@@ -71,7 +66,7 @@ export default function MyApp() {
       })
       .catch((error) => {
         setMessage("Signup failed: Could not reach server.");
-        console.log(error);
+        console.error(error);
       });
   }
 
@@ -92,10 +87,7 @@ export default function MyApp() {
         <Route path="/explore" element={<Explore />} />
         <Route path="/stores" element={<DiningList />} />
         <Route path="/stores/view" element={<StorePage />} />
-        <Route
-          path="/profile"
-          element={<ProfilePage token={token} />}
-        />
+        <Route path="/profile" element={<ProfilePage token={token} />} />
         <Route
           path="/login"
           element={

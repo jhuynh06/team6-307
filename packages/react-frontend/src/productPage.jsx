@@ -14,8 +14,7 @@ import {
   Loader
 } from "@mantine/core";
 
-const API_URL =
-  "https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net";
+import { API_PREFIX } from "./config";
 
 function ProductPage() {
   const { id } = useParams();
@@ -29,7 +28,10 @@ function ProductPage() {
   const [newReviewText, setNewReviewText] = useState("");
 
   useEffect(() => {
-    fetch(`${API_URL}/products/${id}`)
+    const token = localStorage.getItem("token") || "";
+    fetch(`${API_PREFIX}/products/${id}`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
       .then((res) => {
         if (!res.ok) throw new Error("Product not found");
         return res.json();
@@ -63,9 +65,13 @@ function ProductPage() {
     setNewReviewText("");
 
     try {
-      await fetch(`${API_URL}/products/${id}/reviews`, {
+      const token = localStorage.getItem("token") || "";
+      await fetch(`${API_PREFIX}/products/${id}/reviews`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
         body: JSON.stringify(newReview)
       });
     } catch (error) {
@@ -98,10 +104,7 @@ function ProductPage() {
 
   return (
     <Container size="md" mt={40} pb={60}>
-      <Button
-        variant="subtle"
-        onClick={() => navigate(-1)}
-        mb="md">
+      <Button variant="subtle" onClick={() => navigate(-1)} mb="md">
         &larr; Back to Store
       </Button>
       <Title>{productData.name}</Title>
@@ -109,29 +112,19 @@ function ProductPage() {
         {productData.description}
       </Text>
       <Divider my="xl" />
-      <Paper
-        withBorder
-        p="md"
-        mb="xl"
-        bg="var(--mantine-color-gray-0)">
+      <Paper withBorder p="md" mb="xl" bg="var(--mantine-color-gray-0)">
         <Title order={4} mb="sm">
           Leave a Review
         </Title>
         <Stack gap="sm">
           <Group>
             <Text fw={500}>Your Rating:</Text>
-            <Rating
-              value={newRating}
-              onChange={setNewRating}
-              size="lg"
-            />
+            <Rating value={newRating} onChange={setNewRating} size="lg" />
           </Group>
           <Textarea
             placeholder="What did you think?"
             value={newReviewText}
-            onChange={(e) =>
-              setNewReviewText(e.currentTarget.value)
-            }
+            onChange={(e) => setNewReviewText(e.currentTarget.value)}
             minRows={3}
           />
           <Button

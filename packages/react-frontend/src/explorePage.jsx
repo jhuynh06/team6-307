@@ -1,13 +1,8 @@
-import React, { useState, useEffect } from "react";
-import {
-  Box,
-  Title,
-  Skeleton,
-  Container,
-  ActionIcon
-} from "@mantine/core";
+import { useState, useEffect } from "react";
+import { Box, Title, Skeleton, Container, ActionIcon } from "@mantine/core";
 import ProductCard from "./ProductCard";
 import "./explorePage.css";
+import { API_PREFIX } from "./config";
 
 const mockProducts = [
   {
@@ -84,9 +79,7 @@ const CarouselSection = ({ title, products, loading }) => {
     if (currentIndex === 0) {
       const remainder = totalItems % itemsToShow;
       const lastPageStart =
-        remainder === 0
-          ? totalItems - itemsToShow
-          : totalItems - remainder;
+        remainder === 0 ? totalItems - itemsToShow : totalItems - remainder;
       setCurrentIndex(lastPageStart);
     } else {
       setCurrentIndex(Math.max(0, currentIndex - itemsToShow));
@@ -113,11 +106,7 @@ const CarouselSection = ({ title, products, loading }) => {
             <div className="carousel-track">
               {[...Array(3)].map((_, i) => (
                 <div key={i} className="carousel-card-wrapper">
-                  <Skeleton
-                    height={200}
-                    radius="md"
-                    width="100%"
-                  />
+                  <Skeleton height={200} radius="md" width="100%" />
                 </div>
               ))}
             </div>
@@ -128,9 +117,7 @@ const CarouselSection = ({ title, products, loading }) => {
                 transform: `translateX(-${currentIndex * (100 / itemsToShow)}%)`
               }}>
               {safeProducts.map((product) => (
-                <div
-                  key={product._id}
-                  className="carousel-card-wrapper">
+                <div key={product._id} className="carousel-card-wrapper">
                   <ProductCard product={product} />
                 </div>
               ))}
@@ -155,7 +142,10 @@ const Explore = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:8000/products")
+    const token = localStorage.getItem("token") || "";
+    fetch(`${API_PREFIX}/products`, {
+      headers: { Authorization: `Bearer ${token}` }
+    })
       .then((res) => res.json())
       .then((data) => {
         if (data && data.length > 0) {
@@ -165,7 +155,8 @@ const Explore = () => {
         }
         setLoading(false);
       })
-      .catch(() => {
+      .catch((error) => {
+        console.error(error);
         setProducts(mockProducts);
         setLoading(false);
       });

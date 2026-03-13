@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Container, Title } from "@mantine/core";
 import ProductCard from "./ProductCard";
 import "./page.css";
 
-// temp datga for nearby
+// temp data for nearby
 const mockNearbyData = [
   {
     _id: "n1",
@@ -73,9 +73,7 @@ const Homepage = () => {
         </div>
       </section>
 
-      <section
-        className="section"
-        style={{ marginTop: "60px" }}>
+      <section className="section" style={{ marginTop: "60px" }}>
         <Title order={2} mb="md">
           Recent Activity
         </Title>
@@ -89,17 +87,13 @@ const Homepage = () => {
             You
           </span>
           <span
-            className={
-              activeTab === "Friends" ? "active-tab" : ""
-            }
+            className={activeTab === "Friends" ? "active-tab" : ""}
             onClick={() => setActiveTab("Friends")}
             style={{ cursor: "pointer" }}>
             Friends
           </span>
           <span
-            className={
-              activeTab === "Following" ? "active-tab" : ""
-            }
+            className={activeTab === "Following" ? "active-tab" : ""}
             onClick={() => setActiveTab("Following")}
             style={{ cursor: "pointer" }}>
             Following
@@ -132,13 +126,10 @@ const Homepage = () => {
                     <span className="username">You</span>
                     <span className="timestamp">date/time</span>
                   </div>
-                  <p className="comment">
-                    This place was okay. Food was okay.
-                  </p>
+                  <p className="comment">This place was okay. Food was okay.</p>
                 </div>
                 <div className="stars">
-                  ★★★★★{" "}
-                  <span className="action-icons">📝 🗑️</span>
+                  ★★★★★ <span className="action-icons">📝 🗑️</span>
                 </div>
               </div>
               <div className="post-images">
@@ -152,7 +143,7 @@ const Homepage = () => {
         {/* MOCK DATA PLACEHOLDER*/}
         {activeTab === "Following" && (
           <div className="scrollable-feed">
-            {/*Speicifcally this map*/}
+            {/*Specifically this map*/}
             {mockData.map((post) => (
               <div className="activity-item" key={post.id}>
                 <div className="user-info">
@@ -162,13 +153,9 @@ const Homepage = () => {
                       <span className="following-name">
                         {post.restaurantName}
                       </span>
-                      <span className="following-time">
-                        {post.time}
-                      </span>
+                      <span className="following-time">{post.time}</span>
                     </div>
-                    <p className="comment following-comment">
-                      {post.message}
-                    </p>
+                    <p className="comment following-comment">{post.message}</p>
                   </div>
                 </div>
                 {post.hasImages && (
@@ -180,9 +167,7 @@ const Homepage = () => {
               </div>
             ))}
 
-            <div className="end-of-feed-banner">
-              (no new posts)
-            </div>
+            <div className="end-of-feed-banner">(no new posts)</div>
           </div>
         )}
 

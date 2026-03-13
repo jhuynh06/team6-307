@@ -1,12 +1,4 @@
-import {
-  Burger,
-  Group,
-  Text,
-  Box,
-  Button,
-  Avatar,
-  Tabs
-} from "@mantine/core";
+import { Burger, Group, Text, Box, Button, Avatar, Tabs } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useLocation, useNavigate } from "react-router-dom";
 import classes from "./Header.module.css";
@@ -22,8 +14,7 @@ export default function Header({ isLoggedIn, onLogout }) {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const activeTab =
-    links.find((l) => l.link === pathname)?.link || null;
+  const activeTab = links.find((l) => l.link === pathname)?.link || null;
 
   return (
     <header className={classes.header}>
@@ -71,10 +62,7 @@ export default function Header({ isLoggedIn, onLogout }) {
                 style={{ cursor: "pointer" }}>
                 U
               </Avatar>
-              <Button
-                variant="subtle"
-                size="compact-md"
-                onClick={onLogout}>
+              <Button variant="subtle" size="compact-md" onClick={onLogout}>
                 Logout
               </Button>
             </>
