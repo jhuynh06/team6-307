@@ -225,9 +225,7 @@ app.get("/activity", async (req, res) => {
     });
     res.json(activities);
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Failed to fetch activity feed" });
+    res.status(500).json({ error: "Failed to fetch activity feed" });
   }
 });
 
@@ -243,9 +241,7 @@ app.get("/activity/user/:username", async (req, res) => {
 
     res.json({ stats: userStats, posts: userPosts });
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Failed to fetch user profile data" });
+    res.status(500).json({ error: "Failed to fetch user profile data" });
   }
 });
 

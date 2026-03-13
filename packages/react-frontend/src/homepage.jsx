@@ -54,26 +54,20 @@ const Homepage = ({ token }) => {
     fetch(`${API}/stores`)
       .then((res) => res.json())
       .then((data) => setNearbyData(data))
-      .catch((error) =>
-        console.log("Error fetching stores:", error)
-      );
+      .catch((error) => console.log("Error fetching stores:", error));
 
     //global feed
     fetch(`${API}/activity`)
       .then((res) => res.json())
       .then((data) => setFeedData(data))
-      .catch((error) =>
-        console.log("Error fetching activity:", error)
-      );
+      .catch((error) => console.log("Error fetching activity:", error));
 
     // user data
     if (username) {
       fetch(`${API}/activity/user/${username}`)
         .then((res) => res.json())
         .then((data) => setUserData(data))
-        .catch((error) =>
-          console.log("Error fetching user data:", error)
-        );
+        .catch((error) => console.log("Error fetching user data:", error));
     }
   }, [username]);
 
@@ -115,9 +109,7 @@ const Homepage = ({ token }) => {
       </section>
 
       {/* Recent activity */}
-      <section
-        className="section"
-        style={{ marginTop: "60px" }}>
+      <section className="section" style={{ marginTop: "60px" }}>
         <Title order={2} mb="md">
           Recent Activity
         </Title>
@@ -150,21 +142,15 @@ const Homepage = ({ token }) => {
             {/* subsection: stats bar */}
             <div className="stats-bar">
               <div className="stat-item">
-                <span className="stat-number">
-                  {userData.stats.rated}
-                </span>
+                <span className="stat-number">{userData.stats.rated}</span>
                 <span className="stat-label">Places rated</span>
               </div>
               <div className="stat-item border-sides">
-                <span className="stat-number">
-                  {userData.stats.saved}
-                </span>
+                <span className="stat-number">{userData.stats.saved}</span>
                 <span className="stat-label">Places saved</span>
               </div>
               <div className="stat-item">
-                <span className="stat-number">
-                  {userData.stats.tried}
-                </span>
+                <span className="stat-number">{userData.stats.tried}</span>
                 <span className="stat-label">Places tried</span>
               </div>
             </div>
@@ -177,20 +163,14 @@ const Homepage = ({ token }) => {
                     <div className="pic-placeholder">pic</div>
                     <div className="post-meta">
                       <div className="meta-top">
-                        <span className="username">
-                          {post.username}
-                        </span>
-                        <span className="timestamp">
-                          {post.time}
-                        </span>
+                        <span className="username">{post.username}</span>
+                        <span className="timestamp">{post.time}</span>
                       </div>
                       <p className="comment">{post.message}</p>
                     </div>
                     <div className="stars">
                       {Array(post.rating).fill("★").join("")}
-                      <span className="action-icons">
-                        📝 🗑️
-                      </span>
+                      <span className="action-icons">📝 🗑️</span>
                     </div>
                   </div>
                 </div>
@@ -224,9 +204,7 @@ const Homepage = ({ token }) => {
                 )}
               </div>
             ))}
-            <div className="end-of-feed-banner">
-              (no new posts)
-            </div>
+            <div className="end-of-feed-banner">(no new posts)</div>
           </div>
         )}
 
@@ -238,9 +216,7 @@ const Homepage = ({ token }) => {
               placeholder="Search for friends by name or username..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyDown={(e) =>
-                e.key === "Enter" && handleSearch()
-              }
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()}
               rightSection={
                 isSearching ? (
                   <Loader size="xs" />
@@ -263,9 +239,7 @@ const Homepage = ({ token }) => {
                 </Text>
                 <Stack spacing="xs">
                   {searchResults.map((user) => (
-                    <Group
-                      justify="space-between"
-                      key={user.username}>
+                    <Group justify="space-between" key={user.username}>
                       <Group>
                         <Avatar radius="xl" color="cyan">
                           {user.username[0].toUpperCase()}
@@ -279,10 +253,7 @@ const Homepage = ({ token }) => {
                           </Text>
                         </div>
                       </Group>
-                      <ActionIcon
-                        variant="light"
-                        color="blue"
-                        radius="xl">
+                      <ActionIcon variant="light" color="blue" radius="xl">
                         <IconUserPlus size="1.1rem" />
                       </ActionIcon>
                     </Group>
@@ -300,9 +271,7 @@ const Homepage = ({ token }) => {
                 You haven't added any friends yet.
               </Text>
             ) : (
-              <Stack spacing="sm">
-                {/* Map friend list please*/}
-              </Stack>
+              <Stack spacing="sm">{/* Map friend list please*/}</Stack>
             )}
           </Stack>
         )}
