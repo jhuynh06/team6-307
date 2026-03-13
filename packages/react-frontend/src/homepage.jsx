@@ -97,7 +97,7 @@ const Homepage = ({ token }) => {
           What's Nearby
         </Title>
         <div className="nearby-grid">
-          {nearbyData.map((place) => (
+          {nearbyData.slice(0, 3).map((place) => (
             <Link
               key={place._id}
               to={`/stores/${place._id}`}
