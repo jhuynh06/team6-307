@@ -1,9 +1,10 @@
 import express from "express";
 import Activity from "../models/activity.js";
+import { authenticateUser } from "../auth.js";
 
 const router = express.Router();
 
-router.get("/", async (req, res) => {
+router.get("/", authenticateUser, async (req, res) => {
   try {
     const activities = await Activity.find({ type: "announcement" });
     res.json(activities);
@@ -12,7 +13,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/user/:username", async (req, res) => {
+router.get("/user/:username", authenticateUser, async (req, res) => {
   try {
     const userPosts = await Activity.find({
       username: req.params.username
