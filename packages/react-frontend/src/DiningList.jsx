@@ -44,16 +44,31 @@ function DiningList() {
                   color: "inherit"
                 }}>
                 <Group wrap="nowrap" gap={0}>
-                  <Box
-                    w={140}
-                    miw={140}
-                    h={100}
-                    bg="green.6"
-                    style={{
-                      borderRadius:
-                        "var(--mantine-radius-md) 0 0 var(--mantine-radius-md)"
-                    }}
-                  />
+                  {store.cardImage ? (
+                    <Box
+                      w={140}
+                      miw={140}
+                      h={100}
+                      style={{
+                        borderRadius:
+                          "var(--mantine-radius-md) 0 0 var(--mantine-radius-md)",
+                        backgroundImage: `url(${store.cardImage})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center"
+                      }}
+                    />
+                  ) : (
+                    <Box
+                      w={140}
+                      miw={140}
+                      h={100}
+                      bg="green.6"
+                      style={{
+                        borderRadius:
+                          "var(--mantine-radius-md) 0 0 var(--mantine-radius-md)"
+                      }}
+                    />
+                  )}
                   <Box p="md">
                     <Text fw={600} size="lg">
                       {store.name}
