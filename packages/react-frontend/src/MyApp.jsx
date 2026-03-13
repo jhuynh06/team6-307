@@ -102,10 +102,7 @@ export default function MyApp() {
             />
           }
         />
-        <Route
-          path="/stores/:storeId/product/:id"
-          element={<ProductPage />}
-        />
+        <Route path="/stores/:storeId/product/:id" element={<ProductPage />} />
       </Routes>
     </>
   );

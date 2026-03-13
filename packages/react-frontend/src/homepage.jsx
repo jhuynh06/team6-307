@@ -22,9 +22,9 @@ import ProductCard from "./ProductCard";
 import "./page.css";
 import { IconSearch, IconUserPlus } from "@tabler/icons-react";
 import { TextInput, ActionIcon, Loader } from "@mantine/core";
+import { API_PREFIX } from "./config";
 
-const API =
-  "https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net";
+const API = API_PREFIX;
 
 const Homepage = ({ token }) => {
   const username =
