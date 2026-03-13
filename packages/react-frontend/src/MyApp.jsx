@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Routes, Route, useNavigate } from "react-router-dom";
-
 import Homepage from "./homepage";
 import Explore from "./explorePage";
 import StorePage from "./StorePage";
@@ -9,18 +8,15 @@ import Header from "./Header";
 import ProfilePage from "./ProfilePage";
 import Login from "./Login";
 import ProductPage from "./productPage";
-
 const API_PREFIX =
   "https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net";
 const INVALID_TOKEN = "INVALID_TOKEN";
-
 export default function MyApp() {
   const [token, setToken] = useState(
     localStorage.getItem("token") || INVALID_TOKEN
   );
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-
   function loginUser(creds) {
     return fetch(`${API_PREFIX}/login`, {
       method: "POST",
@@ -48,7 +44,6 @@ export default function MyApp() {
         console.log(error);
       });
   }
-
   function signupUser(creds) {
     return fetch(`${API_PREFIX}/signup`, {
       method: "POST",
@@ -74,21 +69,18 @@ export default function MyApp() {
         console.log(error);
       });
   }
-
   function logout() {
     localStorage.removeItem("token");
     setToken(INVALID_TOKEN);
     setMessage("Logged out.");
     navigate("/");
   }
-
   const isLoggedIn = token !== INVALID_TOKEN;
-
   return (
     <>
       <Header isLoggedIn={isLoggedIn} onLogout={logout} />
       <Routes>
-        <Route path="/" element={<Homepage />} />
+        <Route path="/" element={<Homepage token={token} />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/stores" element={<DiningList />} />
         <Route path="/stores/view" element={<StorePage />} />

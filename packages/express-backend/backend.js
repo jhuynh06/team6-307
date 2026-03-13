@@ -305,18 +305,3 @@ app.get("/users/search", authenticateUser, async (req, res) => {
     res.status(500).json({ error: "Search failed" });
   }
 });
-
-app.get("/users/search", authenticateUser, async (req, res) => {
-  const query = req.query.q;
-  try {
-    const users = await User.find({
-      $or: [
-        { username: { $regex: query, $options: "i" } },
-        { fullName: { $regex: query, $options: "i" } }
-      ]
-    }).select("username fullName major");
-    res.json(users);
-  } catch (error) {
-    res.status(500).json({ error: "Search failed" });
-  }
-});
