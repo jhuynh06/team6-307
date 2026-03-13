@@ -85,13 +85,22 @@ const Explore = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem("token") || "";
-    fetch(`${API_PREFIX}/products`, {
-      headers: { Authorization: `Bearer ${token}` }
-    })
+    fetch(`${API_PREFIX}/stores`)
       .then((res) => res.json())
-      .then((data) => {
-        setProducts(data || []);
+      .then((stores) => {
+        // Fetch each store's products and flatten
+        return Promise.all(
+          stores.map((s) =>
+            fetch(`${API_PREFIX}/stores/${s._id}/products`)
+              .then((res) => res.json())
+              .then((prods) =>
+                prods.map((p) => ({ ...p, storeId: s._id }))
+              )
+          )
+        );
+      })
+      .then((nested) => {
+        setProducts(nested.flat());
         setLoading(false);
       })
       .catch((error) => {

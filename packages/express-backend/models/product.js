@@ -10,8 +10,9 @@ const reviewSchema = new mongoose.Schema({
 const productSchema = new mongoose.Schema({
   name: String,
   category: String,
-  inStock: Boolean,
+  inStock: { type: Boolean, default: true },
   description: String,
+  tags: [String],
   reviews: [reviewSchema]
 });
 
