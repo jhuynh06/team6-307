@@ -18,9 +18,7 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import "./ProfilePage.css";
-
-const API_PREFIX =
-  "https://polyratemyfood-ezfxgaf9dcgpdkga.eastus-01.azurewebsites.net";
+import { API_PREFIX, INVALID_TOKEN } from "./config";
 
 export default function ProfilePage({ token }) {
   const [profile, setProfile] = useState({
@@ -35,7 +33,7 @@ export default function ProfilePage({ token }) {
   const [opened, { open, close }] = useDisclosure(false);
 
   useEffect(() => {
-    if (!token || token === "INVALID_TOKEN") return;
+    if (!token || token === INVALID_TOKEN) return;
     fetch(`${API_PREFIX}/profile`, {
       headers: { Authorization: `Bearer ${token}` }
     })
@@ -47,7 +45,7 @@ export default function ProfilePage({ token }) {
         setProfile(data);
         setDraft(data);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   }, [token]);
 
   const onDraftChange = (key) => (valueOrEvent) => {
@@ -75,7 +73,7 @@ export default function ProfilePage({ token }) {
         setProfile(data);
         close();
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   };
 
   const onOpen = () => {
@@ -108,9 +106,7 @@ export default function ProfilePage({ token }) {
 
           <div className="profile-name-section">
             <Group gap="xs" align="center">
-              <Title order={2}>
-                {profile.fullName || "Your Name"}
-              </Title>
+              <Title order={2}>{profile.fullName || "Your Name"}</Title>
               {profile.pronouns && (
                 <Text c="dimmed" size="sm">
                   ({profile.pronouns})
@@ -145,11 +141,7 @@ export default function ProfilePage({ token }) {
       <Container size="sm" py="xl">
         <Stack gap="lg">
           {/* Bio card */}
-          <Paper
-            withBorder
-            p="lg"
-            radius="md"
-            className="profile-card">
+          <Paper withBorder p="lg" radius="md" className="profile-card">
             <Text fw={600} mb="xs">
               About
             </Text>
@@ -161,11 +153,7 @@ export default function ProfilePage({ token }) {
           </Paper>
 
           {/* Details card */}
-          <Paper
-            withBorder
-            p="lg"
-            radius="md"
-            className="profile-card">
+          <Paper withBorder p="lg" radius="md" className="profile-card">
             <Text fw={600} mb="md">
               Details
             </Text>
@@ -236,9 +224,7 @@ export default function ProfilePage({ token }) {
         <Stack gap="md">
           <Group>
             <Avatar radius="xl" size="lg" color="green">
-              {draft.fullName
-                ? draft.fullName.charAt(0).toUpperCase()
-                : "U"}
+              {draft.fullName ? draft.fullName.charAt(0).toUpperCase() : "U"}
             </Avatar>
             <div>
               <Text fw={600}>Profile details</Text>
