@@ -293,9 +293,10 @@ function ProductsTab({ token }) {
           <TextInput
             label="Name"
             value={form.name}
-            onChange={(e) =>
-              setForm((f) => ({ ...f, name: e.currentTarget.value }))
-            }
+            onChange={(e) => {
+              const val = e.currentTarget.value;
+              setForm((f) => ({ ...f, name: val }));
+            }}
             required
           />
           <Select
@@ -307,23 +308,26 @@ function ProductsTab({ token }) {
           <Switch
             label="In Stock"
             checked={form.inStock}
-            onChange={(e) =>
-              setForm((f) => ({ ...f, inStock: e.currentTarget.checked }))
-            }
+            onChange={(e) => {
+              const val = e.currentTarget.checked;
+              setForm((f) => ({ ...f, inStock: val }));
+            }}
           />
           <Textarea
             label="Description"
             value={form.description}
-            onChange={(e) =>
-              setForm((f) => ({ ...f, description: e.currentTarget.value }))
-            }
+            onChange={(e) => {
+              const val = e.currentTarget.value;
+              setForm((f) => ({ ...f, description: val }));
+            }}
           />
           <TextInput
             label="Tags (comma separated)"
             value={form.tags}
-            onChange={(e) =>
-              setForm((f) => ({ ...f, tags: e.currentTarget.value }))
-            }
+            onChange={(e) => {
+              const val = e.currentTarget.value;
+              setForm((f) => ({ ...f, tags: val }));
+            }}
           />
           <Paper withBorder p="sm" radius="md" bg="var(--mantine-color-gray-0)">
             <Text fw={500} size="sm" mb="xs">
@@ -629,24 +633,27 @@ function StoresTab({ token }) {
           <TextInput
             label="Name"
             value={form.name}
-            onChange={(e) =>
-              setForm((f) => ({ ...f, name: e.currentTarget.value }))
-            }
+            onChange={(e) => {
+              const val = e.currentTarget.value;
+              setForm((f) => ({ ...f, name: val }));
+            }}
             required
           />
           <TextInput
             label="Hours"
             value={form.hours}
-            onChange={(e) =>
-              setForm((f) => ({ ...f, hours: e.currentTarget.value }))
-            }
+            onChange={(e) => {
+              const val = e.currentTarget.value;
+              setForm((f) => ({ ...f, hours: val }));
+            }}
           />
           <Switch
             label="Open"
             checked={form.isOpen}
-            onChange={(e) =>
-              setForm((f) => ({ ...f, isOpen: e.currentTarget.checked }))
-            }
+            onChange={(e) => {
+              const val = e.currentTarget.checked;
+              setForm((f) => ({ ...f, isOpen: val }));
+            }}
           />
           {renderImageField("bannerImage", "Banner Image")}
           {renderImageField("cardImage", "Card Image")}
