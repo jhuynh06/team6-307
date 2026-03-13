@@ -126,7 +126,7 @@ const productSchema = new mongoose.Schema({
 
 const Product = mongoose.model("Product", productSchema);
 
-app.get("/products", authenticateUser, async (req, res) => {
+app.get("/products", async (req, res) => {
   try {
     const products = await Product.find();
     res.json(products);
@@ -154,7 +154,7 @@ app.post("/products/:id/reviews", authenticateUser, async (req, res) => {
   }
 });
 
-app.get("/products/:id", authenticateUser, async (req, res) => {
+app.get("/products/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     if (!product) {
