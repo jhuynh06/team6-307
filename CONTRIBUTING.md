@@ -13,6 +13,7 @@ By contributing to this repository, you agree to adhere to these guidelines.
 ## Table of Contents
 
 - [Development Workflow](#development-workflow)
+- [Working with Azure](#working-with-azure)
 - [Coding Style](#coding-style)
 - [Core Values](#core-values)
 - [Code of Conduct](#code-of-conduct)
@@ -32,16 +33,18 @@ Assign the issue to yourself (or coordinate with a team member).
 Create a new branch based on the issue.
 
 ```bash
-git checkout -b feature/short-description
+git checkout -b short-description
 ```
 
 Use clear and descriptive branch names:
-- `feature/add-rating-system`
-- `fix/login-validation-bug`
-- `refactor/api-cleanup`
+- `add-rating-system`
+- `login-validation-bug`
+- `api-cleanup`
 
 ### 4. Make Your Changes
 Implement your changes while following our coding standards.
+
+> **Note on Azure:** The frontend is deployed to Azure Static Web Apps and points to the Azure-hosted backend by default. If you need to test backend changes locally, update `packages/react-frontend/src/config.js` to point to `http://localhost:8000` instead of the Azure API URL. Remember to revert this before merging.
 
 ### 5. Run Formatting and Linting
 
@@ -63,7 +66,7 @@ git commit -m "Add rating system to dining hall page"
 ### 7. Push Your Branch
 
 ```bash
-git push origin feature/short-description
+git push origin short-description
 ```
 
 ### 8. Open a Pull Request

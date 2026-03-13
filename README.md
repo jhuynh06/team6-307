@@ -14,6 +14,8 @@
   - [Code Structure](#code-structure)
   - [High-Level Architecture Flow](#high-level-architecture-flow)
 - [Development Environment Setup](#development-environment-setup)
+  - [Installation](#installation)
+  - [Contributing](#contributing)
 - [Class (Data Model) Diagrams](#class-data-model-diagrams)
 - [Signup Sequence Diagram](#signup-sequence-diagram)
 - [Signin Sequence Diagram](#signin-sequence-diagram)
@@ -40,9 +42,16 @@ We decided to use Figma to create an interactive UI prototype. You can find our 
 
 [View Our Figma Prototype](https://www.figma.com/proto/OISdAr94PWu1oY6zqT3CjO/PRMF-wireframe?node-id=11-232&t=zIU9eh66fzXnfrG5-1&starting-point-node-id=11%3A232)
 
+**Last updated:** February 2026
+
 ---
 
 ## Architecture Docs
+
+For detailed architecture documentation, see the [`docs/`](docs/) folder:
+
+- [Architecture Overview](docs/architecture.md) — monorepo structure and how modules are implemented
+- [UML Class Diagrams](docs/uml-diagrams.md) — data model diagrams with last-updated date
 
 ---
 
@@ -59,7 +68,14 @@ We decided to use Figma to create an interactive UI prototype. You can find our 
 - **MongoDB**
 
 ### Libraries
-- **Mantine**
+- **Mantine** — UI components and styling
+- **React Router** — client-side routing
+- **bcrypt** — password hashing
+- **jsonwebtoken** — JWT authentication
+- **dotenv** — environment variable management
+- **cors** — cross-origin resource sharing
+- **multer** — file upload handling
+- **@azure/storage-blob** — Azure Blob Storage SDK
 
 ---
 
@@ -109,13 +125,51 @@ This separation ensures:
 
 ## Development Environment Setup
 
-Please read our contributing doc below!
+### Installation
+
+1. Clone the repo and install dependencies from the project root:
+
+```bash
+git clone <repo-url>
+cd team6-307
+npm install
+```
+
+2. Create a `.env` file inside `packages/express-backend/` with the following:
+
+```
+MONGO_CONNECTION_STRING=your_mongodb_connection_string
+TOKEN_SECRET=your_jwt_secret
+AZURE_STORAGE_CONNECTION_STRING=your_azure_connection_string
+AZURE_STORAGE_CONTAINER_NAME=images
+```
+
+> Without a valid `.env`, the backend will not start properly.
+
+3. Start the backend from the project root:
+
+```bash
+npm start
+```
+
+4. In a separate terminal, start the frontend from the `packages/react-frontend/` directory:
+
+```bash
+cd packages/react-frontend
+npm run dev
+```
+
+### Contributing
+
+Please read our contributing doc for workflow and coding style guidelines:
 
 [Contributing Doc](CONTRIBUTING.md)
 
 ---
 
-## Class (Data Model) Diagrams 
+## Class (Data Model) Diagrams
+
+See the full [UML Class Diagrams](docs/uml-diagrams.md) documentation page.
 
 ![](images_for_README/UMLDiagram.png)
 
