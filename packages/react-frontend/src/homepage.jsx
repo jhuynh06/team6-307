@@ -57,14 +57,20 @@ const Homepage = ({ token }) => {
       .catch((error) => console.log("Error fetching stores:", error));
 
     //global feed
-    fetch(`${API}/activity`)
-      .then((res) => res.json())
-      .then((data) => setFeedData(data))
-      .catch((error) => console.log("Error fetching activity:", error));
+    if (token && token !== "INVALID_TOKEN") {
+      fetch(`${API}/activity`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+        .then((res) => res.json())
+        .then((data) => setFeedData(data))
+        .catch((error) => console.log("Error fetching activity:", error));
+    }
 
     // user data
     if (username) {
-      fetch(`${API}/activity/user/${username}`)
+      fetch(`${API}/activity/user/${username}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      })
         .then((res) => res.json())
         .then((data) => setUserData(data))
         .catch((error) => console.log("Error fetching user data:", error));
