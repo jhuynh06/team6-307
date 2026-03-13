@@ -1,211 +1,188 @@
-/* page.css */
-*, *::before, *::after {
-    box-sizing: border-box !important;
+*,
+*::before,
+*::after {
+  box-sizing: border-box !important;
 }
 
 html,
 body,
 #root {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    max-width: 100%;
-    overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .container {
-    max-width: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    font-family: Arial, Helvetica, sans-serif;
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .content {
-    width: 100%;
-    max-width: 100%;
-    padding: 40px 5vw;
-    margin: 0;
+  width: 100%;
+  max-width: 100%;
+  padding: 40px 5vw;
+  margin: 0;
 }
 
 .nearby-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2vw;
-    width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2vw;
+  width: 100%;
 }
 
 .gray-box {
-    background-color: #D9D9D9;
-    width: 100%;
-    aspect-ratio: 16 / 9;
+  background-color: #d9d9d9;
+  width: 100%;
+  aspect-ratio: 16 / 9;
 }
 
 .stats-bar {
-    width: 100%;
-    background-color: #D9D9D9;
-    padding: 60px 0;
-    margin: 40px 0;
-    display: flex;
+  width: 100%;
+  background-color: #d9d9d9;
+  padding: 60px 0;
+  margin: 40px 0;
+  display: flex;
 }
 
 .section h3 {
-    font-size: 16px;
-    margin-bottom: 15px;
+  font-size: 16px;
+  margin-bottom: 15px;
 }
 
 .aspect-ratio {
-    aspect-ratio: 16 / 9;
+  aspect-ratio: 16 / 9;
 }
 
+/*-------Homepage Tabs Formatting--------*/
 .tabs {
-    display: flex;
-    gap: 15px;
-    font-size: 12px;
-    margin-bottom: 15px;
-    color: #666;
+  display: flex;
+  gap: 20px;
+  font-size: 16px;
+  margin-bottom: 25px;
+  color: #666;
 }
 
 .active-tab {
-    text-decoration: underline;
-    color: black;
-    font-weight: bold;
+  text-decoration: underline;
+  color: black;
+  font-weight: bold;
 }
 
+.end-of-feed-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 30px 0 20px 0;
+  color: #adb5bd;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.end-of-feed-banner::before,
+.end-of-feed-banner::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #e9ecef;
+  margin: 0 15px;
+}
+
+/*---------------------------------------*/
+
 .stat-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .border-sides {
-    border-left: 1px solid #999;
-    border-right: 1px solid #999;
+  border-left: 1px solid #999;
+  border-right: 1px solid #999;
 }
 
 .stat-number {
-    font-size: 32px;
-    font-weight: 300;
+  font-size: 32px;
+  font-weight: 300;
 }
 
 .stat-label {
-    font-size: 10px;
-    text-transform: uppercase;
+  font-size: 10px;
+  text-transform: uppercase;
 }
 
 .activity-item {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .user-info {
-    display: flex;
-    gap: 15px;
-    align-items: flex-start;
+  display: flex;
+  gap: 15px;
+  align-items: flex-start;
 }
 
 .pic-placeholder {
-    width: 50px;
-    height: 50px;
-    background-color: #D9D9D9;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
+  width: 50px;
+  height: 50px;
+  background-color: #d9d9d9;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
 }
 
 .post-meta {
-    flex-grow: 1;
+  flex-grow: 1;
 }
 
 .meta-top {
-    display: flex;
-    gap: 20px;
-    font-size: 12px;
+  display: flex;
+  gap: 20px;
+  font-size: 12px;
 }
 
 .username {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .timestamp {
-    color: #888;
+  color: #888;
 }
 
 .comment {
-    font-size: 14px;
-    margin: 5px 0;
+  font-size: 14px;
+  margin: 5px 0;
 }
 
 .stars {
-    color: #f1c40f;
-    font-size: 14px;
+  color: #f1c40f;
+  font-size: 14px;
 }
 
 .action-icons {
-    margin-left: 10px;
-    color: #333;
-    cursor: pointer;
+  margin-left: 10px;
+  color: #333;
+  cursor: pointer;
 }
 
 .post-images {
-    display: flex;
-    gap: 15px;
-    margin-left: 65px;
-    margin-top: 10px;
+  display: flex;
+  gap: 15px;
+  margin-left: 65px;
+  margin-top: 10px;
 }
 
 .small-box {
-    width: 25%;
-    min-height: 200px;
-    aspect-ratio: 4/3;
-}
-
-/*EXPLORE PAGE */
-.explore-section {
-    margin-bottom: 50px;
-}
-
-.carousel-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 2vw;
-    width: 100%;
-}
-
-.carousel-arrow {
-    font-size: 3rem;
-    color: #D9D9D9; 
-    cursor: pointer;
-    user-select: none;
-    flex-shrink: 0;
-}
-
-.carousel-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2vw;
-    flex-grow: 1;
-}
-
-.carousel-item {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.center-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    color: black;
-}
-
-.food-label {
-    font-size: 14px;
-    color: black;
+  width: 25%;
+  min-height: 200px;
+  aspect-ratio: 4/3;
 }

@@ -3,16 +3,20 @@ import { useDisclosure } from "@mantine/hooks";
 import { useLocation, useNavigate } from "react-router-dom";
 import classes from "./Header.module.css";
 
-const links = [
-  { link: "/", label: "Home" },
-  { link: "/explore", label: "Explore" },
-  { link: "/stores", label: "Stores" }
-];
-
-export default function Header({ isLoggedIn, onLogout }) {
+export default function Header({ isLoggedIn, onLogout, isAdmin }) {
   const [opened, { toggle }] = useDisclosure(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  const links = [
+    { link: "/", label: "Home" },
+    { link: "/explore", label: "Explore" },
+    { link: "/stores", label: "Stores" }
+  ];
+
+  if (isAdmin) {
+    links.push({ link: "/admin", label: "Manage" });
+  }
 
   const activeTab = links.find((l) => l.link === pathname)?.link || null;
 
@@ -36,8 +40,11 @@ export default function Header({ isLoggedIn, onLogout }) {
           onChange={(value) => navigate(value)}
           variant="default"
           visibleFrom="xs"
-          classNames={{ root: classes.tabs, list: classes.tabList, tab: classes.tab }}
-        >
+          classNames={{
+            root: classes.tabs,
+            list: classes.tabList,
+            tab: classes.tab
+          }}>
           <Tabs.List>
             {links.map((item) => (
               <Tabs.Tab key={item.link} value={item.link}>
@@ -56,8 +63,7 @@ export default function Header({ isLoggedIn, onLogout }) {
                 color="green"
                 className={`${classes.avatar} ${pathname === "/profile" ? classes.avatarActive : ""}`}
                 onClick={() => navigate("/profile")}
-                style={{ cursor: "pointer" }}
-              >
+                style={{ cursor: "pointer" }}>
                 U
               </Avatar>
               <Button variant="subtle" size="compact-md" onClick={onLogout}>
@@ -69,15 +75,13 @@ export default function Header({ isLoggedIn, onLogout }) {
               <Button
                 variant="filled"
                 size="compact-md"
-                onClick={() => navigate("/login")}
-              >
+                onClick={() => navigate("/login")}>
                 Log in
               </Button>
               <Button
                 variant="outline"
                 size="compact-md"
-                onClick={() => navigate("/signup")}
-              >
+                onClick={() => navigate("/signup")}>
                 Sign up
               </Button>
             </>

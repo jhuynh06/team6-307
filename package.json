@@ -7,8 +7,8 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "start": "npm run dev --workspace=react-frontend",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm start --workspace=express-backend",
+    "test": "echo \"Error: no test specified\"",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
   },
   "workspaces": [
@@ -18,5 +18,4 @@
     "nodemon": "^3.1.11",
     "prettier": "^3.8.1"
   }
-
 }

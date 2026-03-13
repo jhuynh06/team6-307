@@ -3,7 +3,6 @@
   min-height: 100vh;
 }
 
-/* Hero: banner + identity bar */
 .profile-hero {
   position: relative;
 }
@@ -17,7 +16,6 @@
   );
 }
 
-/* Identity row below the banner */
 .profile-identity {
   display: flex;
   align-items: center;
@@ -48,7 +46,6 @@
   margin-bottom: 6px;
 }
 
-/* Content cards */
 .profile-card {
   transition: box-shadow 0.2s ease;
 }

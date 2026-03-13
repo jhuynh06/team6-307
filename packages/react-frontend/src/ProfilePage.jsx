@@ -18,8 +18,7 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import "./ProfilePage.css";
-
-const API_PREFIX = "http://localhost:8000";
+import { API_PREFIX, INVALID_TOKEN } from "./config";
 
 export default function ProfilePage({ token }) {
   const [profile, setProfile] = useState({
@@ -34,7 +33,7 @@ export default function ProfilePage({ token }) {
   const [opened, { open, close }] = useDisclosure(false);
 
   useEffect(() => {
-    if (!token || token === "INVALID_TOKEN") return;
+    if (!token || token === INVALID_TOKEN) return;
     fetch(`${API_PREFIX}/profile`, {
       headers: { Authorization: `Bearer ${token}` }
     })
@@ -46,14 +45,14 @@ export default function ProfilePage({ token }) {
         setProfile(data);
         setDraft(data);
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   }, [token]);
 
   const onDraftChange = (key) => (valueOrEvent) => {
     const value =
       typeof valueOrEvent === "string"
         ? valueOrEvent
-        : valueOrEvent?.currentTarget?.value ?? "";
+        : (valueOrEvent?.currentTarget?.value ?? "");
     setDraft((d) => ({ ...d, [key]: value }));
   };
 
@@ -74,7 +73,7 @@ export default function ProfilePage({ token }) {
         setProfile(data);
         close();
       })
-      .catch((error) => console.log(error));
+      .catch((error) => console.error(error));
   };
 
   const onOpen = () => {
@@ -101,16 +100,13 @@ export default function ProfilePage({ token }) {
             size={110}
             radius={110}
             color="green"
-            className="profile-avatar"
-          >
+            className="profile-avatar">
             {initials}
           </Avatar>
 
           <div className="profile-name-section">
             <Group gap="xs" align="center">
-              <Title order={2}>
-                {profile.fullName || "Your Name"}
-              </Title>
+              <Title order={2}>{profile.fullName || "Your Name"}</Title>
               {profile.pronouns && (
                 <Text c="dimmed" size="sm">
                   ({profile.pronouns})
@@ -135,8 +131,7 @@ export default function ProfilePage({ token }) {
             variant="light"
             size="compact-sm"
             className="profile-edit-btn"
-            onClick={onOpen}
-          >
+            onClick={onOpen}>
             Edit Profile
           </Button>
         </Container>
@@ -147,34 +142,72 @@ export default function ProfilePage({ token }) {
         <Stack gap="lg">
           {/* Bio card */}
           <Paper withBorder p="lg" radius="md" className="profile-card">
-            <Text fw={600} mb="xs">About</Text>
-            <Text c={profile.bio ? undefined : "dimmed"} fs={profile.bio ? undefined : "italic"}>
+            <Text fw={600} mb="xs">
+              About
+            </Text>
+            <Text
+              c={profile.bio ? undefined : "dimmed"}
+              fs={profile.bio ? undefined : "italic"}>
               {profile.bio || "No bio yet."}
             </Text>
           </Paper>
 
           {/* Details card */}
           <Paper withBorder p="lg" radius="md" className="profile-card">
-            <Text fw={600} mb="md">Details</Text>
+            <Text fw={600} mb="md">
+              Details
+            </Text>
             <Stack gap="sm">
               <Group>
-                <Text size="sm" c="dimmed" w={120}>Name</Text>
-                <Text size="sm">{profile.fullName || <Text span c="dimmed" fs="italic">Not set</Text>}</Text>
+                <Text size="sm" c="dimmed" w={120}>
+                  Name
+                </Text>
+                <Text size="sm">
+                  {profile.fullName || (
+                    <Text span c="dimmed" fs="italic">
+                      Not set
+                    </Text>
+                  )}
+                </Text>
               </Group>
               <Divider />
               <Group>
-                <Text size="sm" c="dimmed" w={120}>Pronouns</Text>
-                <Text size="sm">{profile.pronouns || <Text span c="dimmed" fs="italic">Not set</Text>}</Text>
+                <Text size="sm" c="dimmed" w={120}>
+                  Pronouns
+                </Text>
+                <Text size="sm">
+                  {profile.pronouns || (
+                    <Text span c="dimmed" fs="italic">
+                      Not set
+                    </Text>
+                  )}
+                </Text>
               </Group>
               <Divider />
               <Group>
-                <Text size="sm" c="dimmed" w={120}>School Year</Text>
-                <Text size="sm">{profile.schoolYear || <Text span c="dimmed" fs="italic">Not set</Text>}</Text>
+                <Text size="sm" c="dimmed" w={120}>
+                  School Year
+                </Text>
+                <Text size="sm">
+                  {profile.schoolYear || (
+                    <Text span c="dimmed" fs="italic">
+                      Not set
+                    </Text>
+                  )}
+                </Text>
               </Group>
               <Divider />
               <Group>
-                <Text size="sm" c="dimmed" w={120}>Major</Text>
-                <Text size="sm">{profile.major || <Text span c="dimmed" fs="italic">Not set</Text>}</Text>
+                <Text size="sm" c="dimmed" w={120}>
+                  Major
+                </Text>
+                <Text size="sm">
+                  {profile.major || (
+                    <Text span c="dimmed" fs="italic">
+                      Not set
+                    </Text>
+                  )}
+                </Text>
               </Group>
             </Stack>
           </Paper>
@@ -187,14 +220,11 @@ export default function ProfilePage({ token }) {
         onClose={close}
         title="Edit Profile"
         size="md"
-        centered
-      >
+        centered>
         <Stack gap="md">
           <Group>
             <Avatar radius="xl" size="lg" color="green">
-              {draft.fullName
-                ? draft.fullName.charAt(0).toUpperCase()
-                : "U"}
+              {draft.fullName ? draft.fullName.charAt(0).toUpperCase() : "U"}
             </Avatar>
             <div>
               <Text fw={600}>Profile details</Text>
@@ -264,8 +294,7 @@ export default function ProfilePage({ token }) {
                   major: "",
                   bio: ""
                 })
-              }
-            >
+              }>
               Reset
             </Button>
             <Button onClick={onSave}>Save</Button>

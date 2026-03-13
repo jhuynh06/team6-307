@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
-
+import { useState } from "react";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import { notifications } from "@mantine/notifications";
 import Homepage from "./homepage";
 import Explore from "./explorePage";
 import StorePage from "./StorePage";
@@ -8,26 +8,27 @@ import DiningList from "./DiningList";
 import Header from "./Header";
 import ProfilePage from "./ProfilePage";
 import Login from "./Login";
+import ProductPage from "./productPage";
+import AdminPanel from "./AdminPanel";
+import { API_PREFIX, INVALID_TOKEN } from "./config";
 
-const API_PREFIX = "http://localhost:8000";
-const INVALID_TOKEN = "INVALID_TOKEN";
+function decodeToken(token) {
+  try {
+    const payload = token.split(".")[1];
+    return JSON.parse(atob(payload));
+  } catch {
+    return null;
+  }
+}
 
 export default function MyApp() {
   const [token, setToken] = useState(
     localStorage.getItem("token") || INVALID_TOKEN
   );
-  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  function addAuthHeader(otherHeaders = {}) {
-    if (token === INVALID_TOKEN) {
-      return otherHeaders;
-    }
-    return {
-      ...otherHeaders,
-      Authorization: `Bearer ${token}`
-    };
-  }
+  const decoded = token !== INVALID_TOKEN ? decodeToken(token) : null;
+  const isAdmin = decoded?.isAdmin || false;
 
   function loginUser(creds) {
     return fetch(`${API_PREFIX}/login`, {
@@ -40,18 +41,30 @@ export default function MyApp() {
           return res.json().then((payload) => {
             localStorage.setItem("token", payload.token);
             setToken(payload.token);
-            setMessage("Login successful.");
+            notifications.show({
+              title: "Success",
+              message: "Login successful.",
+              color: "green"
+            });
             navigate("/");
           });
         } else {
           return res.text().then((text) => {
-            setMessage(text || "Login failed: Invalid credentials.");
+            notifications.show({
+              title: "Login Failed",
+              message: text || "Invalid credentials.",
+              color: "red"
+            });
           });
         }
       })
       .catch((error) => {
-        setMessage("Login failed: Could not reach server.");
-        console.log(error);
+        notifications.show({
+          title: "Error",
+          message: "Could not reach server.",
+          color: "red"
+        });
+        console.error(error);
       });
   }
 
@@ -66,25 +79,41 @@ export default function MyApp() {
           return res.json().then((payload) => {
             localStorage.setItem("token", payload.token);
             setToken(payload.token);
-            setMessage("Signup successful.");
+            notifications.show({
+              title: "Success",
+              message: "Signup successful.",
+              color: "green"
+            });
             navigate("/");
           });
         } else {
           return res.text().then((text) => {
-            setMessage(text || "Signup failed.");
+            notifications.show({
+              title: "Signup Failed",
+              message: text || "Signup failed.",
+              color: "red"
+            });
           });
         }
       })
       .catch((error) => {
-        setMessage("Signup failed: Could not reach server.");
-        console.log(error);
+        notifications.show({
+          title: "Error",
+          message: "Could not reach server.",
+          color: "red"
+        });
+        console.error(error);
       });
   }
 
   function logout() {
     localStorage.removeItem("token");
     setToken(INVALID_TOKEN);
-    setMessage("Logged out.");
+    notifications.show({
+      title: "Logged out",
+      message: "You have been logged out.",
+      color: "blue"
+    });
     navigate("/");
   }
 
@@ -92,20 +121,25 @@ export default function MyApp() {
 
   return (
     <>
-      <Header isLoggedIn={isLoggedIn} onLogout={logout} />
+      <Header isLoggedIn={isLoggedIn} onLogout={logout} isAdmin={isAdmin} />
       <Routes>
-        <Route path="/" element={<Homepage />} />
+        <Route path="/" element={<Homepage token={token} />} />
         <Route path="/explore" element={<Explore />} />
         <Route path="/stores" element={<DiningList />} />
-        <Route path="/stores/view" element={<StorePage />} />
+        <Route path="/stores/:id" element={<StorePage />} />
         <Route path="/profile" element={<ProfilePage token={token} />} />
         <Route
           path="/login"
-          element={<Login handleSubmit={loginUser} buttonLabel="Log In" message={message} />}
+          element={<Login handleSubmit={loginUser} buttonLabel="Log In" />}
         />
         <Route
           path="/signup"
-          element={<Login handleSubmit={signupUser} buttonLabel="Sign Up" message={message} />}
+          element={<Login handleSubmit={signupUser} buttonLabel="Sign Up" />}
+        />
+        <Route path="/stores/:storeId/product/:id" element={<ProductPage />} />
+        <Route
+          path="/admin"
+          element={isAdmin ? <AdminPanel token={token} /> : <Navigate to="/" />}
         />
       </Routes>
     </>

@@ -11,22 +11,13 @@ import {
   Skeleton,
   Paper,
   Checkbox,
-  Accordion
+  Accordion,
+  Loader
 } from "@mantine/core";
+import { Link, useParams } from "react-router-dom";
 import ProductCard from "./ProductCard";
 import "./StorePage.css";
-
-const BANNER =
-  "https://ssgse.com/ssg/wp-content/uploads/SSG-CalPoly-CampusMktUU-2-1024x563.jpg";
-
-const mockProducts = [
-  { _id: "1", name: "Food Name 1", category: "Snacks", inStock: true },
-  { _id: "2", name: "Food Name 2", category: "Drinks", inStock: true },
-  { _id: "3", name: "Food Name 3", category: "Meals", inStock: false },
-  { _id: "4", name: "Food Name 4", category: "Snacks", inStock: true },
-  { _id: "5", name: "Food Name 5", category: "Drinks", inStock: false },
-  { _id: "6", name: "Food Name 6", category: "Meals", inStock: true }
-];
+import { API_PREFIX } from "./config";
 
 const FOOD_TYPES = ["Snacks", "Drinks", "Meals"];
 
@@ -50,8 +41,7 @@ function FilterSidebar({ filters, onChange }) {
         multiple
         defaultValue={["category", "availability"]}
         chevronPosition="left"
-        className="filter-accordion"
-      >
+        className="filter-accordion">
         <Accordion.Item value="category">
           <Accordion.Control>Category</Accordion.Control>
           <Accordion.Panel>
@@ -76,14 +66,20 @@ function FilterSidebar({ filters, onChange }) {
                 label="In Stock"
                 checked={filters.inStock}
                 onChange={(e) =>
-                  onChange({ ...filters, inStock: e.currentTarget.checked })
+                  onChange({
+                    ...filters,
+                    inStock: e.currentTarget.checked
+                  })
                 }
               />
               <Checkbox
                 label="Out of Stock"
                 checked={filters.outOfStock}
                 onChange={(e) =>
-                  onChange({ ...filters, outOfStock: e.currentTarget.checked })
+                  onChange({
+                    ...filters,
+                    outOfStock: e.currentTarget.checked
+                  })
                 }
               />
             </Stack>
@@ -113,8 +109,12 @@ function FilterSidebar({ filters, onChange }) {
 }
 
 function StorePage() {
+  const { id } = useParams();
+  const [store, setStore] = useState(null);
+  const [storeLoading, setStoreLoading] = useState(true);
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [filters, setFilters] = useState({
     foodTypes: [],
     inStock: false,
@@ -122,60 +122,105 @@ function StorePage() {
   });
 
   useEffect(() => {
-    fetch("http://localhost:8000/products")
-      .then((res) => res.json())
+    fetch(`${API_PREFIX}/stores/${id}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Store not found");
+        return res.json();
+      })
+      .then((data) => {
+        setStore(data);
+        setStoreLoading(false);
+      })
+      .catch((err) => {
+        console.error("Store fetch error:", err);
+        setStoreLoading(false);
+      });
+
+    fetch(`${API_PREFIX}/stores/${id}/products`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch products");
+        return res.json();
+      })
       .then((data) => {
         setProducts(data);
         setLoading(false);
       })
-      .catch(() => {
-        setProducts(mockProducts);
+      .catch((err) => {
+        console.error("Fetch error:", err);
+        setError("Could not load products. Please try again later.");
         setLoading(false);
       });
-  }, []);
+  }, [id]);
 
   const filtered = products.filter((p) => {
     const typeMatch =
-      filters.foodTypes.length === 0 ||
-      filters.foodTypes.includes(p.category);
+      filters.foodTypes.length === 0 || filters.foodTypes.includes(p.category);
     const availMatch =
       !filters.inStock && !filters.outOfStock
         ? true
-        : (filters.inStock && p.inStock) ||
-          (filters.outOfStock && !p.inStock);
+        : (filters.inStock && p.inStock) || (filters.outOfStock && !p.inStock);
     return typeMatch && availMatch;
   });
 
+  if (storeLoading) {
+    return (
+      <Box ta="center" mt={60}>
+        <Loader size="xl" />
+      </Box>
+    );
+  }
+
+  if (!store) {
+    return (
+      <Box ta="center" mt={60}>
+        <Title order={2}>Store not found</Title>
+      </Box>
+    );
+  }
+
   return (
     <Box className="store-page-container">
-      <Box className="hero-banner" style={{ backgroundImage: `url(${BANNER})` }}>
+      <Box
+        className="hero-banner"
+        style={{
+          backgroundImage: store.bannerImage
+            ? `url(${store.bannerImage})`
+            : undefined,
+          backgroundColor: store.bannerImage ? undefined : "#4caf50"
+        }}>
         <Box className="hero-overlay" />
         <Group align="center" gap="md" className="hero-content">
-          <Avatar size={80} radius="xl" className="store-avatar" />
+          <Avatar
+            size={80}
+            radius="xl"
+            className="store-avatar"
+            src={store.profileImage || null}
+          />
           <Stack gap={4}>
             <Title order={1} c="white" style={{ fontSize: 32 }}>
-              Campus Market
+              {store.name}
             </Title>
             <Group gap={8}>
-              <Rating value={4} readOnly size="sm" />
+              <Rating value={store.rating} readOnly size="sm" />
               <Text size="sm" c="rgba(255,255,255,0.8)">
-                (128 reviews)
+                ({store.reviewCount} reviews)
               </Text>
             </Group>
             <Group gap={10} mt={4}>
               <Box
                 style={{
-                  backgroundColor: "var(--mantine-color-green-5)",
+                  backgroundColor: store.isOpen
+                    ? "var(--mantine-color-green-5)"
+                    : "var(--mantine-color-red-5)",
                   padding: "2px 8px",
                   borderRadius: "var(--mantine-radius-sm)"
-                }}
-              >
+                }}>
                 <Text size="xs" fw={700} c="white" tt="uppercase">
-                  Open
+                  {store.isOpen ? "Open" : "Closed"}
                 </Text>
               </Box>
               <Text size="sm" c="white" fw={500}>
-                10:00 AM - 11:00 PM
+                {store.hours}
               </Text>
             </Group>
           </Stack>
@@ -194,6 +239,12 @@ function StorePage() {
                     <Skeleton key={i} height={260} radius="md" />
                   ))}
               </SimpleGrid>
+            ) : error ? (
+              <Paper p="xl" withBorder style={{ textAlign: "center" }}>
+                <Text size="lg" c="red">
+                  {error}
+                </Text>
+              </Paper>
             ) : filtered.length === 0 ? (
               <Paper p="xl" withBorder style={{ textAlign: "center" }}>
                 <Text size="lg" c="dimmed">
@@ -203,7 +254,12 @@ function StorePage() {
             ) : (
               <SimpleGrid cols={3} spacing="lg">
                 {filtered.map((product) => (
-                  <ProductCard key={product._id} product={product} />
+                  <Link
+                    key={product._id}
+                    to={`/stores/${id}/product/${product._id}`}
+                    style={{ textDecoration: "none" }}>
+                    <ProductCard product={product} />
+                  </Link>
                 ))}
               </SimpleGrid>
             )}
