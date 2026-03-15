@@ -6,4 +6,3 @@ services (not endpoints) We hope to achive: • 100% test coverage
 ## Current Coverage
 
 ![Testing Coverage](Coverage.png)
-
