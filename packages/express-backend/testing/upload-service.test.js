@@ -31,7 +31,9 @@ describe("uploadToAzure", () => {
     mockUploadData.mockResolvedValue({});
     mockCreateIfNotExists.mockResolvedValue({});
     mockGetBlockBlobClient.mockReturnValue(mockBlockBlobClient);
-    mockBlobServiceClient.getContainerClient.mockReturnValue(mockContainerClient);
+    mockBlobServiceClient.getContainerClient.mockReturnValue(
+      mockContainerClient
+    );
   });
 
   test("throws error if connection string is missing", async () => {

@@ -7,10 +7,11 @@
   "main": "backend.js",
   "type": "module",
   "scripts": {
-  "test": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
-  "test:coverage": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js --coverage",
-  "dev": "npx nodemon backend.js",
-  "start": "node backend.js"
+    "lint": "npx eslint . && npx prettier --check .",
+    "test": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
+    "test:coverage": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js --coverage",
+    "dev": "npx nodemon backend.js",
+    "start": "node backend.js"
   },
   "dependencies": {
     "@azure/storage-blob": "^12.31.0",

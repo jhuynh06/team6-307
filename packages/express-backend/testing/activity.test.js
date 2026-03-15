@@ -1,7 +1,6 @@
 import Activity from "../models/activity.js";
 
 describe("Activity Model", () => {
-
   test("should create an Activity document with all fields", () => {
     const activity = new Activity({
       username: "bob",
@@ -21,5 +20,4 @@ describe("Activity Model", () => {
     expect(activity.rating).toBe(5);
     expect(activity.type).toBe("review");
   });
-
 });

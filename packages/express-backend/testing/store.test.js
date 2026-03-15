@@ -1,7 +1,6 @@
 import Store from "../models/store.js";
 
 describe("Store Model", () => {
-
   test("should create a Store document with all fields", () => {
     const store = new Store({
       name: "Julian's",

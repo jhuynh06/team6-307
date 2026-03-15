@@ -15,7 +15,7 @@ MockUser.findById = mockFindById;
 MockUser.findByIdAndDelete = mockFindByIdAndDelete;
 
 jest.unstable_mockModule("../auth.js", () => ({
-  User: MockUser,
+  User: MockUser
 }));
 
 const userService = (await import("../services/user-service.js")).default;

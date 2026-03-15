@@ -1,7 +1,6 @@
 import Product from "../models/product.js";
 
 describe("Product Model", () => {
-
   test("should create a Product document with all fields", () => {
     const product = new Product({
       name: "Pizza",
@@ -32,5 +31,4 @@ describe("Product Model", () => {
     expect(product.reviews[0].text).toBe("I love food");
     expect(product.reviews[0].rating).toBe(5);
   });
-
 });
