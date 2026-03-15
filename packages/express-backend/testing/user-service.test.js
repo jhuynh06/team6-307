@@ -15,7 +15,7 @@ MockUser.findById = mockFindById;
 MockUser.findByIdAndDelete = mockFindByIdAndDelete;
 
 jest.unstable_mockModule("../auth.js", () => ({
-  User: MockUser
+  User: MockUser,
 }));
 
 const userService = (await import("../services/user-service.js")).default;
@@ -33,6 +33,13 @@ describe("user-service", () => {
     userService.getUsers();
 
     expect(mockFind).toHaveBeenCalledWith();
+  });
+
+  test("getUsers fallback branch when name and job are empty strings", () => {
+    const result = userService.getUsers("", "");
+
+    expect(result).toBeUndefined();
+    expect(mockFind).not.toHaveBeenCalled();
   });
 
   test("findUserById calls findById with id", () => {
