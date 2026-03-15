@@ -8,8 +8,8 @@
   "type": "module",
   "scripts": {
     "lint": "npx eslint . && npx prettier --check .",
-    "test": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
-    "test:coverage": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js --coverage",
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
+    "test:coverage": "NODE_OPTIONS=--experimental-vm-modules npx jest --coverage",
     "dev": "npx nodemon backend.js",
     "start": "node backend.js"
   },
